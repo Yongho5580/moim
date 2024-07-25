@@ -9,6 +9,7 @@ export default function Home() {
                 className="bg-gray-200 w-full"
                 placeholder="write your email"
               />
+              <a>asdf</a>
               <span className="group-focus-within:block hidden">에러!!</span>
               <button>submit</button>
             </div>

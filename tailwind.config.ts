@@ -7,13 +7,7 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  theme: {
-    extend: {
-      borderRadius: {
-        "sex-on-the-beach": "69px",
-      },
-    },
-  },
+  theme: {},
   plugins: [],
 };
 export default config;
