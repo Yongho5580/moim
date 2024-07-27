@@ -1,10 +1,11 @@
 "use server";
 
+import {
+  EMAIL_MESSAGES,
+  NICKNAME_MESSAGES,
+  PASSWORD_MESSAGES,
+} from "@/constants/messages";
 import { z } from "zod";
-
-const checkUsername = (username: string) => {
-  return !username.includes("김용호");
-};
 
 const checkPasswordMatch = ({
   password,
@@ -25,29 +26,21 @@ const schema = z
   .object({
     username: z
       .string({
-        invalid_type_error: "닉네임에 수상한(?) 문자가 섞인 것 같아요.",
-        required_error: "닉네임을 작성해주세요.",
+        invalid_type_error: NICKNAME_MESSAGES["INVALID_TYPE"],
+        required_error: NICKNAME_MESSAGES["REQUIRED"],
       })
-      .min(3, "닉네임은 3글자 이상 작성해주세요.")
-      .max(10, "닉네임은 10글자 이하로 작성해주세요.")
-      .trim()
-      .transform((username) => `🎩 ${username}`)
-      .refine(
-        checkUsername,
-        "김용호라는 단어는 어디서 아셨죠? 이 로그는 저장됐어요."
-      ),
-    email: z.string().email("이메일 주소가 유효하지 않아요.").toLowerCase(),
+      .min(3, NICKNAME_MESSAGES["MIN"])
+      .max(10, NICKNAME_MESSAGES["MAX"])
+      .trim(),
+    email: z.string().email(EMAIL_MESSAGES["INVALID_EMAIL"]).toLowerCase(),
     password: z
       .string()
-      .min(10, "비밀번호는 10글자 이상 작성해주세요.")
-      .regex(
-        passwordRegex,
-        "비밀번호는 소문자, 대문자, 숫자, 특수문자를 포함 해주세요."
-      ),
-    confirm_password: z.string().min(10),
+      .min(10, PASSWORD_MESSAGES["MIN"])
+      .regex(passwordRegex, PASSWORD_MESSAGES["REGEX"]),
+    confirm_password: z.string().min(10, PASSWORD_MESSAGES["MIN"]),
   })
   .refine(checkPasswordMatch, {
-    message: "비밀번호가 일치하지 않아요.",
+    message: PASSWORD_MESSAGES["MISMATCH"],
     path: ["confirm_password"],
   });
 
