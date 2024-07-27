@@ -7,7 +7,8 @@ CREATE TABLE "User" (
     "phone" TEXT,
     "github_id" TEXT,
     "avatar" TEXT,
-    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" DATETIME NOT NULL
 );
 
 -- CreateIndex
