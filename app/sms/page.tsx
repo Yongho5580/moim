@@ -14,8 +14,15 @@ export default function SMSLogin() {
         <h2 className="text-xl">모임에 참여하기 위한 과정이에요!</h2>
       </div>
       <form action={formAction} className="flex flex-col gap-3">
-        <Input name="phone" type="tel" placeholder="휴대폰 번호" required />
-        <Input name="verify" type="text" placeholder="인증 번호" required />
+        <Input name="phone" type="text" placeholder="휴대폰 번호" required />
+        <Input
+          name="verify"
+          type="text"
+          placeholder="인증 번호"
+          required
+          min={100000}
+          max={999999}
+        />
         <Button text="인증하기" />
       </form>
     </div>
