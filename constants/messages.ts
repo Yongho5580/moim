@@ -1,13 +1,15 @@
-export const NICKNAME_MESSAGES = {
-  INVALID_TYPE: "닉네임에 수상한(?) 문자가 섞인 것 같아요.",
-  REQUIRED: "닉네임을 입력해 주세요.",
-  MIN: "닉네임은 3글자 이상 작성해 주세요.",
-  MAX: "닉네임은 10글자 이하로 작성해 주세요.",
+export const USERNAME_MESSAGES = {
+  INVALID_TYPE: "이름에 수상한(?) 문자가 섞인 것 같아요.",
+  REQUIRED: "이름을 입력해 주세요.",
+  MIN: "이름은 3글자 이상 작성해 주세요.",
+  MAX: "이름은 10글자 이하로 작성해 주세요.",
+  DUPLICATE: "이미 사용 중인 이름이에요.",
 };
 
 export const EMAIL_MESSAGES = {
   INVALID_EMAIL: "이메일 주소가 유효하지 않아요.",
   REQUIRED: "이메일을 입력해 주세요.",
+  DUPLICATE: "이미 사용 중인 이메일이에요.",
 };
 
 export const PASSWORD_MESSAGES = {
