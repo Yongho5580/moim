@@ -1,6 +1,6 @@
 "use server";
 import bcrypt from "bcrypt";
-import { PASSWORD_REGEX } from "@/constants";
+import { PASSWORD_REGEX } from "@/constants/validation";
 import { db } from "@/lib/db";
 import {
   EMAIL_MESSAGES,
