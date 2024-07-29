@@ -1,7 +1,7 @@
 "use server";
 import bcrypt from "bcrypt";
 import { PASSWORD_REGEX } from "@/constants";
-import { db } from "@/constants/db";
+import { db } from "@/lib/db";
 import {
   EMAIL_MESSAGES,
   USERNAME_MESSAGES,
@@ -84,9 +84,8 @@ export async function createAccount(prevState: any, formData: FormData) {
   if (!result.success) {
     return result.error.flatten();
   } else {
-    // 3. 비밀번호 해싱
     const { password, username, email } = result.data;
-    // 해싱 알고리즘을 12번 실행
+    // 3. 비밀번호 해싱, 해싱 알고리즘을 12번 실행
     const hashedPassword = await bcrypt.hash(password, 12);
     // 4. DB에 유저 저장
     const user = await db.user.create({
@@ -109,7 +108,6 @@ export async function createAccount(prevState: any, formData: FormData) {
     cookie.id = user.id;
     // 쿠키를 암호화한 뒤 브라우저에 저장
     await cookie.save();
-    // 5. 유저 로그인
     // 6. "/home"으로 리다이렉트
     redirect("/profile");
   }
