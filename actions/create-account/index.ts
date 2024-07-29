@@ -8,8 +8,6 @@ import {
   PASSWORD_MESSAGES,
 } from "@/constants/messages";
 import { z } from "zod";
-import { getIronSession } from "iron-session";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import getSession from "@/lib/session";
 
@@ -23,30 +21,6 @@ const checkPasswordMatch = ({
   return password === confirm_password;
 };
 
-const checkUniqueEmail = async (email: string) => {
-  const data = await db.user.findUnique({
-    where: {
-      email,
-    },
-    select: {
-      id: true,
-    },
-  });
-  return !Boolean(data);
-};
-
-const checkUniqueUsername = async (username: string) => {
-  const data = await db.user.findUnique({
-    where: {
-      username,
-    },
-    select: {
-      id: true,
-    },
-  });
-  return !Boolean(data);
-};
-
 const schema = z
   .object({
     username: z
@@ -56,24 +30,54 @@ const schema = z
       })
       .min(3, USERNAME_MESSAGES["MIN"])
       .max(10, USERNAME_MESSAGES["MAX"])
-      .trim()
-      .refine(checkUniqueUsername, USERNAME_MESSAGES["DUPLICATE"]),
-    email: z
-      .string()
-      .email(EMAIL_MESSAGES["INVALID"])
-      .toLowerCase()
-      .refine(checkUniqueEmail, EMAIL_MESSAGES["DUPLICATE"]),
-    password: z
-      .string()
-      .min(10, PASSWORD_MESSAGES["MIN"])
-      .regex(PASSWORD_REGEX, PASSWORD_MESSAGES["REGEX"]),
+      .trim(),
+    email: z.string().email(EMAIL_MESSAGES["INVALID"]).toLowerCase(),
+    password: z.string().min(10, PASSWORD_MESSAGES["MIN"]),
+    // .regex(PASSWORD_REGEX, PASSWORD_MESSAGES["REGEX"]),
     confirm_password: z.string().min(10, PASSWORD_MESSAGES["MIN"]),
+  })
+  .superRefine(async ({ username }, ctx) => {
+    const userByUsername = await db.user.findUnique({
+      where: {
+        username,
+      },
+      select: {
+        id: true,
+      },
+    });
+    if (userByUsername) {
+      ctx.addIssue({
+        code: "custom",
+        message: USERNAME_MESSAGES["DUPLICATE"],
+        path: ["username"],
+        fatal: true,
+      });
+      return z.NEVER;
+    }
+  })
+  .superRefine(async ({ email }, ctx) => {
+    const userByEmail = await db.user.findUnique({
+      where: {
+        email,
+      },
+      select: {
+        id: true,
+      },
+    });
+    if (userByEmail) {
+      ctx.addIssue({
+        code: "custom",
+        message: EMAIL_MESSAGES["DUPLICATE"],
+        path: ["email"],
+        fatal: true,
+      });
+      return z.NEVER;
+    }
   })
   .refine(checkPasswordMatch, {
     message: PASSWORD_MESSAGES["MISMATCH"],
     path: ["confirm_password"],
   });
-
 export async function createAccount(prevState: any, formData: FormData) {
   const data = {
     username: formData.get("username"),
@@ -83,6 +87,7 @@ export async function createAccount(prevState: any, formData: FormData) {
   };
   const result = await schema.safeParseAsync(data);
   if (!result.success) {
+    console.log(result.error.flatten());
     return result.error.flatten();
   } else {
     const { password, username, email } = result.data;
