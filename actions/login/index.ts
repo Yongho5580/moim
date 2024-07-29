@@ -1,5 +1,5 @@
 "use server";
-import { PASSWORD_MIN_LENGTH, PASSWORD_REGEX } from "@/constants";
+import { PASSWORD_MIN_LENGTH, PASSWORD_REGEX } from "@/constants/validation";
 import { PASSWORD_MESSAGES } from "@/constants/messages";
 import { redirect } from "next/navigation";
 

@@ -5,7 +5,7 @@ import Input from "@/components/input";
 import SocialLogin from "@/components/social-login";
 import { login } from "@/actions/login";
 import { useFormState } from "react-dom";
-import { PASSWORD_MIN_LENGTH } from "@/constants";
+import { PASSWORD_MIN_LENGTH } from "@/constants/validation";
 import "@/lib/db";
 
 export default function Login() {
