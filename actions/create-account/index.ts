@@ -32,8 +32,10 @@ const schema = z
       .max(10, USERNAME_MESSAGES["MAX"])
       .trim(),
     email: z.string().email(EMAIL_MESSAGES["INVALID"]).toLowerCase(),
-    password: z.string().min(10, PASSWORD_MESSAGES["MIN"]),
-    // .regex(PASSWORD_REGEX, PASSWORD_MESSAGES["REGEX"]),
+    password: z
+      .string()
+      .min(10, PASSWORD_MESSAGES["MIN"])
+      .regex(PASSWORD_REGEX, PASSWORD_MESSAGES["REGEX"]),
     confirm_password: z.string().min(10, PASSWORD_MESSAGES["MIN"]),
   })
   .superRefine(async ({ username }, ctx) => {
