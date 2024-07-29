@@ -8,6 +8,9 @@ import {
   PASSWORD_MESSAGES,
 } from "@/constants/messages";
 import { z } from "zod";
+import { getIronSession } from "iron-session";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const checkPasswordMatch = ({
   password,
@@ -82,9 +85,10 @@ export async function createAccount(prevState: any, formData: FormData) {
     return result.error.flatten();
   } else {
     // 3. 비밀번호 해싱
-    // 해싱 알고리즘을 12번 실행
     const { password, username, email } = result.data;
+    // 해싱 알고리즘을 12번 실행
     const hashedPassword = await bcrypt.hash(password, 12);
+    // 4. DB에 유저 저장
     const user = await db.user.create({
       data: {
         username,
@@ -95,8 +99,18 @@ export async function createAccount(prevState: any, formData: FormData) {
         id: true,
       },
     });
-    // 4. DB에 유저 저장
+    const cookie = await getIronSession(cookies(), {
+      cookieName: "moim-cookie",
+      password: process.env.COOKIE_PASSWORD!,
+    });
+    // 세션 ID 추출
+    //@ts-ignore
+    // 쿠키에 세션 ID 할당
+    cookie.id = user.id;
+    // 쿠키를 암호화한 뒤 브라우저에 저장
+    await cookie.save();
     // 5. 유저 로그인
     // 6. "/home"으로 리다이렉트
+    redirect("/profile");
   }
 }
