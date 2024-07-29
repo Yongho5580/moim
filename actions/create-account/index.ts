@@ -1,5 +1,5 @@
 "use server";
-
+import bcrypt from "bcrypt";
 import { PASSWORD_REGEX } from "@/constants";
 import { db } from "@/constants/db";
 import {
@@ -81,25 +81,20 @@ export async function createAccount(prevState: any, formData: FormData) {
   if (!result.success) {
     return result.error.flatten();
   } else {
-    // 1. 유저네임 고유 체크
-    const user = await db.user.findUnique({
-      where: {
-        username: result.data.username,
-      },
-      select: {
-        id: true,
-      },
-    });
-    const email = await db.user.findUnique({
-      where: {
-        email: result.data.email,
-      },
-      select: {
-        id: true,
-      },
-    });
-    // 2. 이메일 고유 체크
     // 3. 비밀번호 해싱
+    // 해싱 알고리즘을 12번 실행
+    const { password, username, email } = result.data;
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const user = await db.user.create({
+      data: {
+        username,
+        email,
+        password: hashedPassword,
+      },
+      select: {
+        id: true,
+      },
+    });
     // 4. DB에 유저 저장
     // 5. 유저 로그인
     // 6. "/home"으로 리다이렉트
