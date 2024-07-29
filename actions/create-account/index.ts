@@ -11,6 +11,7 @@ import { z } from "zod";
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import getSession from "@/lib/session";
 
 const checkPasswordMatch = ({
   password,
@@ -50,7 +51,7 @@ const schema = z
   .object({
     username: z
       .string({
-        invalid_type_error: USERNAME_MESSAGES["INVALID_TYPE"],
+        invalid_type_error: USERNAME_MESSAGES["INVALID"],
         required_error: USERNAME_MESSAGES["REQUIRED"],
       })
       .min(3, USERNAME_MESSAGES["MIN"])
@@ -59,7 +60,7 @@ const schema = z
       .refine(checkUniqueUsername, USERNAME_MESSAGES["DUPLICATE"]),
     email: z
       .string()
-      .email(EMAIL_MESSAGES["INVALID_EMAIL"])
+      .email(EMAIL_MESSAGES["INVALID"])
       .toLowerCase()
       .refine(checkUniqueEmail, EMAIL_MESSAGES["DUPLICATE"]),
     password: z
@@ -98,16 +99,12 @@ export async function createAccount(prevState: any, formData: FormData) {
         id: true,
       },
     });
-    const cookie = await getIronSession(cookies(), {
-      cookieName: "moim-cookie",
-      password: process.env.COOKIE_PASSWORD!,
-    });
+    const session = await getSession();
     // 세션 ID 추출
-    //@ts-ignore
     // 쿠키에 세션 ID 할당
-    cookie.id = user.id;
+    session.id = user.id;
     // 쿠키를 암호화한 뒤 브라우저에 저장
-    await cookie.save();
+    await session.save();
     // 6. "/home"으로 리다이렉트
     redirect("/profile");
   }
