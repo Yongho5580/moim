@@ -26,11 +26,12 @@ const schema = z.object({
     .email()
     .toLowerCase()
     .refine(checkEmailExists, EMAIL_MESSAGES["NOT_FOUND"]),
-  password: z.string({
-    required_error: PASSWORD_MESSAGES["REQUIRED"],
-  }),
-  // .min(PASSWORD_MIN_LENGTH)
-  // .regex(PASSWORD_REGEX, PASSWORD_MESSAGES["REGEX"]),
+  password: z
+    .string({
+      required_error: PASSWORD_MESSAGES["REQUIRED"],
+    })
+    .min(PASSWORD_MIN_LENGTH)
+    .regex(PASSWORD_REGEX, PASSWORD_MESSAGES["REGEX"]),
 });
 
 export async function login(prevState: any, formData: FormData) {
@@ -60,6 +61,7 @@ export async function login(prevState: any, formData: FormData) {
     if (validatePassword) {
       const session = await getSession();
       session.id = user!.id;
+      await session.save();
       redirect("/profile");
     } else {
       return {
