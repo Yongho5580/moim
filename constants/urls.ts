@@ -9,6 +9,8 @@ export const PUBLIC_ONLY_URLS: Routes = {
   "/login": true,
   "/sms": true,
   "/create-account": true,
+  "/github/start": true,
+  "/github/complete": true,
 };
 
 export const PRIVATE_ONLY_URLS: Routes = {};
