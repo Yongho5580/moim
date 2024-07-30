@@ -8,8 +8,8 @@ import {
   PASSWORD_MESSAGES,
 } from "@/constants/messages";
 import { z } from "zod";
+import { setSession } from "@/lib/session";
 import { redirect } from "next/navigation";
-import getSession from "@/lib/session";
 
 const checkPasswordMatch = ({
   password,
@@ -80,6 +80,7 @@ const schema = z
     message: PASSWORD_MESSAGES["MISMATCH"],
     path: ["confirm_password"],
   });
+
 export async function createAccount(prevState: any, formData: FormData) {
   const data = {
     username: formData.get("username"),
@@ -89,7 +90,6 @@ export async function createAccount(prevState: any, formData: FormData) {
   };
   const result = await schema.safeParseAsync(data);
   if (!result.success) {
-    console.log(result.error.flatten());
     return result.error.flatten();
   } else {
     const { password, username, email } = result.data;
@@ -106,13 +106,7 @@ export async function createAccount(prevState: any, formData: FormData) {
         id: true,
       },
     });
-    const session = await getSession();
-    // 세션 ID 추출
-    // 쿠키에 세션 ID 할당
-    session.id = user.id;
-    // 쿠키를 암호화한 뒤 브라우저에 저장
-    await session.save();
-    // 6. "/home"으로 리다이렉트
-    redirect("/profile");
+    await setSession(user.id);
+    return redirect("/profile");
   }
 }

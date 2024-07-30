@@ -7,6 +7,7 @@ export const PUBLIC_URLS: Routes = {};
 export const PUBLIC_ONLY_URLS: Routes = {
   "/": true,
   "/login": true,
+  "/login/error": true,
   "/sms": true,
   "/create-account": true,
   "/github/start": true,

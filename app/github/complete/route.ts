@@ -1,42 +1,31 @@
 import { db } from "@/lib/db";
-import getSession from "@/lib/session";
-import { notFound, redirect } from "next/navigation";
+import { getAccessToken, getGithubEmail, getGithubProfile } from "@/lib/github";
+import { setSession } from "@/lib/session";
+import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
 
-const ACCESS_TOKEN_URL = "https://github.com/login/oauth/access_token";
-const ACCESS_USER_URL = "https://api.github.com/user";
-
 export async function GET(request: NextRequest) {
+  // check URL params
   const code = request.nextUrl.searchParams.get("code");
   if (!code) {
-    return notFound();
-  }
-  const params = {
-    client_id: process.env.GITHUB_CLIENT_ID!,
-    client_secret: process.env.GITHUB_CLIENT_SECRET!,
-    code,
-  };
-  const formattedParams = new URLSearchParams(params).toString();
-  const url = `${ACCESS_TOKEN_URL}?${formattedParams}`;
-  const accessTokenResponse = await fetch(url, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-    },
-  });
-  const { error, access_token } = await accessTokenResponse.json();
-  if (error) {
     return new Response(null, {
       status: 400,
     });
   }
-  const userProfileResponse = await fetch(ACCESS_USER_URL, {
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-    },
-    cache: "no-cache",
-  });
-  const { id, avatar_url, login } = await userProfileResponse.json();
+  // Access Token
+  const { access_token, error } = await getAccessToken(code);
+  if (error) {
+    return new Response(null, {
+      status: 500,
+    });
+  }
+  // Github Profile with Access Token
+  const {
+    id,
+    login: username,
+    avatar_url,
+  } = await getGithubProfile(access_token);
+  // Check is user already create account with github
   const user = await db.user.findUnique({
     where: {
       github_id: String(id),
@@ -45,23 +34,45 @@ export async function GET(request: NextRequest) {
       id: true,
     },
   });
+  // if user exists
   if (user) {
-    const session = await getSession();
-    session.id = user.id;
-    await session.save();
+    await setSession(user.id);
     return redirect("/profile");
   } else {
-    // solve this problem (duplicate username who login by email)
+    // if user not exists
+    const { email } = await getGithubEmail(access_token);
+    const usernameExists = await db.user.findUnique({
+      where: {
+        username,
+      },
+      select: {
+        id: true,
+      },
+    });
+    const emailExists = await db.user.findUnique({
+      where: {
+        email,
+      },
+      select: {
+        id: true,
+      },
+    });
+    // username, email validate
+    if (usernameExists) {
+      return redirect("/login/error?message=username_duplicate");
+    } else if (emailExists) {
+      return redirect("/login/error?message=email_duplicate");
+    }
+    // create new github account
     const newUser = await db.user.create({
       data: {
-        username: login,
+        username,
+        email,
         github_id: String(id),
         avatar: avatar_url,
       },
     });
-    const session = await getSession();
-    session.id = newUser.id;
-    await session.save();
-    return redirect("/profile");
+    await setSession(newUser.id);
+    return redirect("/");
   }
 }

@@ -6,7 +6,7 @@ import bcrypt from "bcrypt";
 
 import { z } from "zod";
 import { db } from "@/lib/db";
-import getSession from "@/lib/session";
+import { setSession } from "@/lib/session";
 
 const checkEmailExists = async (email: string) => {
   const data = await db.user.findUnique({
@@ -59,10 +59,8 @@ export async function login(prevState: any, formData: FormData) {
     );
 
     if (validatePassword) {
-      const session = await getSession();
-      session.id = user!.id;
-      await session.save();
-      redirect("/profile");
+      await setSession(user!.id);
+      return redirect("/profile");
     } else {
       return {
         fieldErrors: {
