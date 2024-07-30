@@ -1,17 +1,17 @@
 "use client";
 
-import { smsVerification } from "@/actions/sms";
+import { smsLogIn } from "@/actions/sms";
 import Button from "@/components/button";
 import Input from "@/components/input";
 import { useFormState } from "react-dom";
 
 const initialState = {
-  verify: false,
+  token: false,
   error: undefined,
 };
 
 export default function SMSLogin() {
-  const [state, formAction] = useFormState(smsVerification, initialState);
+  const [state, formAction] = useFormState(smsLogIn, initialState);
   return (
     <div className="flex flex-col gap-10 py-8 px-6">
       <div className="flex flex-col gap-2 *:font-medium">
@@ -19,10 +19,10 @@ export default function SMSLogin() {
         <h2 className="text-xl">모임에 참여하기 위한 과정이에요!</h2>
       </div>
       <form action={formAction} className="flex flex-col gap-3">
-        {state.verify ? (
+        {state.token ? (
           <Input
-            key="verify"
-            name="verify"
+            key="token"
+            name="token"
             type="text"
             placeholder="인증 번호"
             required
@@ -40,7 +40,7 @@ export default function SMSLogin() {
             errors={state.error?.formErrors}
           />
         )}
-        <Button text={state.verify ? "확인" : "문자로 인증하기"} />
+        <Button text={state.token ? "확인" : "문자로 인증하기"} />
       </form>
     </div>
   );
