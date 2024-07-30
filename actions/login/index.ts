@@ -67,6 +67,7 @@ export async function login(prevState: any, formData: FormData) {
       return {
         fieldErrors: {
           password: [PASSWORD_MESSAGES["INVALID"]],
+          email: [],
         },
       };
     }
