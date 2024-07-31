@@ -1,9 +1,8 @@
 import {
-  ACCESS_EMAIL_URL,
-  ACCESS_TOKEN_URL,
-  ACCESS_USER_URL,
+  GITHUB_EMAIL_URL,
+  GITHUB_TOKEN_URL,
+  GITHUB_USER_URL,
 } from "@/constants/endpoint";
-import { NextRequest } from "next/server";
 
 interface IGithubEmail {
   email: string;
@@ -11,14 +10,14 @@ interface IGithubEmail {
   verified: boolean;
 }
 
-export async function getAccessToken(code: string) {
+export async function getGithubToken(code: string) {
   const params = {
     client_id: process.env.GITHUB_CLIENT_ID!,
     client_secret: process.env.GITHUB_CLIENT_SECRET!,
     code,
   };
   const formattedParams = new URLSearchParams(params).toString();
-  const url = `${ACCESS_TOKEN_URL}?${formattedParams}`;
+  const url = `${GITHUB_TOKEN_URL}?${formattedParams}`;
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -30,7 +29,7 @@ export async function getAccessToken(code: string) {
 }
 
 export async function getGithubProfile(token: string) {
-  const response = await fetch(ACCESS_USER_URL, {
+  const response = await fetch(GITHUB_USER_URL, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -41,7 +40,7 @@ export async function getGithubProfile(token: string) {
 }
 
 export async function getGithubEmail(token: string) {
-  const response = await fetch(ACCESS_EMAIL_URL, {
+  const response = await fetch(GITHUB_EMAIL_URL, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

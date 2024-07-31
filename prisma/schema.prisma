@@ -15,6 +15,7 @@ model User {
   phone      String?    @unique
   github_id  String?    @unique
   avatar     String?
+  auth_type  String     @default("email")
   created_at DateTime   @default(now())
   updated_at DateTime   @updatedAt
   SMSToken   SMSToken[]

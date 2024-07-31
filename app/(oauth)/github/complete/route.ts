@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { getAccessToken, getGithubEmail, getGithubProfile } from "@/lib/github";
+import { getGithubToken, getGithubEmail, getGithubProfile } from "@/lib/github";
 import { setSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
@@ -12,8 +12,8 @@ export async function GET(request: NextRequest) {
       status: 400,
     });
   }
-  // Access Token
-  const { access_token, error } = await getAccessToken(code);
+  // Github Token
+  const { access_token, error } = await getGithubToken(code);
   if (error) {
     return new Response(null, {
       status: 500,
@@ -69,10 +69,11 @@ export async function GET(request: NextRequest) {
         username,
         email,
         github_id: String(id),
+        auth_type: "github",
         avatar: avatar_url,
       },
     });
     await setSession(newUser.id);
-    return redirect("/");
+    return redirect("/profile");
   }
 }

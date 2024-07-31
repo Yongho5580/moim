@@ -92,8 +92,6 @@ export async function smsLogIn(prevState: ActionState, formData: FormData) {
       });
       return { token: true };
     }
-    // create token
-    // send the token using twilio
   } else {
     const result = await tokenSchema.safeParseAsync(token);
     if (!result.success) {

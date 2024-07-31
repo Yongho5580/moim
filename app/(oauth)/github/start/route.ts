@@ -1,6 +1,5 @@
+import { GITHUB_AUTHORIZE_URL } from "@/constants/endpoint";
 import { redirect } from "next/navigation";
-
-const BASE_URL = "https://github.com/login/oauth/authorize";
 
 export async function GET() {
   const params = {
@@ -9,7 +8,7 @@ export async function GET() {
     allow_signup: "true",
   };
   const formattedParams = new URLSearchParams(params).toString();
-  const url = `${BASE_URL}?${formattedParams}`;
+  const url = `${GITHUB_AUTHORIZE_URL}?${formattedParams}`;
 
   return redirect(url);
 }
