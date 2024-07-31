@@ -6,6 +6,10 @@ export const USERNAME_MESSAGES = {
   DUPLICATE: "이미 사용 중인 이름이에요.",
 };
 
+export const TOKEN_MESSAGES = {
+  INVALID: "유효하지 않은 인증번호에요.",
+};
+
 export const EMAIL_MESSAGES = {
   INVALID: "이메일 주소가 유효하지 않아요.",
   REQUIRED: "이메일을 입력해 주세요.",
