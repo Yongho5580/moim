@@ -1,28 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-
-interface ISocialButtonProps {
-  href: string;
-  bgColor: string;
-  hoverColor: string;
-  textColor: string;
-  iconSrc: string;
-  alt: string;
-  text: string;
-}
+import { ISocialLoginButtons } from "..";
 
 export default function SocialButton({
   href,
-  bgColor,
-  hoverColor,
-  textColor,
+  css,
   iconSrc,
   alt,
   text,
-}: ISocialButtonProps) {
+}: ISocialLoginButtons) {
   return (
     <Link
-      className={`primary-btn flex h-10 items-center justify-center gap-3 ${bgColor} hover:${hoverColor} ${textColor}`}
+      className={`${css} primary-btn flex h-10 items-center justify-center gap-3`}
       href={href}
     >
       <span>

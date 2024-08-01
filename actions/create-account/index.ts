@@ -38,25 +38,6 @@ const schema = z
       .regex(PASSWORD_REGEX, PASSWORD_MESSAGES["REGEX"]),
     confirm_password: z.string().min(10, PASSWORD_MESSAGES["MIN"]),
   })
-  .superRefine(async ({ username }, ctx) => {
-    const userByUsername = await db.user.findUnique({
-      where: {
-        username,
-      },
-      select: {
-        id: true,
-      },
-    });
-    if (userByUsername) {
-      ctx.addIssue({
-        code: "custom",
-        message: USERNAME_MESSAGES["DUPLICATE"],
-        path: ["username"],
-        fatal: true,
-      });
-      return z.NEVER;
-    }
-  })
   .superRefine(async ({ email }, ctx) => {
     const userByEmail = await db.user.findUnique({
       where: {

@@ -11,10 +11,12 @@ interface IProductListProps {
 export default function ProductList({ initialProducts }: IProductListProps) {
   const [products, setProducts] = useState(initialProducts);
   const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(0);
 
   const handleLoadMoreClick = async () => {
     setIsLoading(true);
-    const newProducts = await getMoreProducts(1);
+    const newProducts = await getMoreProducts(page + 1);
+    setPage((prev) => prev + 1);
     setProducts((prev) => [...prev, ...newProducts]);
     setIsLoading(false);
   };

@@ -5,38 +5,37 @@ import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
+  // check URL params
   const token = request.nextUrl.searchParams.get("access_token");
-
   if (!token) {
     return new Response(null, {
       status: 400,
     });
   }
-
+  // Get Profile
   const { email, id, name, picture } = await getGoogleProfile(token);
-
-  const usernameExists = await db.user.findUnique({
+  // Check is user already create account with Google
+  const user = await db.user.findUnique({
     where: {
-      username: name,
-    },
-    select: {
-      id: true,
-    },
-  });
-  // username validate
-  if (usernameExists) {
-    return redirect("/login/error?message=username_duplicate");
-  }
-
-  const newUser = await db.user.create({
-    data: {
-      email,
-      username: name,
-      avatar: picture,
+      auth_id: id,
       auth_type: "google",
     },
   });
-  await setSession(newUser.id);
-
-  return redirect("/profile");
+  if (user) {
+    await setSession(user.id);
+    return redirect("/profile");
+  } else {
+    // if user not exists
+    const newUser = await db.user.create({
+      data: {
+        auth_id: String(id),
+        email,
+        username: name,
+        avatar: picture,
+        auth_type: "google",
+      },
+    });
+    await setSession(newUser.id);
+    return redirect("/profile");
+  }
 }

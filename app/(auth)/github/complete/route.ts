@@ -28,7 +28,8 @@ export async function GET(request: NextRequest) {
   // Check is user already create account with github
   const user = await db.user.findUnique({
     where: {
-      github_id: String(id),
+      auth_id: String(id),
+      auth_type: "github",
     },
     select: {
       id: true,
@@ -41,14 +42,6 @@ export async function GET(request: NextRequest) {
   } else {
     // if user not exists
     const { email } = await getGithubEmail(access_token);
-    const usernameExists = await db.user.findUnique({
-      where: {
-        username,
-      },
-      select: {
-        id: true,
-      },
-    });
     const emailExists = await db.user.findUnique({
       where: {
         email,
@@ -57,10 +50,7 @@ export async function GET(request: NextRequest) {
         id: true,
       },
     });
-    // username, email validate
-    if (usernameExists) {
-      return redirect("/login/error?message=username_duplicate");
-    } else if (emailExists) {
+    if (emailExists) {
       return redirect("/login/error?message=email_duplicate");
     }
     // create new github account
@@ -68,7 +58,7 @@ export async function GET(request: NextRequest) {
       data: {
         username,
         email,
-        github_id: String(id),
+        auth_id: String(id),
         auth_type: "github",
         avatar: avatar_url,
       },

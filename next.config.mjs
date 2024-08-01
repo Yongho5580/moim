@@ -10,11 +10,6 @@ const nextConfig = {
       {
         protocol: "https",
         port: "",
-        hostname: "p.kakaocdn.net",
-      },
-      {
-        protocol: "https",
-        port: "",
         hostname: "lh3.googleusercontent.com",
       },
     ],

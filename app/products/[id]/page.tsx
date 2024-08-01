@@ -21,7 +21,7 @@ export default async function ProductDetail({
   }
   const isOwner = await getIsOwner(product.userId);
 
-  async function deleteProduct() {
+  const onDeleteProduct = async () => {
     "use server";
     await db.product.delete({
       where: {
@@ -29,7 +29,7 @@ export default async function ProductDetail({
       },
     });
     redirect("/products");
-  }
+  };
 
   return (
     <div>
@@ -66,7 +66,7 @@ export default async function ProductDetail({
         <span className="font-semibold text-lg">
           {formatToWon(product.price)}원
         </span>
-        <form action={deleteProduct} className="flex gap-3">
+        <form action={onDeleteProduct} className="flex gap-3">
           {isOwner ? (
             <button className="bg-red-500 px-5 py-2.5 rounded-md font-semibold text-white">
               삭제
