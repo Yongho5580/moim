@@ -50,15 +50,6 @@ export default function SocialLogin() {
           </span>
           <span>구글 로그인</span>
         </Link>
-        <Link
-          className="primary-btn bg-zinc-400 hover:bg-zinc-500 flex h-10 items-center justify-center gap-3"
-          href="/sms"
-        >
-          <span>
-            <ChatBubbleOvalLeftEllipsisIcon className="h-6 w-6" />
-          </span>
-          <span>SMS 로그인</span>
-        </Link>
       </div>
     </>
   );
