@@ -1,4 +1,4 @@
-import SocialButton from "./social-button";
+import SocialButton from "./SocialButton";
 
 const socialLoginButtonsData = [
   {
