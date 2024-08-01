@@ -14,7 +14,7 @@ import {
   VideoCameraIcon as OutlineVideoCameraIcon,
   UserIcon as OutlineUserIcon,
 } from "@heroicons/react/24/outline";
-import NavLink from "./nav-link";
+import NavLink from "./NavLink";
 
 const navLinksData = [
   {
@@ -39,7 +39,7 @@ const navLinksData = [
     href: "/live",
     activeIcon: <SolidVideoCameraIcon className="w-7 h-7" />,
     inactiveIcon: <OutlineVideoCameraIcon className="w-7 h-7" />,
-    label: "급 번개",
+    label: "급번개",
   },
   {
     href: "/profile",

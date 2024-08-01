@@ -2,8 +2,8 @@
 
 import { createAccount } from "@/actions/create-account";
 import Button from "@/components/common/Button";
-import Input from "@/components/common/Input/input";
-import SocialLoginButtons from "@/components/social-login-buttons";
+import Input from "@/components/common/Input";
+import SocialLoginButtons from "@/components/common/SocialLoginButtons";
 import { PASSWORD_MIN_LENGTH } from "@/constants/validation";
 import { useFormState } from "react-dom";
 
