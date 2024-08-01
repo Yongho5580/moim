@@ -31,7 +31,6 @@ export async function getKakaoProfile(token: string) {
   });
 
   const { nickName, profileImageURL } = await response.json();
-  ``;
 
   return { nickName, profileImageURL };
 }
