@@ -35,6 +35,7 @@ model Product {
   id          Int      @id @default(autoincrement())
   title       String
   description String
+  location    String   @default("")
   price       Float
   photo       String
   created_at  DateTime @default(now())
