@@ -3,7 +3,7 @@
 import { createAccount } from "@/actions/create-account";
 import Button from "@/components/button";
 import Input from "@/components/input";
-import SocialLogin from "@/components/social-login";
+import SocialLoginButtons from "@/components/social-login-buttons";
 import { PASSWORD_MIN_LENGTH } from "@/constants/validation";
 import { useFormState } from "react-dom";
 
@@ -50,7 +50,7 @@ export default function CreateAccount() {
         />
         <Button text="회원 가입" />
       </form>
-      <SocialLogin />
+      <SocialLoginButtons />
     </div>
   );
 }

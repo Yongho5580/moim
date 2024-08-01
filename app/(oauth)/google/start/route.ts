@@ -5,7 +5,7 @@ import { NextRequest } from "next/server";
 export async function GET(request: NextRequest) {
   const params = {
     client_id: process.env.GOOGLE_CLIENT_ID!,
-    redirect_uri: `http://localhost:3000/google/callback`,
+    redirect_uri: `${request.nextUrl.origin}/google/callback`,
     response_type: "token",
     scope:
       "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",

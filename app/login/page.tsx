@@ -2,7 +2,7 @@
 
 import Button from "@/components/button";
 import Input from "@/components/input";
-import SocialLogin from "@/components/social-login";
+import SocialLoginButtons from "@/components/social-login-buttons";
 import { login } from "@/actions/login";
 import { useFormState } from "react-dom";
 import { PASSWORD_MIN_LENGTH } from "@/constants/validation";
@@ -34,7 +34,7 @@ export default function Login() {
         />
         <Button text="로그인" />
       </form>
-      <SocialLogin />
+      <SocialLoginButtons />
     </div>
   );
 }
