@@ -12,6 +12,11 @@ const nextConfig = {
         port: "",
         hostname: "lh3.googleusercontent.com",
       },
+      {
+        protocol: "https",
+        port: "",
+        hostname: "moim-s3.s3.us-east-2.amazonaws.com",
+      },
     ],
   },
 };
