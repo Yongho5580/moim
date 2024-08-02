@@ -5,32 +5,9 @@ import getSession from "@/lib/session";
 import { redirect } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import {
-  AWS_ACCESS_KEY_ID,
-  AWS_BUCKET,
-  AWS_REGION,
-  AWS_S3_BASE_URL,
-  AWS_SECRET_ACCESS_KEY,
-} from "@/constants/config";
+import { AWS_BUCKET, AWS_S3_BASE_URL } from "@/constants/config";
 import { s3 } from "@/lib/s3Client";
-
-const schema = z.object({
-  title: z.string({
-    required_error: "제목을 작성해주세요.",
-  }),
-  description: z.string({
-    required_error: "설명을 작성해주세요.",
-  }),
-  price: z.coerce.number({
-    required_error: "모임비를 작성해주세요.",
-  }),
-  location: z.string({
-    required_error: "모임 장소를 작성해주세요.",
-  }),
-  photo: z.string({
-    required_error: "사진을 한 장 이상 첨부해주세요.",
-  }),
-});
+import { ADD_PRODUCT_SCHEMA } from "@/schemas/products/add";
 
 export async function uploadS3({ name, body }: { name: string; body: Buffer }) {
   try {
@@ -78,7 +55,7 @@ export async function uploadProduct(_: any, formData: FormData) {
     location: formData.get("location"),
     description: formData.get("description"),
   };
-  const result = schema.safeParse(data);
+  const result = ADD_PRODUCT_SCHEMA.safeParse(data);
   if (!result.success) {
     return result.error.flatten();
   } else {
