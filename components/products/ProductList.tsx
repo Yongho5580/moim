@@ -16,6 +16,7 @@ export default function ProductList({ initialProducts }: IProductListProps) {
   const trigger = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
+    // 2. 요소가 100% (1.0) 화면에 보였을 경우 실행될 함수
     const observer = new IntersectionObserver(
       async (
         entries: IntersectionObserverEntry[],
@@ -27,6 +28,7 @@ export default function ProductList({ initialProducts }: IProductListProps) {
           setIsLoading(true);
           const newProducts = await getMoreProducts(page + 1);
           if (newProducts.length !== 0) {
+            // 3. 여기서 의존성 배열에 page를 넣었기 때문에 useEffect 리렌더
             setPage((prev) => prev + 1);
             setProducts((prev) => [...prev, ...newProducts]);
           } else {
@@ -40,6 +42,7 @@ export default function ProductList({ initialProducts }: IProductListProps) {
       }
     );
 
+    // 1. 렌더 후 span 값이 ref에 할당됐다면 관찰 시작
     if (trigger.current) {
       observer.observe(trigger.current);
     }
