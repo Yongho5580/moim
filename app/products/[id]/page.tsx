@@ -1,11 +1,10 @@
 import { getIsOwner, getProduct } from "@/actions/products";
 import { onDeleteProduct } from "@/actions/products/[id]";
-import { db } from "@/lib/db";
 import { formatToWon } from "@/lib/utils";
 import { UserIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 export default async function ProductDetail({
   params,
