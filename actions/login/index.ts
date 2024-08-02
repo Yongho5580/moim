@@ -6,7 +6,7 @@ import { db } from "@/lib/db";
 import { setSession } from "@/lib/session";
 import { LOGIN_SCHEMA } from "@/schemas/login";
 
-export async function login(prevState: any, formData: FormData) {
+export async function logIn(prevState: any, formData: FormData) {
   const data = {
     email: formData.get("email"),
     password: formData.get("password"),

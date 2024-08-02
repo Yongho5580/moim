@@ -1,5 +1,3 @@
-"use server";
-
 import { AWS_BUCKET } from "@/constants/config";
 import { db } from "@/lib/db";
 import { s3 } from "@/lib/s3Client";

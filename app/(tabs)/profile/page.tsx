@@ -1,34 +1,15 @@
-import { db } from "@/lib/db";
-import getSession from "@/lib/session";
-import { notFound, redirect } from "next/navigation";
-
-async function getUser() {
-  const session = await getSession();
-  if (session.id) {
-    const user = await db.user.findUnique({
-      where: {
-        id: session.id,
-      },
-    });
-    if (user) {
-      return user;
-    }
-  }
-  notFound();
-}
+import { getUser, logOut } from "@/actions/profile";
 
 export default async function Profile() {
   const user = await getUser();
-  const logOut = async () => {
+  const handleLogOut = async () => {
     "use server";
-    const session = await getSession();
-    session.destroy();
-    redirect("/");
+    await logOut();
   };
   return (
     <div>
       <h1>welcome {user?.username}</h1>
-      <form action={logOut}>
+      <form action={handleLogOut}>
         <button>로그아웃</button>
       </form>
     </div>

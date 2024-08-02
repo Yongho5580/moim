@@ -3,13 +3,13 @@
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import SocialLoginButtons from "@/components/common/SocialLoginButtons";
-import { login } from "@/actions/login";
+import { logIn } from "@/actions/login";
 import { useFormState } from "react-dom";
 import { PASSWORD_MIN_LENGTH } from "@/constants/validation";
 import "@/lib/db";
 
 export default function Login() {
-  const [state, formAction] = useFormState(login, null);
+  const [state, formAction] = useFormState(logIn, null);
   return (
     <div className="flex flex-col gap-10 py-8 px-6">
       <div className="flex flex-col gap-2 *:font-medium">
