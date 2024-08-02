@@ -12,6 +12,7 @@ import {
   AWS_S3_BASE_URL,
   AWS_SECRET_ACCESS_KEY,
 } from "@/constants/config";
+import { s3 } from "@/lib/s3Client";
 
 const schema = z.object({
   title: z.string({
@@ -29,14 +30,6 @@ const schema = z.object({
   photo: z.string({
     required_error: "사진을 한 장 이상 첨부해주세요.",
   }),
-});
-
-const s3 = new S3Client({
-  region: AWS_REGION,
-  credentials: {
-    accessKeyId: AWS_ACCESS_KEY_ID as string,
-    secretAccessKey: AWS_SECRET_ACCESS_KEY as string,
-  },
 });
 
 export async function uploadS3({ name, body }: { name: string; body: Buffer }) {
