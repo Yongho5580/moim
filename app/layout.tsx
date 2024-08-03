@@ -5,7 +5,10 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "%s | 모임",
+  title: {
+    template: "%s | 모임",
+    default: "모임",
+  },
   description: "함께하면 즐거움이 배가 되는 모임!",
 };
 
@@ -15,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body
         className={`${inter.className} bg-neutral-900 text-white max-w-screen-sm mx-auto`}
       >

@@ -51,7 +51,7 @@ const navLinksData = [
 
 export default function TabBar() {
   return (
-    <div className="fixed bottom-0 w-full mx-auto max-w-screen-md grid grid-cols-5 border-neutral-600 border-t px-5 py-3 *:text-white bg-neutral-800">
+    <div className="fixed bottom-0 w-full mx-auto max-w-screen-sm grid grid-cols-5 border-neutral-600 items-center border-t p-3 gap-1 *:text-white bg-neutral-800">
       {navLinksData.map((link) => (
         <NavLink
           key={link.href}

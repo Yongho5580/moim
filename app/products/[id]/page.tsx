@@ -1,7 +1,7 @@
 import { getIsOwner, getProduct } from "@/actions/products";
 import { onDeleteProduct } from "@/actions/products/[id]";
 import { formatToWon } from "@/lib/utils";
-import { UserIcon } from "@heroicons/react/24/solid";
+import { ChatBubbleLeftRightIcon, UserIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -31,6 +31,8 @@ export default async function ProductDetail({
       <div className="relative aspect-square">
         <Image
           fill
+          priority
+          sizes="400px"
           src={product.photo}
           alt={product.title}
           className="object-cover"
@@ -57,7 +59,7 @@ export default async function ProductDetail({
         <h1 className="text-2xl font-semibold">{product.title}</h1>
         <p>{product.description}</p>
       </div>
-      <div className="fixed w-full bottom-0 left-0 p-5 pb-10 bg-neutral-800 flex justify-between items-center">
+      <div className="fixed w-full bottom-0 left-0 p-5 bg-neutral-800 flex justify-between items-center">
         <span className="font-semibold text-lg">
           {formatToWon(product.price)}원
         </span>
@@ -71,7 +73,7 @@ export default async function ProductDetail({
               className="bg-emerald-500 px-5 py-2.5 rounded-md font-semibold text-white"
               href="/chats"
             >
-              채팅하기
+              <ChatBubbleLeftRightIcon />
             </Link>
           )}
         </form>
