@@ -13,7 +13,7 @@ export async function middleware(request: NextRequest) {
   } else {
     // 로그인한 상태이면서, PUBLIC ONLY URL인 곳에 접근하려 할 때
     if (exists) {
-      return NextResponse.redirect(new URL("/profile", request.url));
+      return NextResponse.redirect(new URL("/home", request.url));
     }
   }
 }

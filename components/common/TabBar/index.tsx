@@ -18,7 +18,7 @@ import NavLink from "./NavLink";
 
 const navLinksData = [
   {
-    href: "/products",
+    href: "/home",
     activeIcon: <SolidHomeIcon className="w-7 h-7" />,
     inactiveIcon: <OutlineHomeIcon className="w-7 h-7" />,
     label: "홈",

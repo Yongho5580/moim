@@ -24,6 +24,7 @@ export default function ProductItem({
       <div className="relative size-28 rounded-md overflow:hidden">
         <Image
           fill
+          priority
           sizes="112px"
           src={photo}
           alt={title}
