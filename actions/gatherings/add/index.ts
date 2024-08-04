@@ -65,6 +65,7 @@ export async function uploadGathering(_: any, formData: FormData) {
         data: {
           title: result.data.title,
           description: result.data.description,
+          location: result.data.location,
           price: result.data.price,
           photo: photoUrl,
           user: {
@@ -77,7 +78,7 @@ export async function uploadGathering(_: any, formData: FormData) {
           id: true,
         },
       });
-      redirect(`/gatherings/p/${gathering.id}`);
+      redirect(`/gatherings/post/${gathering.id}`);
     }
   }
 }
