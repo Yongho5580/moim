@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
       },
     });
     if (emailExists) {
-      return redirect("/login/error?message=email_duplicate");
+      return redirect("/");
     }
     // create new github account
     const newUser = await db.user.create({

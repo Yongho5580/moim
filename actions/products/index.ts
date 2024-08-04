@@ -2,13 +2,12 @@
 import { db } from "@/lib/db";
 import getSession from "@/lib/session";
 import { Prisma } from "@prisma/client";
-
 export async function getIsOwner(userId: number) {
-  const session = await getSession();
+  // const session = await getSession();
 
-  if (session.id) {
-    return session.id === userId;
-  }
+  // if (session.id) {
+  //   return session.id === userId;
+  // }
   return false;
 }
 
@@ -34,6 +33,7 @@ export type InitialProducts = Prisma.PromiseReturnType<
 >;
 
 export async function getInitialProducts() {
+  console.log("나 생성요!");
   const products = db.product.findMany({
     select: {
       id: true,
@@ -43,7 +43,6 @@ export async function getInitialProducts() {
       photo: true,
       created_at: true,
     },
-    take: 1,
     orderBy: {
       created_at: "desc",
     },

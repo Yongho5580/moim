@@ -6,7 +6,6 @@ import SocialLoginButtons from "@/components/common/SocialLoginButtons";
 import { logIn } from "@/actions/login";
 import { useFormState } from "react-dom";
 import { PASSWORD_MIN_LENGTH } from "@/constants/validation";
-import "@/lib/db";
 
 export default function Login() {
   const [state, formAction] = useFormState(logIn, null);

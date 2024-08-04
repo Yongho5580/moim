@@ -1,10 +1,18 @@
 import { getIsOwner, getProduct } from "@/actions/products";
 import { onDeleteProduct } from "@/actions/products/[id]";
+import { db } from "@/lib/db";
 import { formatToWon } from "@/lib/utils";
 import { ChatBubbleLeftRightIcon, UserIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const product = await getProduct(+params.id);
+  return {
+    title: product?.title,
+  };
+}
 
 export default async function ProductDetail({
   params,
@@ -73,11 +81,22 @@ export default async function ProductDetail({
               className="bg-emerald-500 px-5 py-2.5 rounded-md font-semibold text-white"
               href="/chats"
             >
-              <ChatBubbleLeftRightIcon />
+              <ChatBubbleLeftRightIcon className="h-[25px]" />
             </Link>
           )}
         </form>
       </div>
     </div>
   );
+}
+
+export async function generateStaticParams() {
+  const products = await db.product.findMany({
+    select: {
+      id: true,
+    },
+  });
+  return products.map((product) => ({
+    id: String(product.id),
+  }));
 }

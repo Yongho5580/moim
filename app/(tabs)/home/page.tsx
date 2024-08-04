@@ -3,6 +3,10 @@ import ProductList from "@/components/products/ProductList";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
+export const metadata = {
+  title: "홈",
+};
+
 export default async function Products() {
   const initialProducts = await getInitialProducts();
   return (

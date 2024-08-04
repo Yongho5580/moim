@@ -1,6 +1,5 @@
 import { getIsOwner, getProduct } from "@/actions/products";
 import { onDeleteProduct } from "@/actions/products/[id]";
-import ProductCloseButton from "@/components/products/ProductCloseButton";
 import ProductModalContainer from "@/components/products/ProductModalContainer";
 import { formatToTimeAgo, formatToWon } from "@/lib/utils";
 import {
@@ -10,10 +9,20 @@ import {
 } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
-import { useRef } from "react";
+import { notFound } from "next/navigation";
 
-export default async function Modal({ params }: { params: { id: string } }) {
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const product = await getProduct(+params.id);
+  return {
+    title: product?.title,
+  };
+}
+
+export default async function ProductModal({
+  params,
+}: {
+  params: { id: string };
+}) {
   const id = Number(params.id);
   if (isNaN(id)) {
     return notFound();

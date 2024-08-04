@@ -20,7 +20,7 @@ export default function ProductItem({
   created_at,
 }: IProductItemProps) {
   return (
-    <Link href={`/products/${id}`} className="flex gap-5">
+    <Link href={`/products/p/${id}`} className="flex gap-5">
       <div className="relative size-28 rounded-md overflow:hidden">
         <Image
           fill

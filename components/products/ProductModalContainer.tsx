@@ -9,7 +9,7 @@ export default function ProductModalContainer({
 }: {
   children: React.ReactNode;
 }) {
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
   useEffect(() => {
     const handleClick = (event: MouseEvent | TouchEvent) => {
@@ -28,7 +28,7 @@ export default function ProductModalContainer({
       document.removeEventListener("mouseup", handleClick);
       document.addEventListener("touchstart", handleClick);
     };
-  }, []);
+  }, [router]);
 
   return (
     <div className="absolute w-full h-full z-50 flex items-center justify-center bg-neutral-800 rounded-lg bg-opacity-60 left-0 top-0 p-10">
