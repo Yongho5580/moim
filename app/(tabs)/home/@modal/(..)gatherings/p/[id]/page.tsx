@@ -1,6 +1,6 @@
-import { getIsOwner, getProduct } from "@/actions/products";
-import { onDeleteProduct } from "@/actions/products/[id]";
-import ProductModalContainer from "@/components/products/ProductModalContainer";
+import { getIsOwner, getGathering } from "@/actions/gatherings";
+import { onDeleteGathering } from "@/actions/gatherings/[id]";
+import GatheringModalContainer from "@/components/gatherings/GatheringModalContainer";
 import { formatToTimeAgo, formatToWon } from "@/lib/utils";
 import {
   ChatBubbleLeftRightIcon,
@@ -12,13 +12,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const product = await getProduct(+params.id);
+  const gathering = await getGathering(+params.id);
   return {
-    title: product?.title,
+    title: gathering?.title,
   };
 }
 
-export default async function ProductModal({
+export default async function GatheringModal({
   params,
 }: {
   params: { id: string };
@@ -27,24 +27,24 @@ export default async function ProductModal({
   if (isNaN(id)) {
     return notFound();
   }
-  const product = await getProduct(id);
-  if (!product) {
+  const gathering = await getGathering(id);
+  if (!gathering) {
     return notFound();
   }
-  const isOwner = await getIsOwner(product.userId);
+  const isOwner = await getIsOwner(gathering.userId);
 
-  const handleDeleteProduct = async () => {
+  const handleDeleteGathering = async () => {
     "use server";
-    await onDeleteProduct(id);
+    await onDeleteGathering(id);
   };
 
   return (
-    <ProductModalContainer>
+    <GatheringModalContainer>
       <div className="aspect-square h-full w-full">
         <div className="bg-neutral-900 text-neutral-200 relative flex justify-center rounded-t-xl items-center overflow-hidden h-full">
           <Image
-            src={product.photo}
-            alt={product.title}
+            src={gathering.photo}
+            alt={gathering.title}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             fill
             className="object-contain overflow-hidden"
@@ -54,10 +54,10 @@ export default async function ProductModal({
       <div className="p-5 flex items-center justify-between border-b border-neutral-700">
         <div className="flex items-center gap-3">
           <div className="size-10 overflow-hidden rounded-full">
-            {product.user.avatar !== null ? (
+            {gathering.user.avatar !== null ? (
               <Image
-                src={product.user.avatar}
-                alt={product.user.username}
+                src={gathering.user.avatar}
+                alt={gathering.user.username}
                 width={40}
                 height={40}
               />
@@ -66,11 +66,11 @@ export default async function ProductModal({
             )}
           </div>
           <div>
-            <h3>{product.user.username}</h3>
+            <h3>{gathering.user.username}</h3>
           </div>
         </div>
         <div>
-          <form action={handleDeleteProduct} className="flex gap-3">
+          <form action={handleDeleteGathering} className="flex gap-3">
             {isOwner ? (
               <button className="bg-red-500 px-5 py-2.5 rounded-md font-semibold text-white">
                 <TrashIcon className="h-[25px]" />
@@ -87,18 +87,18 @@ export default async function ProductModal({
         </div>
       </div>
       <div className="h-full flex flex-col p-5 gap-1 overflow-y-auto max-h-[200px] scrollbar-hide">
-        <h1 className="text-xl font-medium">{product.title}</h1>
-        <span className="text-sm text-neutral-500">{product.location}</span>
+        <h1 className="text-xl font-medium">{gathering.title}</h1>
+        <span className="text-sm text-neutral-500">{gathering.location}</span>
         <span className="text-sm text-neutral-500">
-          {formatToTimeAgo(product.created_at.toString())}
+          {formatToTimeAgo(gathering.created_at.toString())}
         </span>
         <span className="text-lg font-bold">
-          {formatToWon(product.price)}원
+          {formatToWon(gathering.price)}원
         </span>
         <p className="mt-4 font-light text-neutral-200 text-sm">
-          {product.description}
+          {gathering.description}
         </p>
       </div>
-    </ProductModalContainer>
+    </GatheringModalContainer>
   );
 }

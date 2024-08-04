@@ -1,6 +1,6 @@
 "use client";
 
-import { uploadProduct } from "@/actions/products/add";
+import { uploadGathering } from "@/actions/gatherings/add";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import { useImagePreview } from "@/hooks/useImagePreview";
@@ -8,9 +8,9 @@ import { PhotoIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import { useFormState } from "react-dom";
 
-export default function AddProduct() {
+export default function AddGauploadGathering() {
   const { preview, onImageChange } = useImagePreview();
-  const [state, formAction] = useFormState(uploadProduct, null);
+  const [state, formAction] = useFormState(uploadGathering, null);
   return (
     <div>
       <form action={formAction} className="p-5 flex flex-col gap-5">

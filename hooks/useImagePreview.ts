@@ -1,4 +1,4 @@
-import { UPLOAD_IMAGE_SCHEMA } from "@/schemas/products/add";
+import { UPLOAD_IMAGE_SCHEMA } from "@/schemas/gatherings/add";
 import { useState } from "react";
 
 export const useImagePreview = () => {

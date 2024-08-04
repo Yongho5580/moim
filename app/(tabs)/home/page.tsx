@@ -1,5 +1,5 @@
-import { getInitialProducts } from "@/actions/products";
-import ProductList from "@/components/products/ProductList";
+import { getInitialGatherings } from "@/actions/gatherings";
+import GatheringList from "@/components/gatherings/GatheringList";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
@@ -7,13 +7,13 @@ export const metadata = {
   title: "홈",
 };
 
-export default async function Products() {
-  const initialProducts = await getInitialProducts();
+export default async function Gatherings() {
+  const initialGatherings = await getInitialGatherings();
   return (
     <div>
-      <ProductList initialProducts={initialProducts} />
+      <GatheringList initialGatherings={initialGatherings} />
       <Link
-        href="/products/add"
+        href="/gatherings/add"
         className="bg-emerald-500 flex items-center justify-center rounded-full size-16 fixed bottom-24 right-8 text-white transition-colors hover:bg-emerald-600"
       >
         <PlusIcon className="size-10" />

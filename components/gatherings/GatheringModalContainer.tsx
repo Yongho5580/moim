@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
-import ProductCloseButton from "./ProductCloseButton";
+import GatheringCloseButton from "./GatheringCloseButton";
 
-export default function ProductModalContainer({
+export default function GatheringModalContainer({
   children,
 }: {
   children: React.ReactNode;
@@ -32,7 +32,7 @@ export default function ProductModalContainer({
 
   return (
     <div className="absolute w-full h-full z-50 flex items-center justify-center bg-neutral-800 rounded-lg bg-opacity-60 left-0 top-0 p-10">
-      <ProductCloseButton />
+      <GatheringCloseButton />
       <div
         ref={ref}
         className="max-w-screen-md h-4/5 flex flex-col justify-center w-full bg-neutral-800 rounded-xl shadow-2xl"

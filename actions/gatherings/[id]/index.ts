@@ -4,8 +4,8 @@ import { s3 } from "@/lib/s3Client";
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { redirect } from "next/navigation";
 
-export async function onDeleteProduct(id: number) {
-  const product = await db.product.delete({
+export async function onDeleteGathering(id: number) {
+  const gathering = await db.gathering.delete({
     where: {
       id,
     },
@@ -13,12 +13,12 @@ export async function onDeleteProduct(id: number) {
       photo: true,
     },
   });
-  const photoKey = product.photo.split("/").pop();
+  const photoKey = gathering.photo.split("/").pop();
   await s3.send(
     new DeleteObjectCommand({
       Bucket: AWS_BUCKET,
       Key: photoKey,
     })
   );
-  redirect("/products");
+  redirect("/gatherings");
 }

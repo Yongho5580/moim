@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const ADD_PRODUCT_SCHEMA = z.object({
+export const ADD_GATHERING_SCHEMA = z.object({
   title: z.string({
     required_error: "제목을 작성해주세요.",
   }),

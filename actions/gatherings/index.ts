@@ -11,10 +11,10 @@ export async function getIsOwner(userId: number) {
   return false;
 }
 
-export async function getProduct(productId: number) {
-  const product = await db.product.findUnique({
+export async function getGathering(gatheringId: number) {
+  const gathering = await db.gathering.findUnique({
     where: {
-      id: productId,
+      id: gatheringId,
     },
     include: {
       user: {
@@ -25,16 +25,15 @@ export async function getProduct(productId: number) {
       },
     },
   });
-  return product;
+  return gathering;
 }
 
-export type InitialProducts = Prisma.PromiseReturnType<
-  typeof getInitialProducts
+export type InitialGatherings = Prisma.PromiseReturnType<
+  typeof getInitialGatherings
 >;
 
-export async function getInitialProducts() {
-  console.log("나 생성요!");
-  const products = db.product.findMany({
+export async function getInitialGatherings() {
+  const gatherings = db.gathering.findMany({
     select: {
       id: true,
       title: true,
@@ -47,11 +46,11 @@ export async function getInitialProducts() {
       created_at: "desc",
     },
   });
-  return products;
+  return gatherings;
 }
 
-export async function getMoreProducts(page: number) {
-  const products = await db.product.findMany({
+export async function getMoreGatherings(page: number) {
+  const gatherings = await db.gathering.findMany({
     select: {
       title: true,
       location: true,
@@ -66,5 +65,5 @@ export async function getMoreProducts(page: number) {
       created_at: "desc",
     },
   });
-  return products;
+  return gatherings;
 }

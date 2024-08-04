@@ -2,7 +2,7 @@ import { formatToTimeAgo, formatToWon } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
-interface IProductItemProps {
+interface IGatheringItemProps {
   id: number;
   title: string;
   location: string;
@@ -11,16 +11,16 @@ interface IProductItemProps {
   created_at: Date;
 }
 
-export default function ProductItem({
+export default function GatheringItem({
   id,
   title,
   location,
   price,
   photo,
   created_at,
-}: IProductItemProps) {
+}: IGatheringItemProps) {
   return (
-    <Link href={`/products/p/${id}`} className="flex gap-5">
+    <Link href={`/gatherings/p/${id}`} className="flex gap-5">
       <div className="relative size-28 rounded-md overflow:hidden">
         <Image
           fill

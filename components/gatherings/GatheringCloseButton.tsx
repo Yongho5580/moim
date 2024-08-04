@@ -3,7 +3,7 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 
-export default function ProductCloseButton() {
+export default function GatheringCloseButton() {
   const router = useRouter();
   const onCloseClick = () => {
     router.back();

@@ -1,15 +1,17 @@
 "use client";
 
-import { getMoreProducts, InitialProducts } from "@/actions/products";
-import ProductItem from "./ProductItem";
+import { getMoreGatherings, InitialGatherings } from "@/actions/gatherings";
+import GatheringItem from "./GatheringItem";
 import { useEffect, useRef, useState } from "react";
 
-interface IProductListProps {
-  initialProducts: InitialProducts;
+interface IGatheringListProps {
+  initialGatherings: InitialGatherings;
 }
 
-export default function ProductList({ initialProducts }: IProductListProps) {
-  const [products, setProducts] = useState(initialProducts);
+export default function GatheringList({
+  initialGatherings,
+}: IGatheringListProps) {
+  const [gatherings, setGatherings] = useState(initialGatherings);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [isLastPage, setIsLastPage] = useState(false);
@@ -26,11 +28,11 @@ export default function ProductList({ initialProducts }: IProductListProps) {
         if (element.isIntersecting && trigger.current) {
           observer.unobserve(trigger.current);
           setIsLoading(true);
-          const newProducts = await getMoreProducts(page + 1);
-          if (newProducts.length !== 0) {
+          const newGatherings = await getMoreGatherings(page + 1);
+          if (newGatherings.length !== 0) {
             // 3. 여기서 의존성 배열에 page를 넣었기 때문에 useEffect 리렌더
             setPage((prev) => prev + 1);
-            setProducts((prev) => [...prev, ...newProducts]);
+            setGatherings((prev) => [...prev, ...newGatherings]);
           } else {
             setIsLastPage(true);
           }
@@ -54,8 +56,8 @@ export default function ProductList({ initialProducts }: IProductListProps) {
 
   return (
     <div className="py-5 flex flex-col gap-5">
-      {products.map((product) => (
-        <ProductItem key={product.id} {...product} />
+      {gatherings.map((Gathering) => (
+        <GatheringItem key={Gathering.id} {...Gathering} />
       ))}
       {/* {!isLastPage ? (
         <span

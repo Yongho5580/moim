@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { AWS_BUCKET, AWS_S3_BASE_URL } from "@/constants/config";
 import { s3 } from "@/lib/s3Client";
-import { ADD_PRODUCT_SCHEMA } from "@/schemas/products/add";
+import { ADD_GATHERING_SCHEMA } from "@/schemas/gatherings/add";
 
 export async function uploadS3({ name, body }: { name: string; body: Buffer }) {
   try {
@@ -36,7 +36,7 @@ export async function preparePhotoData(
   };
 }
 
-export async function uploadProduct(_: any, formData: FormData) {
+export async function uploadGathering(_: any, formData: FormData) {
   const file = formData.get("photo");
   let photoUrl = "";
 
@@ -55,13 +55,13 @@ export async function uploadProduct(_: any, formData: FormData) {
     location: formData.get("location"),
     description: formData.get("description"),
   };
-  const result = ADD_PRODUCT_SCHEMA.safeParse(data);
+  const result = ADD_GATHERING_SCHEMA.safeParse(data);
   if (!result.success) {
     return result.error.flatten();
   } else {
     const session = await getSession();
     if (session.id) {
-      const product = await db.product.create({
+      const gathering = await db.gathering.create({
         data: {
           title: result.data.title,
           description: result.data.description,
@@ -77,7 +77,7 @@ export async function uploadProduct(_: any, formData: FormData) {
           id: true,
         },
       });
-      redirect(`/products/${product.id}`);
+      redirect(`/gatherings/p/${gathering.id}`);
     }
   }
 }

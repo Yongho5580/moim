@@ -8,18 +8,18 @@ datasource db {
 }
 
 model User {
-  id         Int        @id @default(autoincrement())
+  id         Int         @id @default(autoincrement())
   username   String
-  email      String?    @unique
+  email      String?     @unique
   password   String?
-  phone      String?    @unique
-  auth_id    String?    @unique
+  phone      String?     @unique
+  auth_id    String?     @unique
   avatar     String?
-  auth_type  String     @default("email")
-  created_at DateTime   @default(now())
-  updated_at DateTime   @updatedAt
+  auth_type  String      @default("email")
+  created_at DateTime    @default(now())
+  updated_at DateTime    @updatedAt
   SMSToken   SMSToken[]
-  Product    Product[]
+  Gathering  Gathering[]
 }
 
 model SMSToken {
@@ -31,7 +31,7 @@ model SMSToken {
   userId     Int
 }
 
-model Product {
+model Gathering {
   id          Int      @id @default(autoincrement())
   title       String
   description String
