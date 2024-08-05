@@ -1,12 +1,12 @@
-import { getIsOwner, getGathering } from "@/actions/gatherings";
-import { onDeleteGathering } from "@/actions/gatherings/[id]";
+import { getGathering, getIsOwner } from "@/actions/gatherings";
 import GatheringModalContainer from "@/components/gatherings/GatheringModalContainer";
 import { formatToTimeAgo, formatToWon } from "@/lib/utils";
 import {
   ChatBubbleLeftRightIcon,
-  TrashIcon,
+  PencilSquareIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
+import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -18,6 +18,10 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   };
 }
 
+const getCachedGathering = unstable_cache(getGathering, ["gathering-post"], {
+  tags: ["gathering-post"],
+});
+
 export default async function GatheringModal({
   params,
 }: {
@@ -27,16 +31,11 @@ export default async function GatheringModal({
   if (isNaN(id)) {
     return notFound();
   }
-  const gathering = await getGathering(id);
+  const gathering = await getCachedGathering(id);
   if (!gathering) {
     return notFound();
   }
   const isOwner = await getIsOwner(gathering.userId);
-
-  const handleDeleteGathering = async () => {
-    "use server";
-    await onDeleteGathering(id);
-  };
 
   return (
     <GatheringModalContainer>
@@ -69,21 +68,22 @@ export default async function GatheringModal({
             <h3>{gathering.user.username}</h3>
           </div>
         </div>
-        <div>
-          <form action={handleDeleteGathering} className="flex gap-3">
-            {isOwner ? (
-              <button className="bg-red-500 px-5 py-2.5 rounded-md font-semibold text-white">
-                <TrashIcon className="h-[25px]" />
-              </button>
-            ) : (
-              <Link
-                className="bg-emerald-500 px-5 py-2.5 rounded-md font-semibold text-white"
-                href="/chats"
-              >
-                <ChatBubbleLeftRightIcon className="h-[25px]" />
-              </Link>
-            )}
-          </form>
+        <div className="flex">
+          {isOwner ? (
+            <Link
+              className="bg-emerald-500 px-5 py-2.5 rounded-md font-semibold text-white"
+              href={`/gatherings/post/${id}/edit`}
+            >
+              <PencilSquareIcon className="h-[25px]" />
+            </Link>
+          ) : (
+            <Link
+              className="bg-emerald-500 px-5 py-2.5 rounded-md font-semibold text-white"
+              href="/chats"
+            >
+              <ChatBubbleLeftRightIcon className="h-[25px]" />
+            </Link>
+          )}
         </div>
       </div>
       <div className="h-full flex flex-col p-5 gap-1 overflow-y-auto max-h-[200px] scrollbar-hide">

@@ -3,15 +3,16 @@ import { db } from "@/lib/db";
 import getSession from "@/lib/session";
 import { Prisma } from "@prisma/client";
 export async function getIsOwner(userId: number) {
-  // const session = await getSession();
+  const session = await getSession();
 
-  // if (session.id) {
-  //   return session.id === userId;
-  // }
+  if (session.id) {
+    return session.id === userId;
+  }
   return false;
 }
 
 export async function getGathering(gatheringId: number) {
+  console.log("get gathering hit!");
   const gathering = await db.gathering.findUnique({
     where: {
       id: gatheringId,

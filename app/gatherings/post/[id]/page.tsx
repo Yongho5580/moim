@@ -1,11 +1,16 @@
-import { getIsOwner, getGathering } from "@/actions/gatherings";
-import { onDeleteGathering } from "@/actions/gatherings/[id]";
+import { getGathering, getIsOwner } from "@/actions/gatherings";
 import { db } from "@/lib/db";
 import { formatToWon } from "@/lib/utils";
-import { ChatBubbleLeftRightIcon, UserIcon } from "@heroicons/react/24/solid";
+import {
+  ChatBubbleLeftRightIcon,
+  PencilSquareIcon,
+  UserIcon,
+} from "@heroicons/react/24/solid";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import { unstable_cache } from "next/cache";
+import Button from "@/components/common/Button";
+import Link from "next/link";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const gathering = await getGathering(+params.id);
@@ -14,7 +19,11 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   };
 }
 
-export default async function gatheringDetail({
+const getCachedGathering = unstable_cache(getGathering, ["gathering-post"], {
+  tags: ["gathering-post"],
+});
+
+export default async function GatheringPost({
   params,
 }: {
   params: { id: string };
@@ -23,16 +32,11 @@ export default async function gatheringDetail({
   if (isNaN(id)) {
     return notFound();
   }
-  const gathering = await getGathering(id);
+  const gathering = await getCachedGathering(id);
   if (!gathering) {
     return notFound();
   }
   const isOwner = await getIsOwner(gathering.userId);
-
-  const handleDeleteGathering = async () => {
-    "use server";
-    await onDeleteGathering(id);
-  };
 
   return (
     <div>
@@ -71,11 +75,14 @@ export default async function gatheringDetail({
         <span className="font-semibold text-lg">
           {formatToWon(gathering.price)}원
         </span>
-        <form action={handleDeleteGathering} className="flex gap-3">
+        <div className="flex">
           {isOwner ? (
-            <button className="bg-red-500 px-5 py-2.5 rounded-md font-semibold text-white">
-              삭제
-            </button>
+            <Link
+              className="bg-emerald-500 px-5 py-2.5 rounded-md font-semibold text-white"
+              href={`/gatherings/post/${id}/edit`}
+            >
+              <PencilSquareIcon className="h-[25px]" />
+            </Link>
           ) : (
             <Link
               className="bg-emerald-500 px-5 py-2.5 rounded-md font-semibold text-white"
@@ -84,19 +91,8 @@ export default async function gatheringDetail({
               <ChatBubbleLeftRightIcon className="h-[25px]" />
             </Link>
           )}
-        </form>
+        </div>
       </div>
     </div>
   );
-}
-
-export async function generateStaticParams() {
-  const gatherings = await db.gathering.findMany({
-    select: {
-      id: true,
-    },
-  });
-  return gatherings.map((gathering) => ({
-    id: String(gathering.id),
-  }));
 }

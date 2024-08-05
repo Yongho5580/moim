@@ -1,5 +1,4 @@
 "use server";
-import { z } from "zod";
 import { db } from "@/lib/db";
 import getSession from "@/lib/session";
 import { redirect } from "next/navigation";
@@ -8,6 +7,7 @@ import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { AWS_BUCKET, AWS_S3_BASE_URL } from "@/constants/config";
 import { s3 } from "@/lib/s3Client";
 import { ADD_GATHERING_SCHEMA } from "@/schemas/gatherings/add";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function uploadS3({ name, body }: { name: string; body: Buffer }) {
   try {
@@ -26,6 +26,7 @@ export async function uploadS3({ name, body }: { name: string; body: Buffer }) {
 export async function preparePhotoData(
   photo: File
 ): Promise<{ name: string; body: Buffer }> {
+  console.log(photo);
   const ext = photo.name.split(".").at(-1);
   const uid = uuidv4().replace(/-/g, "");
   const name = `${uid}${ext ? "." + ext : ""}`;
@@ -78,6 +79,8 @@ export async function uploadGathering(_: any, formData: FormData) {
           id: true,
         },
       });
+      revalidatePath("/home");
+      revalidateTag("gathering-post");
       redirect(`/gatherings/post/${gathering.id}`);
     }
   }

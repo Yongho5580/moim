@@ -2,6 +2,7 @@ import { AWS_BUCKET } from "@/constants/config";
 import { db } from "@/lib/db";
 import { s3 } from "@/lib/s3Client";
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function onDeleteGathering(id: number) {
@@ -20,5 +21,7 @@ export async function onDeleteGathering(id: number) {
       Key: photoKey,
     })
   );
-  redirect("/gatherings");
+  revalidatePath("/home");
+  revalidateTag("gathering-post");
+  redirect("/home");
 }

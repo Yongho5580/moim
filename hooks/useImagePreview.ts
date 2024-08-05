@@ -24,5 +24,5 @@ export const useImagePreview = () => {
     setPreview(preview);
   };
 
-  return { preview, onImageChange };
+  return { preview, setPreview, onImageChange };
 };

@@ -35,7 +35,7 @@ export default function GatheringModalContainer({
       <GatheringCloseButton />
       <div
         ref={ref}
-        className="max-w-screen-md h-4/5 flex flex-col justify-center w-full bg-neutral-800 rounded-xl shadow-2xl"
+        className="max-w-screen-sm h-4/5 flex flex-col justify-center w-full bg-neutral-800 rounded-xl shadow-2xl"
       >
         {children}
       </div>
