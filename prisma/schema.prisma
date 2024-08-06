@@ -8,18 +8,21 @@ datasource db {
 }
 
 model User {
-  id         Int         @id @default(autoincrement())
-  username   String
-  email      String?     @unique
-  password   String?
-  phone      String?     @unique
-  auth_id    String?     @unique
-  avatar     String?
-  auth_type  String      @default("email")
-  created_at DateTime    @default(now())
-  updated_at DateTime    @updatedAt
-  SMSToken   SMSToken[]
-  Gathering  Gathering[]
+  id            Int             @id @default(autoincrement())
+  username      String
+  email         String?         @unique
+  password      String?
+  phone         String?         @unique
+  auth_id       String?         @unique
+  avatar        String?
+  auth_type     String          @default("email")
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @updatedAt
+  tokens        SMSToken[]
+  gatheringPost GatheringPost[]
+  communityPost CommunityPost[]
+  comments      Comment[]
+  Like          Like[]
 }
 
 model SMSToken {
@@ -31,7 +34,7 @@ model SMSToken {
   userId     Int
 }
 
-model Gathering {
+model GatheringPost {
   id          Int      @id @default(autoincrement())
   title       String
   description String
@@ -42,4 +45,39 @@ model Gathering {
   updated_at  DateTime @updatedAt
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      Int
+}
+
+model CommunityPost {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  views       Int       @default(0)
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  comments    Comment[]
+  likes       Like[]
+}
+
+model Comment {
+  id              Int            @id @default(autoincrement())
+  payload         String
+  created_at      DateTime       @default(now())
+  updated_at      DateTime       @updatedAt
+  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          Int
+  communityPost   CommunityPost? @relation(fields: [communityPostId], references: [id], onDelete: Cascade)
+  communityPostId Int?
+}
+
+model Like {
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  communityPost   CommunityPost @relation(fields: [communityPostId], references: [id], onDelete: Cascade)
+  userId          Int
+  communityPostId Int
+  created_at      DateTime      @default(now())
+  updated_at      DateTime      @updatedAt
+
+  @@id(name: "id", [userId, communityPostId])
 }

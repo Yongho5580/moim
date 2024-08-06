@@ -1,4 +1,8 @@
-import { getGathering, getIsOwner } from "@/actions/gatherings";
+import {
+  getCachedGatheringPost,
+  getGathering,
+  getIsOwner,
+} from "@/actions/gatherings";
 import { db } from "@/lib/db";
 import { formatToWon } from "@/lib/utils";
 import {
@@ -8,8 +12,6 @@ import {
 } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { unstable_cache } from "next/cache";
-import Button from "@/components/common/Button";
 import Link from "next/link";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
@@ -18,11 +20,6 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
     title: gathering?.title,
   };
 }
-
-const getCachedGathering = unstable_cache(getGathering, ["gathering-post"], {
-  tags: ["gathering-post"],
-});
-
 export default async function GatheringPost({
   params,
 }: {
@@ -32,7 +29,7 @@ export default async function GatheringPost({
   if (isNaN(id)) {
     return notFound();
   }
-  const gathering = await getCachedGathering(id);
+  const gathering = await getCachedGatheringPost(id);
   if (!gathering) {
     return notFound();
   }

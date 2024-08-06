@@ -6,7 +6,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function onDeleteGathering(id: number) {
-  const gathering = await db.gathering.delete({
+  const gathering = await db.gatheringPost.delete({
     where: {
       id,
     },

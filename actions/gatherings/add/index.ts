@@ -62,7 +62,7 @@ export async function uploadGathering(_: any, formData: FormData) {
   } else {
     const session = await getSession();
     if (session.id) {
-      const gathering = await db.gathering.create({
+      const gathering = await db.gatheringPost.create({
         data: {
           title: result.data.title,
           description: result.data.description,

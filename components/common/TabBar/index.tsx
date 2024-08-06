@@ -27,7 +27,7 @@ const navLinksData = [
     href: "/community",
     activeIcon: <SolidNewspaperIcon className="w-7 h-7" />,
     inactiveIcon: <OutlineNewspaperIcon className="w-7 h-7" />,
-    label: "모임 소식",
+    label: "커뮤니티",
   },
   {
     href: "/chats",

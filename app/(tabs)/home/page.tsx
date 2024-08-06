@@ -1,7 +1,6 @@
 import { getInitialGatherings } from "@/actions/gatherings";
 import GatheringList from "@/components/gatherings/GatheringList";
 import { PlusIcon } from "@heroicons/react/24/solid";
-import { unstable_cache } from "next/cache";
 import Link from "next/link";
 
 export const metadata = {

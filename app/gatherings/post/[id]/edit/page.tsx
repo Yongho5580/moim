@@ -1,12 +1,11 @@
-import { getGathering, getIsOwner } from "@/actions/gatherings";
+import {
+  getCachedGatheringPost,
+  getGathering,
+  getIsOwner,
+} from "@/actions/gatherings";
 import { updateGathering } from "@/actions/gatherings/edit";
 import GatheringForm from "@/components/gatherings/GatheringForm";
-import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
-
-const getCachedGathering = unstable_cache(getGathering, ["gathering-post"], {
-  tags: ["gathering-post"],
-});
 
 export default async function EditGathering({
   params,
@@ -17,7 +16,7 @@ export default async function EditGathering({
   if (isNaN(id)) {
     return notFound();
   }
-  const gathering = await getCachedGathering(id);
+  const gathering = await getCachedGatheringPost(id);
   if (!gathering) {
     return notFound();
   }

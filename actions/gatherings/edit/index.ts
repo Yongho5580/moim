@@ -37,7 +37,7 @@ export async function updateGathering(_: any, formData: FormData) {
   } else {
     const session = await getSession();
     if (session.id) {
-      const gathering = await db.gathering.update({
+      const gathering = await db.gatheringPost.update({
         where: {
           id: +id,
         },

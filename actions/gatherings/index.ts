@@ -2,6 +2,8 @@
 import { db } from "@/lib/db";
 import getSession from "@/lib/session";
 import { Prisma } from "@prisma/client";
+import { unstable_cache } from "next/cache";
+
 export async function getIsOwner(userId: number) {
   const session = await getSession();
 
@@ -13,7 +15,7 @@ export async function getIsOwner(userId: number) {
 
 export async function getGathering(gatheringId: number) {
   console.log("get gathering hit!");
-  const gathering = await db.gathering.findUnique({
+  const gathering = await db.gatheringPost.findUnique({
     where: {
       id: gatheringId,
     },
@@ -34,7 +36,7 @@ export type InitialGatherings = Prisma.PromiseReturnType<
 >;
 
 export async function getInitialGatherings() {
-  const gatherings = db.gathering.findMany({
+  const gatherings = db.gatheringPost.findMany({
     select: {
       id: true,
       title: true,
@@ -51,7 +53,7 @@ export async function getInitialGatherings() {
 }
 
 export async function getMoreGatherings(page: number) {
-  const gatherings = await db.gathering.findMany({
+  const gatherings = await db.gatheringPost.findMany({
     select: {
       title: true,
       location: true,
@@ -67,4 +69,12 @@ export async function getMoreGatherings(page: number) {
     },
   });
   return gatherings;
+}
+
+export async function getCachedGatheringPost(postId: number) {
+  const getCachedGathering = unstable_cache(getGathering, ["gathering-post"], {
+    tags: ["gathering-post"],
+  });
+
+  return getCachedGathering(postId);
 }

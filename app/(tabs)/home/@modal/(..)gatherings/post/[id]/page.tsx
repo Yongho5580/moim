@@ -1,4 +1,8 @@
-import { getGathering, getIsOwner } from "@/actions/gatherings";
+import {
+  getCachedGatheringPost,
+  getGathering,
+  getIsOwner,
+} from "@/actions/gatherings";
 import GatheringModalContainer from "@/components/gatherings/GatheringModalContainer";
 import { formatToTimeAgo, formatToWon } from "@/lib/utils";
 import {
@@ -6,7 +10,6 @@ import {
   PencilSquareIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
-import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -18,10 +21,6 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   };
 }
 
-const getCachedGathering = unstable_cache(getGathering, ["gathering-post"], {
-  tags: ["gathering-post"],
-});
-
 export default async function GatheringModal({
   params,
 }: {
@@ -31,7 +30,7 @@ export default async function GatheringModal({
   if (isNaN(id)) {
     return notFound();
   }
-  const gathering = await getCachedGathering(id);
+  const gathering = await getCachedGatheringPost(id);
   if (!gathering) {
     return notFound();
   }
