@@ -2,20 +2,20 @@
 
 import { HandThumbUpIcon } from "@heroicons/react/24/solid";
 import { HandThumbUpIcon as OutlineHandThumbUpIcon } from "@heroicons/react/24/outline";
-import { useOptimistic } from "react";
+import { startTransition, useOptimistic } from "react";
 import { disLikeCommunityPost, likeCommunityPost } from "@/actions/community";
 
-interface ICommunityLikeButtonProps {
+interface ILikeButtonProps {
   isLiked: boolean;
   likeCount: number;
   postId: number;
 }
 
-export default function CommunityLikeButton({
+export default function LikeButton({
   isLiked,
   likeCount,
   postId,
-}: ICommunityLikeButtonProps) {
+}: ILikeButtonProps) {
   const [optimisticState, updateFn] = useOptimistic(
     { isLiked, likeCount },
     (previousState, payload) => ({
@@ -26,7 +26,7 @@ export default function CommunityLikeButton({
     })
   );
   const onClick = async () => {
-    updateFn(undefined);
+    startTransition(() => updateFn(undefined));
     if (isLiked) {
       await disLikeCommunityPost(postId);
     } else {

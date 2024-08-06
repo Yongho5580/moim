@@ -2,11 +2,12 @@ import {
   getCachedCommunityPost,
   getCachedLikeStatus,
 } from "@/actions/community";
-import { formatToTimeAgo } from "@/lib/utils";
-import { EyeIcon } from "@heroicons/react/24/solid";
-import Image from "next/image";
 import { notFound } from "next/navigation";
-import CommunityLikeButton from "@/components/community/CommunityLikeButton";
+import Comments from "@/components/community/[id]/Comments";
+import UserInfo from "@/components/community/[id]/UserInfo";
+import PostContent from "@/components/community/[id]/PostContent";
+import PostStats from "@/components/community/[id]/PostStats";
+import getSession from "@/lib/session";
 
 export default async function CommunityPost({
   params,
@@ -17,6 +18,7 @@ export default async function CommunityPost({
   if (isNaN(id)) {
     return notFound();
   }
+  const session = await getSession();
   const post = await getCachedCommunityPost(id);
   if (!post) {
     return notFound();
@@ -24,35 +26,24 @@ export default async function CommunityPost({
   const { isLiked, likeCount } = await getCachedLikeStatus(id);
 
   return (
-    <div className="p-5 text-white border-b-slate-200 border-b">
-      <div className="flex items-center gap-2 mb-2">
-        <Image
-          width={28}
-          height={28}
-          className="size-7 rounded-full"
-          src={post.user.avatar!}
-          alt={post.user.username}
-        />
-        <div>
-          <span className="text-sm font-semibold">{post.user.username}</span>
-          <div className="text-xs">
-            <span>{formatToTimeAgo(post.created_at.toString())}</span>
-          </div>
-        </div>
-      </div>
-      <h2 className="text-lg font-semibold">{post.title}</h2>
-      <p className="mb-5">{post.description}</p>
-      <div className="flex flex-col gap-5 items-start">
-        <div className="flex items-center gap-2 text-neutral-400 text-sm">
-          <EyeIcon className="size-5" />
-          <span>조회 {post.views}</span>
-        </div>
-        <CommunityLikeButton
-          postId={id}
-          isLiked={isLiked}
-          likeCount={likeCount}
-        />
-      </div>
+    <div className="p-5 flex flex-col text-white">
+      <UserInfo
+        avatar={post.user.avatar!}
+        username={post.user.username}
+        createdAt={post.created_at}
+      />
+      <PostContent title={post.title} description={post.description} />
+      <PostStats
+        isLiked={isLiked}
+        likeCount={likeCount}
+        postId={id}
+        views={post.views}
+      />
+      <Comments
+        postId={id}
+        sessionId={Number(session.id)!}
+        comments={post.comments}
+      />
     </div>
   );
 }

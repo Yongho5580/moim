@@ -1,5 +1,4 @@
 import { getUser, logOut } from "@/actions/profile";
-import { Suspense } from "react";
 export default async function Profile() {
   const user = await getUser();
   const handleLogOut = async () => {

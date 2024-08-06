@@ -5,7 +5,7 @@ import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
-export async function onDeleteGathering(id: number) {
+export async function deleteGathering(id: number) {
   const gathering = await db.gatheringPost.delete({
     where: {
       id,
