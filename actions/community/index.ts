@@ -77,7 +77,6 @@ async function getLikeStatus(postId: number, userId: number) {
 }
 
 export async function likeCommunityPost(postId: number) {
-  console.log(postId);
   try {
     const session = await getSession();
     await db.like.create({
@@ -91,7 +90,6 @@ export async function likeCommunityPost(postId: number) {
 }
 
 export async function disLikeCommunityPost(postId: number) {
-  console.log(postId);
   try {
     const session = await getSession();
     await db.like.delete({
