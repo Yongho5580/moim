@@ -24,7 +24,7 @@ export default async function CommunityPost({
   const { isLiked, likeCount } = await getCachedLikeStatus(id);
 
   return (
-    <div className="p-5 text-white">
+    <div className="p-5 text-white border-b-slate-200 border-b">
       <div className="flex items-center gap-2 mb-2">
         <Image
           width={28}

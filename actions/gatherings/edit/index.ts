@@ -58,7 +58,7 @@ export async function updateGathering(_: any, formData: FormData) {
         },
       });
       revalidatePath("/home");
-      revalidateTag("gathering-post");
+      revalidateTag(`gathering-post-${gathering.id}`);
       redirect(`/gatherings/post/${gathering.id}`);
     }
   }

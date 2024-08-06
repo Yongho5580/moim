@@ -72,9 +72,13 @@ export async function getMoreGatherings(page: number) {
 }
 
 export async function getCachedGatheringPost(postId: number) {
-  const getCachedGathering = unstable_cache(getGathering, ["gathering-post"], {
-    tags: ["gathering-post"],
-  });
+  const getCachedGathering = unstable_cache(
+    getGathering,
+    [`gathering-post-${postId}`],
+    {
+      tags: [`gathering-post-${postId}`],
+    }
+  );
 
   return getCachedGathering(postId);
 }

@@ -11,6 +11,7 @@ export async function onDeleteGathering(id: number) {
       id,
     },
     select: {
+      id: true,
       photo: true,
     },
   });
@@ -22,6 +23,6 @@ export async function onDeleteGathering(id: number) {
     })
   );
   revalidatePath("/home");
-  revalidateTag("gathering-post");
+  revalidateTag(`gathering-post-${gathering.id}`);
   redirect("/home");
 }

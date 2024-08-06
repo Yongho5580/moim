@@ -27,7 +27,7 @@ export async function getCommunityPosts() {
   }
 }
 
-export async function getCommunityPost(id: number) {
+async function getCommunityPost(id: number) {
   try {
     const post = await db.communityPost.update({
       where: {
@@ -104,8 +104,26 @@ export async function disLikeCommunityPost(postId: number) {
   } catch (e) {}
 }
 
+async function getCommunityPostComment(postId: number) {
+  const comments = await db.comment.findMany({
+    where: {
+      communityPostId: postId,
+    },
+  });
+  console.log(comments);
+  return comments;
+}
+
+// 여기서부터 데이터 캐시 함수
 export async function getCachedCommunityPost(postId: number) {
   const cachedOperation = unstable_cache(getCommunityPost, ["community-post"]);
+  return cachedOperation(postId);
+}
+
+export async function getCachedCommunityPostComment(postId: number) {
+  const cachedOperation = unstable_cache(getCommunityPostComment, [
+    `community-post-comments-${postId}`,
+  ]);
   return cachedOperation(postId);
 }
 
