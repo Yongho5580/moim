@@ -2,6 +2,7 @@
 
 import { db } from "@/lib/db";
 import getSession from "@/lib/session";
+import { Prisma } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 export async function createChatRoom(receiverId: number) {
@@ -27,10 +28,10 @@ export async function createChatRoom(receiverId: number) {
   redirect(`/chats/${room.id}`);
 }
 
-export async function getChatRoom(roomId: string) {
+export async function getChatRoom(chatRoomId: string) {
   const room = await db.chatRoom.findUnique({
     where: {
-      id: roomId,
+      id: chatRoomId,
     },
     include: {
       users: {
@@ -42,4 +43,29 @@ export async function getChatRoom(roomId: string) {
   });
   console.log(room);
   return room;
+}
+
+export type InitialChatRoomMessages = Prisma.PromiseReturnType<
+  typeof getMessages
+>;
+
+export async function getMessages(chatRoomId: string) {
+  const messages = await db.message.findMany({
+    where: {
+      chatRoomId,
+    },
+    select: {
+      id: true,
+      payload: true,
+      created_at: true,
+      userId: true,
+      user: {
+        select: {
+          username: true,
+          avatar: true,
+        },
+      },
+    },
+  });
+  return messages;
 }
