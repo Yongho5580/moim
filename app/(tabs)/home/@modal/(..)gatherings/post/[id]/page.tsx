@@ -1,3 +1,4 @@
+import { createChatRoom } from "@/actions/chats";
 import {
   getCachedGatheringPost,
   getGathering,
@@ -35,6 +36,11 @@ export default async function GatheringModal({
     return notFound();
   }
   const isOwner = await getIsOwner(gathering.userId);
+
+  const interceptAction = async () => {
+    "use server";
+    await createChatRoom(gathering.userId);
+  };
 
   return (
     <GatheringModalContainer>
@@ -76,12 +82,11 @@ export default async function GatheringModal({
               <PencilSquareIcon className="h-[25px]" />
             </Link>
           ) : (
-            <Link
-              className="bg-emerald-500 px-5 py-2.5 rounded-md font-semibold text-white"
-              href="/chats"
-            >
-              <ChatBubbleLeftRightIcon className="h-[25px]" />
-            </Link>
+            <form action={interceptAction}>
+              <button className="bg-emerald-500 px-5 py-2.5 rounded-md font-semibold text-white">
+                <ChatBubbleLeftRightIcon className="h-[25px]" />
+              </button>
+            </form>
           )}
         </div>
       </div>

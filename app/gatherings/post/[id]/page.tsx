@@ -13,6 +13,7 @@ import {
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { createChatRoom } from "@/actions/chats";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const gathering = await getGathering(+params.id);
@@ -34,6 +35,11 @@ export default async function GatheringPost({
     return notFound();
   }
   const isOwner = await getIsOwner(gathering.userId);
+
+  const interceptAction = async () => {
+    "use server";
+    await createChatRoom(gathering.userId);
+  };
 
   return (
     <div>
@@ -81,12 +87,11 @@ export default async function GatheringPost({
               <PencilSquareIcon className="h-[25px]" />
             </Link>
           ) : (
-            <Link
-              className="bg-emerald-500 px-5 py-2.5 rounded-md font-semibold text-white"
-              href="/chats"
-            >
-              <ChatBubbleLeftRightIcon className="h-[25px]" />
-            </Link>
+            <form action={interceptAction}>
+              <button className="bg-emerald-500 px-5 py-2.5 rounded-md font-semibold text-white">
+                <ChatBubbleLeftRightIcon className="h-[25px]" />
+              </button>
+            </form>
           )}
         </div>
       </div>
