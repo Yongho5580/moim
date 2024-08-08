@@ -3,7 +3,7 @@
 import CommentItem from "./CommentItem";
 import CommentForm from "./CommentForm";
 import { useFormState } from "react-dom";
-import { deleteComment, uploadComment } from "@/actions/community";
+import { uploadComment } from "@/actions/community";
 import { useOptimistic } from "react";
 
 type Comment = {

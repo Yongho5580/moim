@@ -1,4 +1,5 @@
 import { getChatRoom, getMessages } from "@/actions/chats";
+import { getUser } from "@/actions/profile";
 import ChatMessages from "@/components/chats/ChatMessages";
 import getSession from "@/lib/session";
 import { notFound } from "next/navigation";
@@ -18,12 +19,15 @@ export default async function ChatRoom({ params }: { params: { id: string } }) {
   }
   const initialMessages = await getMessages(params.id);
   const session = await getSession();
+  const { username, avatar } = await getUser();
 
   return (
     <div>
       <ChatMessages
         chatRoomId={params.id}
         userId={session.id!}
+        username={username}
+        avatar={avatar!}
         initialMessages={initialMessages}
       />
     </div>
