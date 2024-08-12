@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
 
 const notoSans = Noto_Sans_KR({
   weight: "500",
   subsets: ["latin"],
-  variable: "--notoSans-text",
+  variable: "--noto-sans",
 });
 
 export const metadata: Metadata = {
@@ -24,7 +25,10 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`${notoSans.className} bg-neutral-900 text-white max-w-screen-sm mx-auto`}
+        className={cn(
+          "bg-neutral-900 text-white max-w-screen-sm mx-auto",
+          notoSans.variable
+        )}
       >
         {children}
       </body>
