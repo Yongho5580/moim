@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 
-const inter = Noto_Sans_KR({ weight: "500", subsets: ["latin"] });
+const notoSans = Noto_Sans_KR({
+  weight: "500",
+  subsets: ["latin"],
+  variable: "--notoSans-text",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -20,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`${inter.className} bg-neutral-900 text-white max-w-screen-sm mx-auto`}
+        className={`${notoSans.className} bg-neutral-900 text-white max-w-screen-sm mx-auto`}
       >
         {children}
       </body>
