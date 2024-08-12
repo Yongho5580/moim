@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 
 export async function createChatRoom(receiverId: number) {
   const session = await getSession();
+
   const room = await db.chatRoom.create({
     data: {
       users: {
@@ -135,10 +136,14 @@ export async function saveMessage(
   });
 }
 export async function markMessagesAsRead(chatRoomId: string) {
+  const session = await getSession();
   await db.message.updateMany({
     where: {
       chatRoomId,
       isRead: false,
+      userId: {
+        not: session.id,
+      },
     },
     data: {
       isRead: true,

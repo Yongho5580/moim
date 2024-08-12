@@ -36,12 +36,6 @@ const navLinksData = [
     label: "채팅",
   },
   {
-    href: "/live",
-    activeIcon: <SolidVideoCameraIcon className="w-7 h-7" />,
-    inactiveIcon: <OutlineVideoCameraIcon className="w-7 h-7" />,
-    label: "급번개",
-  },
-  {
     href: "/profile",
     activeIcon: <SolidUserIcon className="w-7 h-7" />,
     inactiveIcon: <OutlineUserIcon className="w-7 h-7" />,
@@ -51,7 +45,7 @@ const navLinksData = [
 
 export default function TabBar() {
   return (
-    <div className="fixed bottom-0 w-full mx-auto max-w-screen-sm grid grid-cols-5 border-neutral-600 items-center border-t p-3 gap-1 *:text-white bg-neutral-800">
+    <div className="fixed bottom-0 w-full mx-auto max-w-screen-sm grid grid-cols-4 border-neutral-600 items-center border-t p-3 gap-1 *:text-white bg-neutral-800">
       {navLinksData.map((link) => (
         <NavLink
           key={link.href}

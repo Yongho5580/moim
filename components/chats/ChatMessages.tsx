@@ -75,7 +75,7 @@ export default function ChatMessages({
         },
       },
     });
-    // 이 함수는 채팅방에 접속해있는 모든이에게 적용
+    // 이 함수는 채팅방에 접속해있는 모든 이에게 적용
     channel.current
       .on("broadcast", { event: "message" }, (payload) => {
         setMessages((prevMsgs) => [...prevMsgs, payload.payload]);

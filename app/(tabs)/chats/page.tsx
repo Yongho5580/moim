@@ -5,7 +5,9 @@ import getSession from "@/lib/session";
 export default async function Chats() {
   const chatRooms = await getChatRooms();
   const session = await getSession();
-  const isSender = chatRooms[0].messages[0].userId === session.id;
+  const isSender = chatRooms[0].messages[0]?.userId === session.id;
+
+  console.log(chatRooms);
 
   return (
     <div className="flex flex-col py-5 gap-5">
@@ -13,10 +15,10 @@ export default async function Chats() {
         <ChatRoomItem
           key={chatRoom.id}
           chatRoomId={chatRoom.id}
-          isRead={chatRoom.messages[0].isRead}
+          isRead={chatRoom.messages[0]?.isRead}
           isSender={isSender}
-          createdAt={chatRoom.messages[0].created_at}
-          payload={chatRoom.messages[0].payload}
+          createdAt={chatRoom.messages[0]?.created_at}
+          payload={chatRoom.messages[0]?.payload}
           username={chatRoom.users[0].username}
           avatar={chatRoom.users[0].avatar!}
         />

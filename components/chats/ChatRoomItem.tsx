@@ -72,7 +72,7 @@ export default function ChatRoomItem({
                     : "text-neutral-300"
                 }`}
               >
-                {formatToTimeAgo(createdAt.toString())}
+                {formatToTimeAgo(createdAt?.toString())}
               </span>
             </div>
           </div>
