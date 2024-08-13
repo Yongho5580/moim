@@ -1,12 +1,12 @@
 "use client";
 
 import { ButtonHTMLAttributes } from "react";
-import { Loader2 } from "lucide-react";
 import { useFormStatus } from "react-dom";
 import {
   Button as ShadcnButton,
   ButtonProps as ShadcnButtonProps,
 } from "@/components/ui/button";
+import { ArrowPathIcon } from "@heroicons/react/24/solid";
 
 export default function SubmitButton({
   children,
@@ -20,7 +20,11 @@ export default function SubmitButton({
       disabled={pending}
       {...props}
     >
-      {pending ? <Loader2 className="mr-2 w-4 h-4 animate-spin" /> : children}
+      {pending ? (
+        <ArrowPathIcon className="mr-2 w-4 h-4 animate-spin" />
+      ) : (
+        children
+      )}
     </ShadcnButton>
   );
 }

@@ -5,7 +5,6 @@ import { HandThumbUpIcon as OutlineHandThumbUpIcon } from "@heroicons/react/24/o
 import { startTransition, useOptimistic } from "react";
 import { disLikeCommunityPost, likeCommunityPost } from "@/actions/community";
 import { Button } from "@/components/ui/button";
-import { ThumbsUp } from "lucide-react";
 
 interface ILikeButtonProps {
   isLiked: boolean;
@@ -45,7 +44,7 @@ export default function LikeButton({
           : ""
       }`}
     >
-      <ThumbsUp
+      <HandThumbUpIcon
         className={`size-4 ${optimisticState.isLiked ? "fill-primary" : ""}`}
       />
       <span>{optimisticState.likeCount}</span>

@@ -17,9 +17,9 @@ export default function NavLink({
   const pathname = usePathname();
   const isActive = pathname === href;
   return (
-    <Link href={href} className="flex flex-col items-center gap-px">
+    <Link href={href} className="flex flex-col items-center gap-1">
       {isActive ? activeIcon : inactiveIcon}
-      <span>{label}</span>
+      <span className="text-xs">{label}</span>
     </Link>
   );
 }

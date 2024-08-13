@@ -55,7 +55,7 @@ export default function GatheringList({
   }, [page]);
 
   return (
-    <div className="py-5 flex flex-col gap-5">
+    <div className="flex flex-col gap-5">
       {gatherings.map((Gathering) => (
         <GatheringItem key={Gathering.id} {...Gathering} />
       ))}

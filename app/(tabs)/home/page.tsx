@@ -13,13 +13,12 @@ export default async function Gatherings() {
   return (
     <div>
       <GatheringList initialGatherings={initialGatherings} />
-
       <Button
         asChild
-        className="bg-emerald-500 flex items-center justify-center rounded-full size-16 fixed bottom-24 right-8 text-white transition-colors hover:bg-emerald-600"
+        className="flex items-center justify-center rounded-full size-16 fixed bottom-24 right-4 transition-colors"
       >
         <Link href="/gatherings/add">
-          <PlusIcon className="size-10" />
+          <PlusIcon className="size-10 stroke-2" />
         </Link>
       </Button>
     </div>

@@ -10,7 +10,7 @@ export default async function Chats() {
   console.log(chatRooms);
 
   return (
-    <div className="flex flex-col py-5 gap-5">
+    <div className="flex flex-col gap-5">
       {chatRooms.map((chatRoom) => (
         <ChatRoomItem
           key={chatRoom.id}

@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang="ko">
       <body
         className={cn(
-          "bg-background max-w-screen-sm mx-auto",
+          "bg-background max-w-screen-sm mx-auto py-5",
           notoSans.variable
         )}
       >
