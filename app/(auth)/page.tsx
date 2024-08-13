@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function Home() {
@@ -9,14 +10,14 @@ export default function Home() {
         <h1 className="text-2xl">연결되는 즐거움을 느껴보세요!</h1>
       </div>
       <div className="flex flex-col items-center gap-3 w-full">
-        <Link className="primary-btn text-lg py-2.5" href="/create-account">
-          시작하기
-        </Link>
-        <div className="flex gap-2">
+        <Button asChild className="w-full">
+          <Link href="/create-account">시작하기</Link>
+        </Button>
+        <div className="flex items-center gap-2">
           <span>이미 계정이 있나요?</span>
-          <Link className="hover:underline" href="/login">
-            로그인
-          </Link>
+          <Button variant="link" asChild>
+            <Link href="/login">로그인</Link>
+          </Button>
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { deleteComment } from "@/actions/community";
+import SubmitButton from "@/components/common/SubmitButton";
 import { formatToTimeAgo } from "@/lib/utils";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
@@ -47,9 +48,9 @@ export default function CommentItem({
       </div>
       {sessionId === userId ? (
         <form action={handleDeleteComment}>
-          <button>
+          <SubmitButton>
             <TrashIcon className="size-5" />
-          </button>
+          </SubmitButton>
         </form>
       ) : null}
     </div>

@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang="ko">
       <body
         className={cn(
-          "bg-neutral-900 text-white max-w-screen-sm mx-auto",
+          "bg-background max-w-screen-sm mx-auto",
           notoSans.variable
         )}
       >

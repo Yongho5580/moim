@@ -14,6 +14,8 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createChatRoom } from "@/actions/chats";
+import { Button } from "@/components/ui/button";
+import SubmitButton from "@/components/common/SubmitButton";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const gathering = await getGathering(+params.id);
@@ -80,17 +82,16 @@ export default async function GatheringPost({
         </span>
         <div className="flex">
           {isOwner ? (
-            <Link
-              className="bg-emerald-500 px-5 py-2.5 rounded-md font-semibold text-white"
-              href={`/gatherings/post/${id}/edit`}
-            >
-              <PencilSquareIcon className="h-[25px]" />
-            </Link>
+            <Button asChild>
+              <Link href={`/gatherings/post/${id}/edit`}>
+                <PencilSquareIcon className="h-[25px]" />
+              </Link>
+            </Button>
           ) : (
             <form action={interceptAction}>
-              <button className="bg-emerald-500 px-5 py-2.5 rounded-md font-semibold text-white">
+              <SubmitButton>
                 <ChatBubbleLeftRightIcon className="h-[25px]" />
-              </button>
+              </SubmitButton>
             </form>
           )}
         </div>

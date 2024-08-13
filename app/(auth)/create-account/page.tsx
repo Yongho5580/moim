@@ -1,11 +1,11 @@
 "use client";
 
 import { createAccount } from "@/actions/create-account";
-import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import SocialLoginButtons from "@/components/common/SocialLoginButtons";
 import { PASSWORD_MIN_LENGTH } from "@/constants/validation";
 import { useFormState } from "react-dom";
+import SubmitButton from "@/components/common/SubmitButton";
 
 export default function CreateAccount() {
   const [state, formAction] = useFormState(createAccount, null);
@@ -48,7 +48,7 @@ export default function CreateAccount() {
           errors={state?.fieldErrors.confirm_password}
           minLength={PASSWORD_MIN_LENGTH}
         />
-        <Button text="회원 가입" />
+        <SubmitButton>회원 가입</SubmitButton>
       </form>
       <SocialLoginButtons />
     </div>

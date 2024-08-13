@@ -1,11 +1,11 @@
 "use client";
 
-import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import SocialLoginButtons from "@/components/common/SocialLoginButtons";
 import { logIn } from "@/actions/login";
 import { useFormState } from "react-dom";
 import { PASSWORD_MIN_LENGTH } from "@/constants/validation";
+import SubmitButton from "@/components/common/SubmitButton";
 
 export default function Login() {
   const [state, formAction] = useFormState(logIn, null);
@@ -31,7 +31,7 @@ export default function Login() {
           required
           errors={state?.fieldErrors.password}
         />
-        <Button text="로그인" />
+        <SubmitButton>로그인</SubmitButton>
       </form>
       <SocialLoginButtons />
     </div>

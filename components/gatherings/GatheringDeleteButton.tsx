@@ -1,6 +1,7 @@
 import { getIsOwner } from "@/actions/gatherings";
 import { deleteGathering } from "@/actions/gatherings/[id]";
 import { TrashIcon } from "@heroicons/react/24/solid";
+import { Button } from "../ui/button";
 
 interface IGatheringDeleteButtonProps {
   userId: number;
@@ -20,9 +21,9 @@ export default async function GatheringDeleteButton({
 
   return (
     <form action={handleDeleteGathering} className="flex gap-3">
-      <button className="bg-emerald-500 px-5 py-2.5 rounded-md font-semibold text-white">
+      <Button>
         <TrashIcon className="h-[25px]" />
-      </button>
+      </Button>
     </form>
   );
 }

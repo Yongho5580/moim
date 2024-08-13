@@ -2,11 +2,11 @@
 
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import Input from "../common/Input";
-import Button from "../common/Button";
 import { useImagePreview } from "@/hooks/useImagePreview";
 import { useFormState } from "react-dom";
 import { typeToFlattenedError } from "zod";
 import { useEffect } from "react";
+import SubmitButton from "../common/SubmitButton";
 
 interface IGatheringFormProps {
   action: (
@@ -105,7 +105,7 @@ export default function GatheringForm({
         type="text"
         errors={state?.fieldErrors.price}
       />
-      <Button text="작성 완료" />
+      <SubmitButton>작성 완료</SubmitButton>
     </form>
   );
 }

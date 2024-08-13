@@ -4,7 +4,9 @@ import {
   getGathering,
   getIsOwner,
 } from "@/actions/gatherings";
+import SubmitButton from "@/components/common/SubmitButton";
 import GatheringModalContainer from "@/components/gatherings/GatheringModalContainer";
+import { Button } from "@/components/ui/button";
 import { formatToTimeAgo, formatToWon } from "@/lib/utils";
 import {
   ChatBubbleLeftRightIcon,
@@ -75,17 +77,16 @@ export default async function GatheringModal({
         </div>
         <div className="flex">
           {isOwner ? (
-            <Link
-              className="bg-emerald-500 px-5 py-2.5 rounded-md font-semibold text-white"
-              href={`/gatherings/post/${id}/edit`}
-            >
-              <PencilSquareIcon className="h-[25px]" />
-            </Link>
+            <Button asChild>
+              <Link href={`/gatherings/post/${id}/edit`}>
+                <PencilSquareIcon className="h-[25px]" />
+              </Link>
+            </Button>
           ) : (
             <form action={interceptAction}>
-              <button className="bg-emerald-500 px-5 py-2.5 rounded-md font-semibold text-white">
+              <SubmitButton>
                 <ChatBubbleLeftRightIcon className="h-[25px]" />
-              </button>
+              </SubmitButton>
             </form>
           )}
         </div>

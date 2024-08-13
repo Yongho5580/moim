@@ -11,6 +11,7 @@ import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
 import { createClient, RealtimeChannel } from "@supabase/supabase-js";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import SubmitButton from "../common/SubmitButton";
 
 interface IChatMessagesProps {
   initialMessages: InitialChatRoomMessages;
@@ -161,9 +162,9 @@ export default function ChatMessages({
           name="message"
           placeholder="메시지 보내기..."
         />
-        <button className="absolute right-0">
-          <ArrowUpCircleIcon className="size-10 text-emerald-500 transition-colors hover:text-emerald-300" />
-        </button>
+        <SubmitButton variant="none" size="icon" className="absolute right-0">
+          <ArrowUpCircleIcon className="size-10 text-primary transition-colors hover:text-primary-hover" />
+        </SubmitButton>
       </form>
     </div>
   );
