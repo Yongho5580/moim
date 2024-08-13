@@ -2,17 +2,15 @@ import { db } from "@/lib/db";
 import getSession from "@/lib/session";
 import { notFound, redirect } from "next/navigation";
 
-export async function getUser() {
+export async function getUser(id: number) {
   const session = await getSession();
-  if (session.id) {
-    const user = await db.user.findUnique({
-      where: {
-        id: session.id,
-      },
-    });
-    if (user) {
-      return user;
-    }
+  const user = await db.user.findUnique({
+    where: {
+      id: session.id,
+    },
+  });
+  if (user) {
+    return user;
   }
   return notFound();
 }

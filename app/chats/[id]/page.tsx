@@ -6,10 +6,10 @@ import { notFound } from "next/navigation";
 
 export default async function ChatRoom({ params }: { params: { id: string } }) {
   const room = await getChatRoom(params.id);
-  if (!room) {
+  const session = await getSession();
+  if (!room || !session.id) {
     return notFound();
   } else {
-    const session = await getSession();
     const hasChatRoomAccess = Boolean(
       room.users.find((user) => user.id === session.id)
     );
@@ -17,9 +17,9 @@ export default async function ChatRoom({ params }: { params: { id: string } }) {
       return notFound();
     }
   }
+
+  const { username, avatar } = await getUser(session.id);
   const initialMessages = await getMessages(params.id);
-  const session = await getSession();
-  const { username, avatar } = await getUser();
 
   return (
     <div>

@@ -12,6 +12,8 @@ import { createClient, RealtimeChannel } from "@supabase/supabase-js";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import SubmitButton from "../common/SubmitButton";
+import { redirect } from "next/navigation";
+import Link from "next/link";
 
 interface IChatMessagesProps {
   initialMessages: InitialChatRoomMessages;
@@ -68,6 +70,10 @@ export default function ChatMessages({
   }, [initialMessages]);
 
   useEffect(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+  }, []);
+
+  useEffect(() => {
     const client = createClient(String(SUPABASE_URL), String(SUPABASE_KEY));
     channel.current = client.channel(`chatRoom-${chatRoomId}`, {
       config: {
@@ -116,13 +122,15 @@ export default function ChatMessages({
             }`}
           >
             {message.userId === userId ? null : (
-              <Image
-                src={message.user.avatar!}
-                alt={message.user.username}
-                width={50}
-                height={50}
-                className="size-8 rounded-full"
-              />
+              <Link href={`/user/${message.userId}`}>
+                <Image
+                  src={message.user.avatar!}
+                  alt={message.user.username}
+                  width={50}
+                  height={50}
+                  className="size-8 rounded-full cursor-pointer"
+                />
+              </Link>
             )}
             <div
               className={`flex flex-col gap-1 ${

@@ -15,7 +15,7 @@ export default async function Gatherings() {
       <GatheringList initialGatherings={initialGatherings} />
       <Button
         asChild
-        className="flex items-center justify-center rounded-full size-16 fixed bottom-24 right-4 transition-colors"
+        className="flex items-center justify-center rounded-full size-16 fixed bottom-24 right-3 transition-colors"
       >
         <Link href="/gatherings/add">
           <PlusIcon className="size-10 stroke-2" />

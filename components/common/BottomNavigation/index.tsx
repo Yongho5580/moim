@@ -39,22 +39,27 @@ const navLinksData = [
     href: "/profile",
     activeIcon: <SolidUserIcon className="w-7 h-7" />,
     inactiveIcon: <OutlineUserIcon className="w-7 h-7" />,
-    label: "프로필",
+    label: "마이페이지",
   },
 ];
 
-export default function TabBar() {
+export default function BottomNavigation() {
   return (
-    <div className="fixed bottom-0 w-full mx-auto max-w-screen-sm grid grid-cols-4 border-neutral-600 items-center border-t p-3 gap-1 *:text-white bg-neutral-800">
-      {navLinksData.map((link) => (
-        <NavLink
-          key={link.href}
-          href={link.href}
-          activeIcon={link.activeIcon}
-          inactiveIcon={link.inactiveIcon}
-          label={link.label}
-        />
-      ))}
+    <div
+      id="bottom-navigation"
+      className="fixed bottom-0 w-full mx-auto max-w-screen-sm items-cente *:text-[#777777] bg-white"
+    >
+      <div className="flex w-full max-w-screen-sm flex-row items-center justify-center border-t px-3 border-border">
+        {navLinksData.map((link) => (
+          <NavLink
+            key={link.href}
+            href={link.href}
+            activeIcon={link.activeIcon}
+            inactiveIcon={link.inactiveIcon}
+            label={link.label}
+          />
+        ))}
+      </div>
     </div>
   );
 }

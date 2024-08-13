@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import MainContainer from "@/components/common/MainContainer";
+import MainContent from "@/components/common/MainContent";
+import BottomNavigation from "@/components/common/BottomNavigation";
 
 const notoSans = Noto_Sans_KR({
   weight: "500",
@@ -24,13 +27,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body
-        className={cn(
-          "bg-background max-w-screen-sm mx-auto py-5",
-          notoSans.variable
-        )}
-      >
-        {children}
+      <body className={cn("overflow-auto", notoSans.variable)}>
+        <MainContainer>
+          <MainContent>{children}</MainContent>
+          <BottomNavigation />
+        </MainContainer>
       </body>
     </html>
   );
