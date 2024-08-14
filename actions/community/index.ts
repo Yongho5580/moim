@@ -28,7 +28,7 @@ export async function getCommunityPosts() {
   }
 }
 
-async function getCommunityPost(id: number) {
+export async function getCommunityPost(id: number) {
   try {
     const post = await db.communityPost.update({
       where: {

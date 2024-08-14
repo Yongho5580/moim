@@ -1,7 +1,6 @@
 "use client";
 
-import { HandThumbUpIcon } from "@heroicons/react/24/solid";
-import { HandThumbUpIcon as OutlineHandThumbUpIcon } from "@heroicons/react/24/outline";
+import { HeartIcon } from "@heroicons/react/24/solid";
 import { startTransition, useOptimistic } from "react";
 import { disLikeCommunityPost, likeCommunityPost } from "@/actions/community";
 import { Button } from "@/components/ui/button";
@@ -44,7 +43,7 @@ export default function LikeButton({
           : ""
       }`}
     >
-      <HandThumbUpIcon
+      <HeartIcon
         className={`size-4 ${optimisticState.isLiked ? "fill-primary" : ""}`}
       />
       <span>{optimisticState.likeCount}</span>

@@ -1,6 +1,8 @@
 import {
   getCachedCommunityPost,
   getCachedLikeStatus,
+  getCommunityPost,
+  getCommunityPosts,
 } from "@/actions/community";
 import { notFound } from "next/navigation";
 import Comments from "@/components/community/[id]/Comments";
@@ -18,7 +20,6 @@ export default async function CommunityPost({
   if (isNaN(id)) {
     return notFound();
   }
-  const session = await getSession();
   const post = await getCachedCommunityPost(id);
   if (!post) {
     return notFound();
@@ -39,11 +40,7 @@ export default async function CommunityPost({
         postId={id}
         views={post.views}
       />
-      <Comments
-        postId={id}
-        sessionId={Number(session.id)!}
-        comments={post.comments}
-      />
+      <Comments postId={id} sessionId={Number(2)} comments={post.comments} />
     </div>
   );
 }

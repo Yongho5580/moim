@@ -5,6 +5,7 @@ import CommentForm from "./CommentForm";
 import { useFormState } from "react-dom";
 import { uploadComment } from "@/actions/community";
 import { useOptimistic } from "react";
+import getSession from "@/lib/session";
 
 type Comment = {
   id: number;

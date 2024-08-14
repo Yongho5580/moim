@@ -56,8 +56,8 @@ export default function GatheringList({
 
   return (
     <div className="flex w-full flex-col items-center justify-start gap-0">
-      {gatherings.map((Gathering) => (
-        <GatheringItem key={Gathering.id} {...Gathering} />
+      {gatherings.map((post) => (
+        <GatheringItem key={post.id} {...post} />
       ))}
       {/* {!isLastPage ? (
         <span
