@@ -11,7 +11,7 @@ export default function Home() {
       </div>
       <div className="flex flex-col items-center gap-3 w-full">
         <Button asChild className="w-full">
-          <Link href="/create-account">시작하기</Link>
+          <Link href="/create-account">회원가입</Link>
         </Button>
         <div className="flex items-center gap-2">
           <span>이미 계정이 있나요?</span>

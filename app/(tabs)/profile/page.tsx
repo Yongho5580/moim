@@ -10,7 +10,6 @@ export default async function Profile() {
   const user = await getUser(session.id);
   const handleLogOut = async () => {
     "use server";
-    await new Promise((resolve) => setTimeout(resolve, 20000));
     await logOut();
   };
   return (

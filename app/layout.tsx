@@ -30,7 +30,6 @@ export default function RootLayout({
       <body className={cn("overflow-auto", notoSans.variable)}>
         <MainContainer>
           <MainContent>{children}</MainContent>
-          <BottomNavigation />
         </MainContainer>
       </body>
     </html>

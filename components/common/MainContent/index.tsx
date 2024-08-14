@@ -6,7 +6,7 @@ export default function MainContent({
   return (
     <div
       id="main-content"
-      className="flex flex-col flex-1 w-full max-w-screen-sm items-stretch bg-white mb-16"
+      className="flex flex-col flex-1 w-full max-w-screen-sm items-stretch bg-white"
     >
       {children}
     </div>
