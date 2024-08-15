@@ -29,7 +29,7 @@ export default async function Profile() {
     <>
       <Link
         href={"/profile/edit"}
-        className="flex w-full items-center justify-start gap-5 px-side py-5 pt-4 text-left text-gray-800"
+        className="flex w-full items-center justify-start gap-2 px-side py-5 pt-4 text-left text-gray-800"
       >
         <Image
           className="h-8 w-8 overflow-hidden object-cover rounded-full"
