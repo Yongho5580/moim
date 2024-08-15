@@ -1,7 +1,7 @@
 "use client";
 
 import { PhotoIcon } from "@heroicons/react/24/solid";
-import Input from "../common/Input";
+import Input from "../common/InputWithError";
 import { useImagePreview } from "@/hooks/useImagePreview";
 import { useFormState } from "react-dom";
 import { typeToFlattenedError } from "zod";

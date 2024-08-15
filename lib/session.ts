@@ -1,16 +1,21 @@
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 interface SessionContents {
-  id?: number;
+  id: number;
 }
 
 export default function getSession() {
-  return getIronSession<SessionContents>(cookies(), {
+  const session = getIronSession<SessionContents>(cookies(), {
     cookieName: "moim-cookie",
     password: process.env.COOKIE_PASSWORD!,
   });
+
+  if (!session) {
+    return notFound();
+  }
+  return session;
 }
 
 export async function setSession(id: number) {

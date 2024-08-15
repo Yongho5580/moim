@@ -1,8 +1,4 @@
-import {
-  getCachedGatheringPost,
-  getGathering,
-  getIsOwner,
-} from "@/actions/gatherings";
+import { getCachedGatheringPost, getIsOwner } from "@/actions/gatherings";
 import { updateGathering } from "@/actions/gatherings/edit";
 import GatheringForm from "@/components/gatherings/GatheringForm";
 import { notFound } from "next/navigation";
@@ -25,12 +21,10 @@ export default async function EditGathering({
     return notFound();
   }
   return (
-    <div>
-      <GatheringForm
-        id={params.id}
-        action={updateGathering}
-        initialState={gathering}
-      />
-    </div>
+    <GatheringForm
+      id={params.id}
+      action={updateGathering}
+      initialState={gathering}
+    />
   );
 }

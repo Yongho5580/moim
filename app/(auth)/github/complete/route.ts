@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
   // if user exists
   if (user) {
     await setSession(user.id);
-    return redirect("/profile");
+    return redirect("/home");
   } else {
     // if user not exists
     const { email } = await getGithubEmail(access_token);
@@ -64,6 +64,6 @@ export async function GET(request: NextRequest) {
       },
     });
     await setSession(newUser.id);
-    return redirect("/profile");
+    return redirect("/home");
   }
 }

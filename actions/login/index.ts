@@ -32,11 +32,11 @@ export async function logIn(prevState: any, formData: FormData) {
 
     if (validatePassword) {
       await setSession(user!.id);
-      return redirect("/profile");
+      return redirect("/home");
     } else {
       return {
         fieldErrors: {
-          password: [PASSWORD_MESSAGES["INVALID"]],
+          password: [PASSWORD_MESSAGES["MISMATCH"]],
           email: [],
         },
       };

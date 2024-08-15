@@ -1,7 +1,7 @@
 "use client";
 
 import { createAccount } from "@/actions/create-account";
-import Input from "@/components/common/Input";
+import Input from "@/components/common/InputWithError";
 import SocialLoginButtons from "@/components/common/SocialLoginButtons";
 import { PASSWORD_MIN_LENGTH } from "@/constants/validation";
 import { useFormState } from "react-dom";

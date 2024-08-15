@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import getSession from "@/lib/session";
+import { unstable_cache } from "next/cache";
 import { notFound, redirect } from "next/navigation";
 
 export async function getUser(id: number) {
@@ -35,6 +36,14 @@ export async function getUser(id: number) {
     return user;
   }
   return notFound();
+}
+
+export async function getCachedUser(userId: number) {
+  const getCachedData = unstable_cache(getUser, [`user-${userId}`], {
+    tags: [`user-${userId}`],
+  });
+
+  return getCachedData(userId);
 }
 
 export async function logOut() {

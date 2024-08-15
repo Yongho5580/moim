@@ -1,4 +1,4 @@
-import Input from "@/components/common/Input";
+import Input from "@/components/common/InputWithError";
 import SubmitButton from "@/components/common/SubmitButton";
 import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
 

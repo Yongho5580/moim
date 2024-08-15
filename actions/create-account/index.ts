@@ -32,6 +32,6 @@ export async function createAccount(prevState: any, formData: FormData) {
       },
     });
     await setSession(user.id);
-    return redirect("/profile");
+    return redirect("/");
   }
 }
