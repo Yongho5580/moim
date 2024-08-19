@@ -1,4 +1,4 @@
-import { deleteComment } from "@/actions/community";
+import { deleteComment } from "@/actions/community/[id]";
 import { SubmitButton } from "@/components/common/SubmitButton";
 import { formatToTimeAgo } from "@/lib/utils";
 import { TrashIcon } from "@heroicons/react/24/solid";

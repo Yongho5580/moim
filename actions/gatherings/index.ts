@@ -14,7 +14,6 @@ export async function getIsOwner(userId: number) {
 }
 
 export async function getGathering(gatheringId: number) {
-  console.log("get gathering hit!");
   const gathering = await db.gatheringPost.findUnique({
     where: {
       id: gatheringId,

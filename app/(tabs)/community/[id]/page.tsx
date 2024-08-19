@@ -1,10 +1,13 @@
-import { getCachedLikeStatus, getCommunityPost } from "@/actions/community";
 import { notFound } from "next/navigation";
 import Comments from "@/components/community/[id]/Comments";
 import UserInfo from "@/components/community/[id]/UserInfo";
 import PostContent from "@/components/community/[id]/PostContent";
 import PostStats from "@/components/community/[id]/PostStats";
 import getSession from "@/lib/session";
+import {
+  getCachedLikeStatus,
+  getCommunityPost,
+} from "@/actions/community/[id]";
 
 export default async function CommunityPost({
   params,
@@ -26,6 +29,7 @@ export default async function CommunityPost({
     <div className="p-5 flex flex-col gap-x-40">
       <UserInfo
         userId={post.userId}
+        postId={id}
         avatar={post.user.avatar!}
         username={post.user.username}
         createdAt={post.created_at}

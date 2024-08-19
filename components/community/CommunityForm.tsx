@@ -44,6 +44,7 @@ export default function CommunityForm({
         errors={state?.fieldErrors.title}
       />
       <TextareaWithError
+        defaultValue={initialState.description ?? ""}
         name="description"
         placeholder="내용을 작성해주세요."
         errors={state?.fieldErrors.description}

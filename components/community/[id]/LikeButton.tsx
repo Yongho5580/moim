@@ -2,8 +2,11 @@
 
 import { HeartIcon } from "@heroicons/react/24/solid";
 import { startTransition, useOptimistic } from "react";
-import { disLikeCommunityPost, likeCommunityPost } from "@/actions/community";
 import { Button } from "@/components/ui/button";
+import {
+  disLikeCommunityPost,
+  likeCommunityPost,
+} from "@/actions/community/[id]";
 
 interface ILikeButtonProps {
   isLiked: boolean;

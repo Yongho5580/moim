@@ -8,4 +8,5 @@ export const CREATE_COMMENT_SCHEMA = z.object({
 export const CREATE_COMMUNITY_SCHEMA = z.object({
   title: z.string().min(3, "제목은 3글자 이상으로 작성해주세요."),
   description: z.string().min(1, "글 내용을 작성해주세요."),
+  id: z.string().optional(),
 });

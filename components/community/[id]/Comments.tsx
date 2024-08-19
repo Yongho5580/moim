@@ -3,8 +3,8 @@
 import CommentItem from "./CommentItem";
 import CommentForm from "./CommentForm";
 import { useFormState } from "react-dom";
-import { uploadComment } from "@/actions/community";
 import { useOptimistic } from "react";
+import { uploadComment } from "@/actions/community/[id]";
 
 type Comment = {
   id: number;
