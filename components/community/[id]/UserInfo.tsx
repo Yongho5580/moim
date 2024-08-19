@@ -1,18 +1,21 @@
 import { formatToTimeAgo } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
 interface IUserInfoProps {
+  userId: number;
   avatar: string;
   username: string;
   createdAt: Date;
 }
 
 export default function UserInfo({
+  userId,
   avatar,
   username,
   createdAt,
 }: IUserInfoProps) {
   return (
-    <div className="flex items-center gap-2 mb-2">
+    <Link href={`/user/${userId}`} className="flex items-center gap-2 mb-2">
       <Image
         width={28}
         height={28}
@@ -26,6 +29,6 @@ export default function UserInfo({
           <span>{formatToTimeAgo(createdAt.toString())}</span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

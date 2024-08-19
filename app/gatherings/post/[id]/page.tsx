@@ -3,7 +3,6 @@ import {
   getGathering,
   getIsOwner,
 } from "@/actions/gatherings";
-import { db } from "@/lib/db";
 import { formatToWon } from "@/lib/utils";
 import {
   ChatBubbleLeftRightIcon,
@@ -15,7 +14,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createChatRoom } from "@/actions/chats";
 import { Button } from "@/components/ui/button";
-import SubmitButton from "@/components/common/SubmitButton";
+import { SubmitButton } from "@/components/common/SubmitButton";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const gathering = await getGathering(+params.id);

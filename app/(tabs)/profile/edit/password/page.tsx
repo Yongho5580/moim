@@ -1,8 +1,8 @@
 "use client";
 
 import { updatePassword } from "@/actions/profile/edit/password";
-import SubmitButton from "@/components/common/SubmitButton";
-import InputWithError from "@/components/common/InputWithError";
+import { SubmitButton } from "@/components/common/SubmitButton";
+import { InputWithError } from "@/components/common/InputWithError";
 import { Label } from "@/components/ui/label";
 import { useFormState } from "react-dom";
 

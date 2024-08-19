@@ -1,4 +1,5 @@
 import { getCommunityPosts } from "@/actions/community";
+import FloatingAddButton from "@/components/common/FloatingAddButton";
 import CommunityItem from "@/components/community/CommunityItem";
 
 export const metadata = {
@@ -13,6 +14,7 @@ export default async function Community() {
       {posts?.map((post) => (
         <CommunityItem key={post.id} {...post} />
       ))}
+      <FloatingAddButton href="/community/add" />
     </div>
   );
 }

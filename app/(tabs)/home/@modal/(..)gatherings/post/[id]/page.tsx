@@ -4,7 +4,7 @@ import {
   getGathering,
   getIsOwner,
 } from "@/actions/gatherings";
-import SubmitButton from "@/components/common/SubmitButton";
+import { SubmitButton } from "@/components/common/SubmitButton";
 import GatheringModalContainer from "@/components/gatherings/GatheringModalContainer";
 import { Button } from "@/components/ui/button";
 import { formatToTimeAgo, formatToWon } from "@/lib/utils";

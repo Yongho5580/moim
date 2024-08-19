@@ -6,7 +6,7 @@ interface IInputWithErrorProps {
   errors?: string[];
 }
 
-export default function InputWithError({
+export function InputWithError({
   errors = [],
   name,
   ...props

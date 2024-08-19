@@ -1,11 +1,11 @@
 "use client";
 
-import Input from "@/components/common/InputWithError";
+import { InputWithError } from "@/components/common/InputWithError";
 import SocialLoginButtons from "@/components/common/SocialLoginButtons";
 import { logIn } from "@/actions/login";
 import { useFormState } from "react-dom";
 import { PASSWORD_MIN_LENGTH } from "@/constants/validation";
-import SubmitButton from "@/components/common/SubmitButton";
+import { SubmitButton } from "@/components/common/SubmitButton";
 
 export default function Login() {
   const [state, formAction] = useFormState(logIn, null);
@@ -16,14 +16,14 @@ export default function Login() {
         <h2 className="text-xl">함께 하는 즐거움, 모임</h2>
       </div>
       <form action={formAction} className="flex flex-col gap-3">
-        <Input
+        <InputWithError
           name="email"
           type="email"
           placeholder="이메일"
           required
           errors={state?.fieldErrors.email}
         />
-        <Input
+        <InputWithError
           name="password"
           type="password"
           placeholder="비밀번호"

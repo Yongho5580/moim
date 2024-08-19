@@ -5,7 +5,6 @@ import CommentForm from "./CommentForm";
 import { useFormState } from "react-dom";
 import { uploadComment } from "@/actions/community";
 import { useOptimistic } from "react";
-import getSession from "@/lib/session";
 
 type Comment = {
   id: number;
@@ -52,7 +51,7 @@ export default function Comments({
   const [state, formAction] = useFormState(interceptAction, null);
 
   return (
-    <div className="py-5">
+    <div className="py-5 flex flex-col gap-5">
       <CommentForm postId={postId} formAction={formAction} />
       {optimisticComments.map((comment) => (
         <CommentItem

@@ -1,9 +1,4 @@
-import {
-  getCachedCommunityPost,
-  getCachedLikeStatus,
-  getCommunityPost,
-  getCommunityPosts,
-} from "@/actions/community";
+import { getCachedLikeStatus, getCommunityPost } from "@/actions/community";
 import { notFound } from "next/navigation";
 import Comments from "@/components/community/[id]/Comments";
 import UserInfo from "@/components/community/[id]/UserInfo";
@@ -20,15 +15,17 @@ export default async function CommunityPost({
   if (isNaN(id)) {
     return notFound();
   }
-  const post = await getCachedCommunityPost(id);
+  const post = await getCommunityPost(id);
   if (!post) {
     return notFound();
   }
+  const session = await getSession();
   const { isLiked, likeCount } = await getCachedLikeStatus(id);
 
   return (
-    <div className="p-5 flex flex-col text-white">
+    <div className="p-5 flex flex-col gap-x-40">
       <UserInfo
+        userId={post.userId}
         avatar={post.user.avatar!}
         username={post.user.username}
         createdAt={post.created_at}
@@ -40,7 +37,7 @@ export default async function CommunityPost({
         postId={id}
         views={post.views}
       />
-      <Comments postId={id} sessionId={Number(2)} comments={post.comments} />
+      <Comments postId={id} sessionId={session.id} comments={post.comments} />
     </div>
   );
 }

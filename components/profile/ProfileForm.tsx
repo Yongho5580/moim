@@ -1,12 +1,12 @@
 "use client";
 
 import { PhotoIcon } from "@heroicons/react/24/solid";
-import Input from "../common/InputWithError";
+import { InputWithError } from "../common/InputWithError";
 import { useImagePreview } from "@/hooks/useImagePreview";
 import { useFormState } from "react-dom";
 import { typeToFlattenedError } from "zod";
 import { useEffect } from "react";
-import SubmitButton from "../common/SubmitButton";
+import { SubmitButton } from "../common/SubmitButton";
 import { Label } from "../ui/label";
 
 interface IProfileFormProps {
@@ -72,7 +72,7 @@ export default function ProfileForm({
       />
       <div className="flex flex-col gap-1.5 w-full">
         <Label htmlFor="username">이름</Label>
-        <Input
+        <InputWithError
           defaultValue={initialState.username ?? ""}
           name="username"
           required

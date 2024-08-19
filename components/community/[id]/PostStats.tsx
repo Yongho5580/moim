@@ -15,7 +15,7 @@ export default function PostStats({
   likeCount,
 }: IPostStatsProps) {
   return (
-    <div className="flex flex-col gap-5 items-start border-b-slate-200 border-b">
+    <div className="flex flex-col gap-5 items-start border-b-slate-200 border-b pb-5">
       <div className="flex items-center gap-2 text-neutral-400 text-sm">
         <EyeIcon className="size-5" />
         <span>조회 {views}</span>

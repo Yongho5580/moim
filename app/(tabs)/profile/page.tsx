@@ -1,5 +1,5 @@
 import { getUser, logOut } from "@/actions/profile";
-import SubmitButton from "@/components/common/SubmitButton";
+import { SubmitButton } from "@/components/common/SubmitButton";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
 import getSession from "@/lib/session";
 import Image from "next/image";

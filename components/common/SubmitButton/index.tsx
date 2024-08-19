@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/button";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
 
-export default function SubmitButton({
+export function SubmitButton({
   children,
   ...props
 }: ShadcnButtonProps & ButtonHTMLAttributes<HTMLButtonElement>) {

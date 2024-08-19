@@ -1,12 +1,12 @@
 "use client";
 
 import { PhotoIcon } from "@heroicons/react/24/solid";
-import Input from "../common/InputWithError";
+import { InputWithError } from "../common/InputWithError";
 import { useImagePreview } from "@/hooks/useImagePreview";
 import { useFormState } from "react-dom";
 import { typeToFlattenedError } from "zod";
 import { useEffect } from "react";
-import SubmitButton from "../common/SubmitButton";
+import { SubmitButton } from "../common/SubmitButton";
 
 interface IGatheringFormProps {
   action: (
@@ -73,7 +73,7 @@ export default function GatheringForm({
         className="hidden"
       />
       <input type="hidden" name="id" className="hidden" defaultValue={id} />
-      <Input
+      <InputWithError
         defaultValue={initialState.title ?? ""}
         name="title"
         required
@@ -81,7 +81,7 @@ export default function GatheringForm({
         type="text"
         errors={state?.fieldErrors.title}
       />
-      <Input
+      <InputWithError
         defaultValue={initialState.description ?? ""}
         name="description"
         required
@@ -89,7 +89,7 @@ export default function GatheringForm({
         type="text"
         errors={state?.fieldErrors.description}
       />
-      <Input
+      <InputWithError
         defaultValue={initialState.location ?? ""}
         name="location"
         required
@@ -97,7 +97,7 @@ export default function GatheringForm({
         type="text"
         errors={state?.fieldErrors.location}
       />
-      <Input
+      <InputWithError
         defaultValue={initialState.price ?? ""}
         name="price"
         required

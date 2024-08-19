@@ -11,8 +11,7 @@ import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
 import { createClient, RealtimeChannel } from "@supabase/supabase-js";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import SubmitButton from "../common/SubmitButton";
-import { redirect } from "next/navigation";
+import { SubmitButton } from "../common/SubmitButton";
 import Link from "next/link";
 
 interface IChatMessagesProps {
