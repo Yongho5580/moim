@@ -6,22 +6,22 @@ import Image from "next/image";
 
 interface ICommentItemProps {
   id: number;
-  sessionId: number;
-  userId: number;
   avatar: string;
   username: string;
+  userId: number;
   createdAt: Date;
   payload: string;
+  sessionId: number;
 }
 
 export default function CommentItem({
   id,
-  sessionId,
-  userId,
   avatar,
   username,
   createdAt,
+  userId,
   payload,
+  sessionId,
 }: ICommentItemProps) {
   const handleDeleteComment = async () => {
     await deleteComment(id);

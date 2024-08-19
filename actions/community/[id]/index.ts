@@ -23,6 +23,24 @@ async function getLikeStatus(postId: number, userId: number) {
   return { likeCount, isLiked: Boolean(isLiked) };
 }
 
+async function getComments(postId: number) {
+  const comments = await db.comment.findMany({
+    where: {
+      communityPostId: postId,
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          avatar: true,
+          username: true,
+        },
+      },
+    },
+  });
+  return comments;
+}
+
 export async function uploadComment(_: any, formData: FormData) {
   const data = {
     payload: formData.get("payload"),
@@ -45,7 +63,7 @@ export async function uploadComment(_: any, formData: FormData) {
       },
     });
 
-    revalidateTag(`community-post-${result.data.postId}`);
+    revalidateTag(`community-comments-${result.data.postId}`);
   }
 }
 
@@ -58,7 +76,7 @@ export async function deleteComment(commentId: number) {
       communityPostId: true,
     },
   });
-  revalidateTag(`community-post-${communityPostId}`);
+  revalidateTag(`community-comments-${communityPostId}`);
 }
 
 export async function likeCommunityPost(postId: number) {
@@ -105,20 +123,6 @@ export async function getCommunityPost(id: number) {
           select: {
             username: true,
             avatar: true,
-          },
-        },
-        comments: {
-          select: {
-            id: true,
-            payload: true,
-            created_at: true,
-            user: {
-              select: {
-                id: true,
-                username: true,
-                avatar: true,
-              },
-            },
           },
         },
         _count: {
@@ -171,4 +175,13 @@ export async function getCachedLikeStatus(postId: number) {
   );
 
   return cachedOperation(postId, userId!);
+}
+
+export async function getCachedComments(postId: number) {
+  const cachedOperation = unstable_cache(
+    getComments,
+    [`community-comments-${postId}`],
+    { tags: [`community-comments-${postId}`] }
+  );
+  return cachedOperation(postId);
 }

@@ -14,6 +14,7 @@ import { SubmitButton } from "@/components/common/SubmitButton";
 interface IUserInfoProps {
   userId: number;
   postId: number;
+  sessionId: number;
   avatar: string;
   username: string;
   createdAt: Date;
@@ -23,6 +24,7 @@ export default function UserInfo({
   userId,
   avatar,
   postId,
+  sessionId,
   username,
   createdAt,
 }: IUserInfoProps) {
@@ -47,29 +49,31 @@ export default function UserInfo({
           </div>
         </div>
       </Link>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="none" size="icon">
-            <EllipsisVerticalIcon className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <Link href={`/community/${postId}/edit`}>
-            <DropdownMenuItem>
-              <PencilIcon className="mr-2 h-4 w-4" />
-              <span>수정</span>
+      {sessionId === userId && (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="none" size="icon">
+              <EllipsisVerticalIcon className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <Link href={`/community/${postId}/edit`}>
+              <DropdownMenuItem>
+                <PencilIcon className="mr-2 h-4 w-4" />
+                <span>수정</span>
+              </DropdownMenuItem>
+            </Link>
+            <DropdownMenuItem asChild>
+              <form action={handleDeleteCommunityPost}>
+                <SubmitButton variant="none" className="px-0 py-0 h-5">
+                  <Trash2Icon className="mr-2 h-4 w-4" />
+                  <span>삭제</span>
+                </SubmitButton>
+              </form>
             </DropdownMenuItem>
-          </Link>
-          <DropdownMenuItem asChild>
-            <form action={handleDeleteCommunityPost}>
-              <SubmitButton variant="none" className="px-0 py-0 h-5">
-                <Trash2Icon className="mr-2 h-4 w-4" />
-                <span>삭제</span>
-              </SubmitButton>
-            </form>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )}
     </div>
   );
 }

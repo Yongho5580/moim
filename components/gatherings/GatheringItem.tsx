@@ -20,7 +20,7 @@ export default function GatheringItem({
   created_at,
 }: IGatheringItemProps) {
   return (
-    <div className="w-full px-0 py-4">
+    <div className="w-full px-side py-4">
       <div className="flex flex-col gap-4"></div>
       <div className="relative flex w-full max-w-screen-sm flex-col overflow-hidden rounded-xl">
         <Link

@@ -19,8 +19,8 @@ type Comment = {
 
 interface ICommentsProps {
   postId: number;
-  sessionId: number;
   comments: Comment[];
+  sessionId: number;
 }
 
 export default function Comments({

@@ -1,3 +1,5 @@
+"use server";
+
 import { db } from "@/lib/db";
 import getSession from "@/lib/session";
 import { CREATE_COMMUNITY_SCHEMA } from "@/schemas/community";
