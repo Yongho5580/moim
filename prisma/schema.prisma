@@ -55,13 +55,14 @@ model GatheringPost {
 }
 
 model Participant {
-  id              Int           @id @default(autoincrement())
   user            User          @relation(fields: [userId], references: [id])
   userId          Int
   gathering       GatheringPost @relation(fields: [gatheringPostId], references: [id])
   gatheringPostId Int
   status          String        @default("pending")
   joined_at       DateTime      @default(now())
+
+  @@id(name: "id", fields: [userId, gatheringPostId])
 }
 
 model CommunityPost {
