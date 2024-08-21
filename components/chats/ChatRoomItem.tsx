@@ -1,7 +1,6 @@
 import { formatToTimeAgo } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { getUnReadMessages } from "@/actions/chats";
 
 interface IChatRoomItemProps {
   chatRoomId: string;
@@ -25,19 +24,19 @@ export default function ChatRoomItem({
   return (
     <Link
       href={`/chats/${chatRoomId}`}
-      className="pb-5 mb-5 border-b border-neutral-500 flex flex-col gap-2 last:pb-0 last:border-b-0"
+      className="border-b border-neutral-300 flex flex-col gap-2 py-5 px-side"
     >
       <div className="flex justify-between items-center">
-        <div className="flex items-center gap-2 mb-2">
+        <div className="flex items-center gap-3 mb-2">
           <Image
-            width={50}
-            height={50}
-            className="size-10 rounded-full"
+            width={56}
+            height={56}
+            className="size-14 rounded-full"
             src={avatar}
             alt={username}
           />
           <div>
-            <span className="text-base font-semibold text-neutral-300">
+            <span className="text-base font-semibold text-neutral-800">
               {username}
             </span>
             <div className={`flex gap-1 *:text-sm`}>
@@ -77,9 +76,6 @@ export default function ChatRoomItem({
             </div>
           </div>
         </div>
-        {/* <div className="inline-flex items-center justify-center w-8 h-6 ms-2  text-xs font-semibold text-slate-200 bg-emerald-800 rounded-lg">
-      {unReadMessagesCount}
-    </div> */}
       </div>
     </Link>
   );
