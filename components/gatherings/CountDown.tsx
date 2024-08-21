@@ -1,20 +1,20 @@
-"use client"; // 이 파일이 클라이언트에서 실행되어야 함을 지정
+"use client";
 
-import { convertUTCToLocalTime } from "@/lib/utils";
 import { useEffect, useRef } from "react";
 
 function useCountdown(
   endDate: Date,
+  status: string,
   countdownRef: React.RefObject<HTMLTimeElement>
 ) {
   useEffect(() => {
     const updateCountdown = () => {
       const timeDifference = endDate.getTime() - new Date().getTime();
 
-      if (timeDifference <= 0) {
+      if (timeDifference <= 0 || status === "closed") {
         clearInterval(intervalId);
         if (countdownRef.current) {
-          countdownRef.current.textContent = "00:00:00";
+          countdownRef.current.textContent = "모집 종료";
         }
         return;
       }
@@ -38,24 +38,27 @@ function useCountdown(
 
     const intervalId = setInterval(updateCountdown, 1000);
 
-    // 처음 한 번 즉시 업데이트
     updateCountdown();
 
     return () => clearInterval(intervalId);
-  }, [endDate, countdownRef]);
+  }, [endDate, status, countdownRef]);
 }
 
-export default function Countdown({ endDate }: { endDate: Date }) {
+export default function Countdown({
+  endDate,
+  status,
+}: {
+  endDate: Date;
+  status: string;
+}) {
   const countdownRef = useRef(null);
 
-  useCountdown(endDate, countdownRef);
+  useCountdown(endDate, status, countdownRef);
 
   return (
     <time
       ref={countdownRef}
       className="shrink-0 rounded-sm border px-2 pb-0.5 pt-1 text-xs border-gray-white border-opacity-30 bg-gray-900 bg-opacity-40 text-gray-400"
-    >
-      {/* 초기값을 설정하지 않으면 useEffect에서 첫 업데이트 전에 내용이 바뀔 수 있음 */}
-    </time>
+    ></time>
   );
 }

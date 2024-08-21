@@ -26,6 +26,8 @@ export async function getUser(id: number) {
           price: true,
           description: true,
           photo: true,
+          status: true,
+          endDate: true,
           location: true,
           created_at: true,
         },

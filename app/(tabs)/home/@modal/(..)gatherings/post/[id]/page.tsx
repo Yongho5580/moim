@@ -1,21 +1,12 @@
 import { createChatRoom } from "@/actions/chats";
-import {
-  getCachedGatheringPost,
-  getGathering,
-  getIsOwner,
-} from "@/actions/gatherings";
-import { createParticipant } from "@/actions/gatherings/[id]";
+import { getGathering, getIsOwner } from "@/actions/gatherings";
+import { createParticipant, deleteGathering } from "@/actions/gatherings/[id]";
 import { SubmitButton } from "@/components/common/SubmitButton";
 import Countdown from "@/components/gatherings/CountDown";
 import GatheringModalContainer from "@/components/gatherings/GatheringModalContainer";
-import { Button } from "@/components/ui/button";
 import getSession from "@/lib/session";
-import { formatToTimeAgo, formatToWon, isPastEndDate } from "@/lib/utils";
-import {
-  ChatBubbleLeftRightIcon,
-  PencilSquareIcon,
-  UserIcon,
-} from "@heroicons/react/24/solid";
+import { formatToWon, isPastEndDate } from "@/lib/utils";
+import { ChatBubbleLeftRightIcon, UserIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -59,7 +50,7 @@ export default async function GatheringModal({
     await createChatRoom(gathering.userId);
   };
 
-  const applyForMeeting = async () => {
+  const handleCreateParticipant = async () => {
     "use server";
     await createParticipant(session.id, gathering.id);
   };
@@ -79,33 +70,29 @@ export default async function GatheringModal({
         </div>
       </div>
       <div className="p-5 flex items-center justify-between border-b border-gray-300">
-        <div className="flex items-center gap-3">
-          <div className="size-10 overflow-hidden rounded-full">
-            {gathering.user.avatar !== null ? (
-              <Image
-                src={gathering.user.avatar}
-                alt={gathering.user.username}
-                width={40}
-                height={40}
-              />
-            ) : (
-              <UserIcon className="size-10 rounded-full" />
-            )}
+        <Link href={`/user/${gathering.userId}`}>
+          <div className="flex items-center gap-3">
+            <div className="size-10 overflow-hidden rounded-full">
+              {gathering.user.avatar !== null ? (
+                <Image
+                  src={gathering.user.avatar}
+                  alt={gathering.user.username}
+                  width={40}
+                  height={40}
+                />
+              ) : (
+                <UserIcon className="size-10 rounded-full" />
+              )}
+            </div>
+            <div>
+              <h3>{gathering.user.username}</h3>
+            </div>
           </div>
-          <div>
-            <h3>{gathering.user.username}</h3>
-          </div>
-        </div>
+        </Link>
         <div className="flex">
-          {isOwner ? (
-            <Button asChild>
-              <Link href={`/gatherings/post/${id}/edit`}>
-                <PencilSquareIcon className="h-[25px]" />
-              </Link>
-            </Button>
-          ) : (
+          {!isOwner && (
             <div className="flex gap-4">
-              <form action={applyForMeeting}>
+              <form action={handleCreateParticipant}>
                 <SubmitButton
                   disabled={disabledButtonValue()}
                   variant={disabledButtonValue() ? "secondary" : "default"}
@@ -127,7 +114,11 @@ export default async function GatheringModal({
         <div className="flex gap-1 items-center *:text-gray-400">
           <span className="text-xs text-neutral-500">{gathering.location}</span>
           <span>·</span>
-          <Countdown endDate={gathering.endDate} />
+          <span className="text-xs text-neutral-500">
+            {gathering.participants.length}/{gathering.maxParticipants} 모집
+          </span>
+          <span>·</span>
+          <Countdown status={gathering.status} endDate={gathering.endDate} />
         </div>
         <span className="text-lg font-bold">
           {formatToWon(gathering.price)}원

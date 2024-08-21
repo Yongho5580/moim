@@ -62,7 +62,9 @@ export default async function Profile() {
         <TabsContent value="gatherings">
           {myInfo.gatheringPost.length !== 0 ? (
             myInfo.gatheringPost.map((post) => (
-              <GatheringItem key={post.id} {...post} />
+              <div key={post.id}>
+                <GatheringItem key={post.id} {...post} />
+              </div>
             ))
           ) : (
             <div className="flex justify-center align-center w-full py-16 bg-gray-100">

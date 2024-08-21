@@ -55,7 +55,7 @@ export default function GatheringList({
   }, [page]);
 
   return (
-    <div className="flex w-full flex-col items-center justify-start gap-0">
+    <div className="flex w-full flex-col px-side items-center justify-start gap-0">
       {gatherings.map((post) => (
         <GatheringItem key={post.id} {...post} />
       ))}

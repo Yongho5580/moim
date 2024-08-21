@@ -1,3 +1,5 @@
+"use server";
+
 import { AWS_BUCKET } from "@/constants/config";
 import { db } from "@/lib/db";
 import { s3 } from "@/lib/s3Client";
@@ -24,7 +26,7 @@ export async function deleteGathering(id: number) {
   );
   revalidatePath("/home");
   revalidateTag(`gathering-post-${gathering.id}`);
-  redirect("/home");
+  redirect("/profile");
 }
 
 export async function createParticipant(
