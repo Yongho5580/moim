@@ -4,11 +4,9 @@ import getSession from "@/lib/session";
 import { Prisma } from "@prisma/client";
 import { unstable_cache } from "next/cache";
 
-export async function getIsOwner(userId: number) {
-  const session = await getSession();
-
-  if (session.id) {
-    return session.id === userId;
+export async function getIsOwner(userId: number, sessionId: number) {
+  if (sessionId) {
+    return sessionId === userId;
   }
   return false;
 }
@@ -25,6 +23,7 @@ export async function getGathering(gatheringId: number) {
           avatar: true,
         },
       },
+      participants: true,
     },
   });
   return gathering;
@@ -43,6 +42,10 @@ export async function getInitialGatherings() {
       price: true,
       photo: true,
       created_at: true,
+      maxParticipants: true,
+      participants: true,
+      status: true,
+      endDate: true,
     },
     orderBy: {
       created_at: "desc",
@@ -54,12 +57,16 @@ export async function getInitialGatherings() {
 export async function getMoreGatherings(page: number) {
   const gatherings = await db.gatheringPost.findMany({
     select: {
+      id: true,
       title: true,
       location: true,
       price: true,
-      created_at: true,
       photo: true,
-      id: true,
+      created_at: true,
+      maxParticipants: true,
+      participants: true,
+      status: true,
+      endDate: true,
     },
     skip: page * 1,
     take: 1,

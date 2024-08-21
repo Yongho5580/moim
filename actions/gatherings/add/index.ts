@@ -26,7 +26,6 @@ export async function uploadS3({ name, body }: { name: string; body: Buffer }) {
 export async function preparePhotoData(
   photo: File
 ): Promise<{ name: string; body: Buffer }> {
-  console.log(photo);
   const ext = photo.name.split(".").at(-1);
   const uid = uuidv4().replace(/-/g, "");
   const name = `${uid}${ext ? "." + ext : ""}`;
@@ -55,6 +54,8 @@ export async function uploadGathering(_: any, formData: FormData) {
     price: formData.get("price"),
     location: formData.get("location"),
     description: formData.get("description"),
+    maxParticipants: formData.get("maxParticipants"),
+    endDate: formData.get("endDate"),
   };
   const result = ADD_GATHERING_SCHEMA.safeParse(data);
   if (!result.success) {
@@ -69,6 +70,8 @@ export async function uploadGathering(_: any, formData: FormData) {
           location: result.data.location,
           price: result.data.price,
           photo: photoUrl,
+          maxParticipants: result.data.maxParticipants,
+          endDate: result.data.endDate,
           user: {
             connect: {
               id: session.id,

@@ -26,3 +26,15 @@ export async function deleteGathering(id: number) {
   revalidateTag(`gathering-post-${gathering.id}`);
   redirect("/home");
 }
+
+export async function createParticipant(
+  userId: number,
+  gatheringPostId: number
+) {
+  const participant = await db.participant.create({
+    data: {
+      userId,
+      gatheringPostId,
+    },
+  });
+}

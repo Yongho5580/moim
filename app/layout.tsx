@@ -4,7 +4,6 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import MainContainer from "@/components/common/MainContainer";
 import MainContent from "@/components/common/MainContent";
-import BottomNavigation from "@/components/common/BottomNavigation";
 
 const notoSans = Noto_Sans_KR({
   weight: "500",

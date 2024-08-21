@@ -15,6 +15,7 @@ import Link from "next/link";
 import { createChatRoom } from "@/actions/chats";
 import { Button } from "@/components/ui/button";
 import { SubmitButton } from "@/components/common/SubmitButton";
+import getSession from "@/lib/session";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const gathering = await getGathering(+params.id);
@@ -35,7 +36,8 @@ export default async function GatheringPost({
   if (!gathering) {
     return notFound();
   }
-  const isOwner = await getIsOwner(gathering.userId);
+  const session = await getSession();
+  const isOwner = await getIsOwner(gathering.userId, session.id);
 
   const interceptAction = async () => {
     "use server";
@@ -54,7 +56,7 @@ export default async function GatheringPost({
           className="object-cover"
         />
       </div>
-      <div className="p-5 flex items-center gap-3 border-b border-neutral-700">
+      <div className="p-5 flex items-center gap-3 border-b border-gray-300">
         <div className="size-10 overflow-hidden rounded-full">
           {gathering.user.avatar !== null ? (
             <Image
@@ -71,8 +73,8 @@ export default async function GatheringPost({
           <h3>{gathering.user.username}</h3>
         </div>
       </div>
-      <div className="p-5">
-        <h1 className="text-2xl font-semibold">{gathering.title}</h1>
+      <div className="p-5 flex flex-col gap-4">
+        <h2 className="text-xl font-semibold">{gathering.title}</h2>
         <p>{gathering.description}</p>
       </div>
       <div className="fixed w-full bottom-0 left-0 p-5 bg-neutral-800 flex justify-between items-center">
@@ -87,11 +89,18 @@ export default async function GatheringPost({
               </Link>
             </Button>
           ) : (
-            <form action={interceptAction}>
-              <SubmitButton>
-                <ChatBubbleLeftRightIcon className="h-[25px]" />
-              </SubmitButton>
-            </form>
+            <div className="flex gap-4">
+              <form action={interceptAction}>
+                <SubmitButton>
+                  <ChatBubbleLeftRightIcon className="h-[25px]" />
+                </SubmitButton>
+              </form>
+              <form action={interceptAction}>
+                <SubmitButton>
+                  <ChatBubbleLeftRightIcon className="h-[25px]" />
+                </SubmitButton>
+              </form>
+            </div>
           )}
         </div>
       </div>

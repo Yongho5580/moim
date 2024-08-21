@@ -1,4 +1,3 @@
-import { getIsOwner } from "@/actions/gatherings";
 import { deleteGathering } from "@/actions/gatherings/[id]";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import { Button } from "../ui/button";
@@ -12,8 +11,6 @@ export default async function GatheringDeleteButton({
   userId,
   gatheringId,
 }: IGatheringDeleteButtonProps) {
-  const isOwner = await getIsOwner(userId);
-
   const handleDeleteGathering = async () => {
     "use server";
     await deleteGathering(gatheringId);

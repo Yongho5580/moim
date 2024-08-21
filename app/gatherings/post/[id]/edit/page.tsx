@@ -1,6 +1,7 @@
 import { getCachedGatheringPost, getIsOwner } from "@/actions/gatherings";
 import { updateGathering } from "@/actions/gatherings/edit";
 import GatheringForm from "@/components/gatherings/GatheringForm";
+import getSession from "@/lib/session";
 import { notFound } from "next/navigation";
 
 export default async function EditGathering({
@@ -16,7 +17,8 @@ export default async function EditGathering({
   if (!gathering) {
     return notFound();
   }
-  const isOwner = await getIsOwner(gathering.userId);
+  const session = await getSession();
+  const isOwner = await getIsOwner(gathering.userId, session.id);
   if (!isOwner) {
     return notFound();
   }

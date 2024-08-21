@@ -2,6 +2,7 @@ import { getCachedCommunityPost } from "@/actions/community/[id]";
 import { updateCommunity } from "@/actions/community/edit";
 import { getIsOwner } from "@/actions/gatherings";
 import CommunityForm from "@/components/community/CommunityForm";
+import getSession from "@/lib/session";
 import { notFound } from "next/navigation";
 
 export default async function EditCommunity({
@@ -17,7 +18,8 @@ export default async function EditCommunity({
   if (!community) {
     return notFound();
   }
-  const isOwner = await getIsOwner(community.userId);
+  const session = await getSession();
+  const isOwner = await getIsOwner(community.userId, session.id);
   if (!isOwner) {
     return notFound();
   }

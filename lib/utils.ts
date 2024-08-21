@@ -18,3 +18,16 @@ export function formatToWon(price: number): string {
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export function isPastEndDate(endDate: Date): boolean {
+  const now = convertUTCToLocalTime();
+  return now > endDate;
+}
+
+export function convertUTCToLocalTime() {
+  const utcDate = new Date();
+  const nineHoursInMillis = 9 * 60 * 60 * 1000;
+  const localDate = new Date(utcDate.getTime() + nineHoursInMillis);
+
+  return localDate;
+}

@@ -9,7 +9,6 @@ import {
   getCachedCommunityPost,
   getCachedLikeStatus,
 } from "@/actions/community/[id]";
-import { getIsOwner } from "@/actions/gatherings";
 
 export default async function CommunityPost({
   params,

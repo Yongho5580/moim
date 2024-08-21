@@ -1,6 +1,7 @@
 import { formatToTimeAgo, formatToWon } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import Countdown from "./CountDown";
 
 interface IGatheringItemProps {
   id: number;
@@ -8,7 +9,7 @@ interface IGatheringItemProps {
   location: string;
   price: number;
   photo: string;
-  created_at: Date;
+  endDate: Date;
 }
 
 export default function GatheringItem({
@@ -17,7 +18,7 @@ export default function GatheringItem({
   location,
   price,
   photo,
-  created_at,
+  endDate,
 }: IGatheringItemProps) {
   return (
     <div className="w-full px-side py-4">
@@ -40,9 +41,7 @@ export default function GatheringItem({
           <div className="absolute inset-0 bg-gray-black bg-opacity-50" />
           <div className="absolute flex w-full flex-col gap-2 px-4 pb-[72px] pt-5">
             <div>
-              <span className="shrink-0 rounded-sm border px-2 pb-0.5 pt-1 text-xs border-gray-white border-opacity-30 bg-gray-900 bg-opacity-40 text-gray-400">
-                {formatToTimeAgo(created_at.toString())}
-              </span>
+              <Countdown endDate={endDate} />
             </div>
             <span className="text-lg text-slate-100 text-opacity-50 font-bold">
               {title}

@@ -4,10 +4,13 @@ import {
   getGathering,
   getIsOwner,
 } from "@/actions/gatherings";
+import { createParticipant } from "@/actions/gatherings/[id]";
 import { SubmitButton } from "@/components/common/SubmitButton";
+import Countdown from "@/components/gatherings/CountDown";
 import GatheringModalContainer from "@/components/gatherings/GatheringModalContainer";
 import { Button } from "@/components/ui/button";
-import { formatToTimeAgo, formatToWon } from "@/lib/utils";
+import getSession from "@/lib/session";
+import { formatToTimeAgo, formatToWon, isPastEndDate } from "@/lib/utils";
 import {
   ChatBubbleLeftRightIcon,
   PencilSquareIcon,
@@ -33,31 +36,49 @@ export default async function GatheringModal({
   if (isNaN(id)) {
     return notFound();
   }
-  const gathering = await getCachedGatheringPost(id);
+  const gathering = await getGathering(id);
   if (!gathering) {
     return notFound();
   }
-  const isOwner = await getIsOwner(gathering.userId);
+  const session = await getSession();
+  const isOwner = await getIsOwner(gathering.userId, session.id);
 
-  const interceptAction = async () => {
+  const disabledButtonValue = () => {
+    if (
+      isPastEndDate(gathering.endDate) ||
+      gathering.status === "closed" ||
+      gathering.maxParticipants === gathering.participants.length
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  const startChat = async () => {
     "use server";
     await createChatRoom(gathering.userId);
   };
 
+  const applyForMeeting = async () => {
+    "use server";
+    await createParticipant(session.id, gathering.id);
+  };
+
   return (
     <GatheringModalContainer>
-      <div className="aspect-square h-full w-full">
-        <div className="bg-neutral-900 text-neutral-200 relative flex justify-center rounded-t-xl items-center overflow-hidden h-full">
+      <div className="aspect-[16/6] h-full w-full">
+        <div className="text-neutral-200 relative flex justify-center rounded-t-xl items-center overflow-hidden h-full">
           <Image
+            fill
+            priority
+            sizes="400px"
             src={gathering.photo}
             alt={gathering.title}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            fill
-            className="object-contain overflow-hidden"
+            className="object-cover"
           />
         </div>
       </div>
-      <div className="p-5 flex items-center justify-between border-b border-neutral-700">
+      <div className="p-5 flex items-center justify-between border-b border-gray-300">
         <div className="flex items-center gap-3">
           <div className="size-10 overflow-hidden rounded-full">
             {gathering.user.avatar !== null ? (
@@ -83,26 +104,35 @@ export default async function GatheringModal({
               </Link>
             </Button>
           ) : (
-            <form action={interceptAction}>
-              <SubmitButton>
-                <ChatBubbleLeftRightIcon className="h-[25px]" />
-              </SubmitButton>
-            </form>
+            <div className="flex gap-4">
+              <form action={applyForMeeting}>
+                <SubmitButton
+                  disabled={disabledButtonValue()}
+                  variant={disabledButtonValue() ? "secondary" : "default"}
+                >
+                  모임 신청
+                </SubmitButton>
+              </form>
+              <form action={startChat}>
+                <SubmitButton>
+                  <ChatBubbleLeftRightIcon className="h-[25px]" />
+                </SubmitButton>
+              </form>
+            </div>
           )}
         </div>
       </div>
-      <div className="h-full flex flex-col p-5 gap-1 overflow-y-auto max-h-[200px] scrollbar-hide">
+      <div className="h-full flex flex-col p-5 gap-0.5 overflow-y-auto max-h-[200px] scrollbar-hide">
         <h1 className="text-xl font-medium">{gathering.title}</h1>
-        <span className="text-sm text-neutral-500">{gathering.location}</span>
-        <span className="text-sm text-neutral-500">
-          {formatToTimeAgo(gathering.created_at.toString())}
-        </span>
+        <div className="flex gap-1 items-center *:text-gray-400">
+          <span className="text-xs text-neutral-500">{gathering.location}</span>
+          <span>·</span>
+          <Countdown endDate={gathering.endDate} />
+        </div>
         <span className="text-lg font-bold">
           {formatToWon(gathering.price)}원
         </span>
-        <p className="mt-4 font-light text-neutral-200 text-sm">
-          {gathering.description}
-        </p>
+        <p className="mt-4 text-neutral-900 text-sm">{gathering.description}</p>
       </div>
     </GatheringModalContainer>
   );

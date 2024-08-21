@@ -30,9 +30,12 @@ export async function updateGathering(_: any, formData: FormData) {
     location: formData.get("location"),
     photo: formData.get("photo"),
     price: formData.get("price"),
+    endDate: formData.get("endDate"),
+    maxParticipants: formData.get("maxParticipants"),
   };
   const result = ADD_GATHERING_SCHEMA.safeParse(data);
   if (!result.success) {
+    console.log(result.error.flatten());
     return result.error.flatten();
   } else {
     const session = await getSession();
@@ -47,6 +50,8 @@ export async function updateGathering(_: any, formData: FormData) {
           location: result.data.location,
           price: result.data.price,
           photo: result.data.photo,
+          maxParticipants: result.data.maxParticipants,
+          endDate: result.data.endDate,
           user: {
             connect: {
               id: session.id,
