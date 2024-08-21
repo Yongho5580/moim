@@ -33,10 +33,24 @@ export async function createParticipant(
   userId: number,
   gatheringPostId: number
 ) {
-  const participant = await db.participant.create({
+  const participantExist = await db.participant.findUnique({
+    where: {
+      id: {
+        userId,
+        gatheringPostId,
+      },
+    },
+  });
+  if (participantExist) {
+    return redirect("/");
+  }
+  await db.participant.create({
     data: {
       userId,
       gatheringPostId,
     },
   });
+
+  revalidatePath("/profile");
+  redirect("/profile");
 }

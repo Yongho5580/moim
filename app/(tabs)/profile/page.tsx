@@ -25,6 +25,7 @@ export default async function Profile() {
     "use server";
     redirect("/profile/edit/password");
   };
+  console.log(myInfo);
   return (
     <>
       <Link
@@ -53,7 +54,7 @@ export default async function Profile() {
       <Tabs defaultValue="gatherings" className="w-full px-side pb-5">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="gatherings">
-            만든 모임 ({myInfo.gatheringPost?.length})
+            참가한 모임 ({myInfo.gatheringPost?.length})
           </TabsTrigger>
           <TabsTrigger value="community">
             커뮤니티 글 ({myInfo.communityPost?.length})
@@ -63,13 +64,17 @@ export default async function Profile() {
           {myInfo.gatheringPost.length !== 0 ? (
             myInfo.gatheringPost.map((post) => (
               <div key={post.id}>
-                <GatheringItem key={post.id} {...post} />
+                <GatheringItem
+                  isOwner={post.userId === session.id}
+                  key={post.id}
+                  {...post}
+                />
               </div>
             ))
           ) : (
             <div className="flex justify-center align-center w-full py-16 bg-gray-100">
               <span className="text-sm font-medium text-gray-400">
-                만든 모임이 없어요
+                참가한 모임이 없어요
               </span>
             </div>
           )}

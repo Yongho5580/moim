@@ -82,6 +82,12 @@ export async function uploadGathering(_: any, formData: FormData) {
           id: true,
         },
       });
+      await db.participant.create({
+        data: {
+          userId: session.id,
+          gatheringPostId: gathering.id,
+        },
+      });
       revalidatePath("/home");
       revalidateTag(`gathering-post-${gathering.id}`);
       redirect(`/gatherings/post/${gathering.id}`);

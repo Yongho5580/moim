@@ -19,23 +19,35 @@ export async function getUser(id: number) {
           created_at: true,
         },
       },
-      gatheringPost: {
+      participants: {
         select: {
-          id: true,
-          title: true,
-          price: true,
-          description: true,
-          photo: true,
-          status: true,
-          endDate: true,
-          location: true,
-          created_at: true,
+          gathering: {
+            select: {
+              id: true,
+              title: true,
+              price: true,
+              description: true,
+              photo: true,
+              status: true,
+              endDate: true,
+              location: true,
+              created_at: true,
+              userId: true,
+            },
+          },
         },
       },
     },
   });
+
   if (user) {
-    return user;
+    const gatheringPost = user.participants.map(
+      (participant) => participant.gathering
+    );
+    return {
+      ...user,
+      gatheringPost,
+    };
   }
   return notFound();
 }

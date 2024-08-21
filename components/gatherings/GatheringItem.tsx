@@ -13,7 +13,7 @@ interface IGatheringItemProps {
   id: number;
   title: string;
   location: string;
-  price: number;
+  isOwner: boolean;
   status: string;
   photo: string;
   endDate: Date;
@@ -24,7 +24,7 @@ export default function GatheringItem({
   title,
   location,
   status,
-  price,
+  isOwner,
   photo,
   endDate,
 }: IGatheringItemProps) {
@@ -33,7 +33,7 @@ export default function GatheringItem({
 
   const handleEditClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    router.push(`/gathering/post/${id}/edit`);
+    router.push(`/gatherings/post/${id}/edit`);
   };
 
   const handleDeleteClick = async (
@@ -65,7 +65,7 @@ export default function GatheringItem({
           <div className="absolute flex w-full flex-col gap-2 px-4 pb-[72px] pt-5">
             <div className="flex items-center justify-between">
               <Countdown status={status} endDate={endDate} />
-              {pathname === "/profile" && (
+              {pathname === "/profile" && isOwner && (
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
