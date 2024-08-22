@@ -6,8 +6,31 @@ import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export async function createChatRoom(receiverId: number) {
-  const session = await getSession();
+export async function createChatRoom(receiverId: number, sessionId: number) {
+  const roomExists = await db.chatRoom.findFirst({
+    where: {
+      AND: [
+        {
+          users: {
+            some: {
+              id: receiverId,
+            },
+          },
+        },
+        {
+          users: {
+            some: {
+              id: sessionId,
+            },
+          },
+        },
+      ],
+    },
+  });
+
+  if (roomExists) {
+    return redirect(`/chats/${roomExists.id}`);
+  }
 
   const room = await db.chatRoom.create({
     data: {
@@ -17,7 +40,7 @@ export async function createChatRoom(receiverId: number) {
             id: receiverId,
           },
           {
-            id: session.id,
+            id: sessionId,
           },
         ],
       },

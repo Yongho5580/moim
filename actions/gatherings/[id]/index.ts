@@ -42,7 +42,7 @@ export async function createParticipant(
     },
   });
   if (participantExist) {
-    return redirect("/");
+    return redirect("/profile");
   }
   await db.participant.create({
     data: {

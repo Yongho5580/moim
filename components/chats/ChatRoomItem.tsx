@@ -46,7 +46,7 @@ export default function ChatRoomItem({
                     ? "text-neutral-400"
                     : isRead
                     ? "text-neutral-400"
-                    : "text-neutral-300"
+                    : "text-neutral-900 font-semibold"
                 }`}
               >
                 {payload}
@@ -57,7 +57,7 @@ export default function ChatRoomItem({
                     ? "text-neutral-400"
                     : isRead
                     ? "text-neutral-400"
-                    : "text-neutral-300"
+                    : "text-neutral-900 font-semibold"
                 }`}
               >
                 ·
@@ -68,7 +68,7 @@ export default function ChatRoomItem({
                     ? "text-neutral-400"
                     : isRead
                     ? "text-neutral-400"
-                    : "text-neutral-300"
+                    : "text-neutral-900 font-semibold"
                 }`}
               >
                 {formatToTimeAgo(createdAt?.toString())}

@@ -62,7 +62,7 @@ export default async function GatheringPost({
 
   const startChat = async () => {
     "use server";
-    await createChatRoom(gathering.userId);
+    await createChatRoom(gathering.userId, session.id);
   };
 
   const handleCreateParticipant = async () => {

@@ -20,7 +20,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function isPastEndDate(endDate: Date): boolean {
-  const now = convertUTCToLocalTime();
+  const now = new Date();
   return now > endDate;
 }
 
