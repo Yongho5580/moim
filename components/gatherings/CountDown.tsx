@@ -59,6 +59,8 @@ export default function Countdown({
     <time
       ref={countdownRef}
       className="shrink-0 rounded-sm border px-2 pb-0.5 pt-1 text-xs border-gray-white border-opacity-30 bg-gray-900 bg-opacity-40 text-gray-400"
-    ></time>
+    >
+      00:00:00 남음
+    </time>
   );
 }

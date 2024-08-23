@@ -7,8 +7,6 @@ export default async function Chats() {
   const session = await getSession();
   const isSender = chatRooms[0].messages[0]?.userId === session.id;
 
-  console.log(chatRooms);
-
   return (
     <div className="flex flex-col gap-5">
       {chatRooms.map((chatRoom) => (

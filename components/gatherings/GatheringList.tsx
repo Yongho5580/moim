@@ -57,7 +57,7 @@ export default function GatheringList({
   return (
     <div className="flex w-full flex-col px-side items-center justify-start gap-0">
       {gatherings.map((post) => (
-        <GatheringItem key={post.id} {...post} />
+        <GatheringItem key={post.id} isOwner={false} {...post} />
       ))}
       {/* {!isLastPage ? (
         <span

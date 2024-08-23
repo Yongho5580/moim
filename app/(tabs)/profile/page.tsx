@@ -25,7 +25,7 @@ export default async function Profile() {
     "use server";
     redirect("/profile/edit/password");
   };
-  console.log(myInfo);
+
   return (
     <>
       <Link
@@ -93,14 +93,20 @@ export default async function Profile() {
           )}
         </TabsContent>
       </Tabs>
-      {myInfo.auth_type === "email" && (
-        <form action={handleRedirect}>
-          <SubmitButton variant="link">비밀번호 변경</SubmitButton>
+      <div className="px-side pb-5">
+        {myInfo.auth_type === "email" && (
+          <form action={handleRedirect}>
+            <SubmitButton variant="link" className="p-0">
+              비밀번호 변경
+            </SubmitButton>
+          </form>
+        )}
+        <form action={handleLogOut}>
+          <SubmitButton variant="link" className="p-0">
+            로그아웃
+          </SubmitButton>
         </form>
-      )}
-      <form action={handleLogOut}>
-        <SubmitButton variant="link">로그아웃</SubmitButton>
-      </form>
+      </div>
     </>
   );
 }
