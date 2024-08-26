@@ -138,9 +138,7 @@ export default function ChatMessages({
             >
               <span
                 className={`${
-                  message.userId === userId
-                    ? "bg-emerald-500"
-                    : "bg-neutral-500"
+                  message.userId === userId ? "bg-primary" : "bg-secondary"
                 } p-2.5 rounded-md`}
               >
                 {message.payload}
@@ -164,7 +162,7 @@ export default function ChatMessages({
           required
           onChange={onChange}
           value={message}
-          className="bg-transparent rounded-full w-full h-10 focus:outline-none px-5 ring-2 focus:ring-4 transition ring-neutral-200 focus:ring-neutral-50 border-none placeholder:text-neutral-400"
+          className="bg-transparent rounded-full w-full h-10 focus:outline-none px-5 ring-2 focus:ring-2 transition ring-neutral-200 focus:ring-neutral-300 border-none placeholder:text-neutral-400"
           type="text"
           name="message"
           placeholder="메시지 보내기..."

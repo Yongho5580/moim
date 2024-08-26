@@ -10,7 +10,6 @@ export const metadata: Metadata = {
 export default async function Chats() {
   const chatRooms = await getChatRooms();
   const session = await getSession();
-  const isSender = chatRooms[0].messages[0]?.userId === session.id;
 
   return (
     <div className="flex flex-col gap-5">
@@ -19,7 +18,7 @@ export default async function Chats() {
           key={chatRoom.id}
           chatRoomId={chatRoom.id}
           isRead={chatRoom.messages[0]?.isRead}
-          isSender={isSender}
+          isSender={chatRoom.messages[0]?.userId === session.id}
           createdAt={chatRoom.messages[0]?.created_at}
           payload={chatRoom.messages[0]?.payload}
           username={chatRoom.users[0].username}

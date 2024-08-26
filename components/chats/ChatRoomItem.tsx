@@ -36,7 +36,15 @@ export default function ChatRoomItem({
             alt={username}
           />
           <div>
-            <span className="text-base font-semibold text-neutral-800">
+            <span
+              className={`${
+                isSender
+                  ? "text-neutral-900"
+                  : isRead
+                  ? "text-neutral-400"
+                  : "text-neutral-900 font-semibold"
+              }`}
+            >
               {username}
             </span>
             <div className={`flex gap-1 *:text-sm`}>

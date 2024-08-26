@@ -112,7 +112,7 @@ export default async function GatheringPost({
       </div>
       <div className="h-full flex flex-col p-5 gap-0.5 overflow-y-auto max-h-[200px] scrollbar-hide">
         <h1 className="text-xl font-medium">{gathering.title}</h1>
-        <div className="flex items-cente gap-1">
+        <div className="flex gap-1">
           <div className="flex items-center gap-1 *:text-neutral-500">
             <span className="text-xs">{gathering.location}</span>
             <span>·</span>

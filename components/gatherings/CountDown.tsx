@@ -24,10 +24,7 @@ export default function Countdown({
       : "border-gray-300 bg-gray-400 text-neutral-100";
 
   return (
-    <time
-      ref={countdownRef}
-      className={`${baseClasses} ${variantClasses} bg-gray-`}
-    >
+    <time ref={countdownRef} className={`${baseClasses} ${variantClasses}`}>
       00:00:00 남음
     </time>
   );

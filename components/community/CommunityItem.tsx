@@ -45,7 +45,7 @@ export default function CommunityItem({
             {likes}
           </span>
           <span>
-            <ChatBubbleBottomCenterIcon className="size-4" />
+            <ChatBubbleBottomCenterIcon className="size-4 text-blue-400" />
             {comments}
           </span>
         </div>

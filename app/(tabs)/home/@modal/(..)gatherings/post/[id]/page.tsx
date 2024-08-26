@@ -69,7 +69,7 @@ export default async function GatheringModal({
           />
         </div>
       </div>
-      <div className="p-5 flex items-center justify-between border-b border-gray-300">
+      <div className="p-5 flex items-center justify-between border-b sm: flex-col sm: gap-2 border-gray-300">
         <Link href={`/user/${gathering.userId}`}>
           <div className="flex items-center gap-3">
             <div className="size-10 overflow-hidden rounded-full">
@@ -111,7 +111,7 @@ export default async function GatheringModal({
       </div>
       <div className="h-full flex flex-col p-5 gap-0.5 overflow-y-auto max-h-[200px] scrollbar-hide">
         <h1 className="text-xl font-medium">{gathering.title}</h1>
-        <div className="flex items-cente gap-1">
+        <div className="flex gap-1">
           <div className="flex items-center gap-1 *:text-neutral-500">
             <span className="text-xs">{gathering.location}</span>
             <span>·</span>
