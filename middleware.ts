@@ -8,10 +8,13 @@ export async function middleware(request: NextRequest) {
   // 로그인하지 않은 상태이면서, PUBLIC ONLY URL이 아닌 곳에 접근하려 할 때
   if (!session.id) {
     if (!exists) {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/login", request.url));
     }
   } else {
     // 로그인한 상태이면서, PUBLIC ONLY URL인 곳에 접근하려 할 때
+    if (request.nextUrl.pathname === "/") {
+      return NextResponse.redirect(new URL("/home", request.url));
+    }
     if (exists) {
       return NextResponse.redirect(new URL("/home", request.url));
     }

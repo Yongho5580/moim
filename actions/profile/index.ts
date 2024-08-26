@@ -63,5 +63,5 @@ export async function getCachedUser(userId: number) {
 export async function logOut() {
   const session = await getSession();
   session.destroy();
-  return redirect("/");
+  return redirect("/login");
 }

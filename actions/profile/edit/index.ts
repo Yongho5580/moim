@@ -46,6 +46,6 @@ export async function updateProfile(_: any, formData: FormData) {
       },
     });
     revalidateTag(`user-${user.id}`);
-    redirect("/");
+    redirect("/login");
   }
 }

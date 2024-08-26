@@ -6,7 +6,6 @@ export const PUBLIC_URLS: Routes = {};
 
 export const PUBLIC_ONLY_URLS: Routes = {
   // Auth
-  "/": true,
   "/login": true,
   "/login/error": true,
   "/create-account": true,
