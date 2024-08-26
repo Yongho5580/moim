@@ -3,12 +3,14 @@ import CommunityItem from "@/components/community/CommunityItem";
 import GatheringItem from "@/components/gatherings/GatheringItem";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import getSession from "@/lib/session";
-import { Metadata } from "next";
 import Image from "next/image";
 
-export const metadata: Metadata = {
-  title: "",
-};
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const user = await getUser(+params.id);
+  return {
+    title: `${user.username}님의 프로필`,
+  };
+}
 
 export default async function UserProfile({
   params,
