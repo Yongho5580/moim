@@ -44,7 +44,7 @@ export default function GatheringItem({
   };
 
   return (
-    <div className="w-full pt-4 pb-2">
+    <div className="w-full">
       <div className="flex flex-col gap-4"></div>
       <div className="relative flex w-full max-w-screen-sm flex-col overflow-hidden rounded-xl">
         <Link

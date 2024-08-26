@@ -18,6 +18,9 @@ export async function getUser(id: number) {
           _count: true,
           created_at: true,
         },
+        orderBy: {
+          created_at: "desc",
+        },
       },
       participants: {
         select: {
@@ -34,6 +37,11 @@ export async function getUser(id: number) {
               created_at: true,
               userId: true,
             },
+          },
+        },
+        orderBy: {
+          gathering: {
+            created_at: "desc",
           },
         },
       },

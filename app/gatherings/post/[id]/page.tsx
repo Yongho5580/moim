@@ -119,7 +119,11 @@ export default async function GatheringPost({
             {gathering.participants.length}/{gathering.maxParticipants} 모집
           </span>
           <span>·</span>
-          <Countdown status={gathering.status} endDate={gathering.endDate} />
+          <Countdown
+            status={gathering.status}
+            endDate={gathering.endDate}
+            variant="secondary"
+          />
         </div>
         <span className="text-lg font-bold">
           {formatToWon(gathering.price)}원

@@ -111,14 +111,20 @@ export default async function GatheringModal({
       </div>
       <div className="h-full flex flex-col p-5 gap-0.5 overflow-y-auto max-h-[200px] scrollbar-hide">
         <h1 className="text-xl font-medium">{gathering.title}</h1>
-        <div className="flex gap-1 items-center *:text-gray-400">
-          <span className="text-xs text-neutral-500">{gathering.location}</span>
-          <span>·</span>
-          <span className="text-xs text-neutral-500">
-            {gathering.participants.length}/{gathering.maxParticipants} 모집
-          </span>
-          <span>·</span>
-          <Countdown status={gathering.status} endDate={gathering.endDate} />
+        <div className="flex items-cente gap-1">
+          <div className="flex items-center gap-1 *:text-neutral-500">
+            <span className="text-xs">{gathering.location}</span>
+            <span>·</span>
+            <span className="text-xs">
+              {gathering.participants.length}/{gathering.maxParticipants} 모집
+            </span>
+            <span>·</span>
+          </div>
+          <Countdown
+            variant="secondary"
+            status={gathering.status}
+            endDate={gathering.endDate}
+          />
         </div>
         <span className="text-lg font-bold">
           {formatToWon(gathering.price)}원

@@ -3,6 +3,10 @@ import FloatingAddButton from "@/components/common/FloatingAddButton";
 import GatheringList from "@/components/gatherings/GatheringList";
 import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "홈",
+};
+
 export default async function Gatherings() {
   const initialGatherings = await getInitialGatherings();
   return (

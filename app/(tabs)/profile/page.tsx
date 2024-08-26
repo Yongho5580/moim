@@ -65,7 +65,7 @@ export default async function Profile() {
             커뮤니티 글 ({myInfo.communityPost?.length})
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="gatherings">
+        <TabsContent value="gatherings" className="flex flex-col gap-4">
           {myInfo.gatheringPost.length !== 0 ? (
             myInfo.gatheringPost.map((post) => (
               <div key={post.id}>
