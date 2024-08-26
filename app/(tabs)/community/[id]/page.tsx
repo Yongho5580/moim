@@ -10,6 +10,13 @@ import {
   getCachedLikeStatus,
 } from "@/actions/community/[id]";
 
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const post = await getCachedCommunityPost(+params.id);
+  return {
+    title: post?.title,
+  };
+}
+
 export default async function CommunityPost({
   params,
 }: {

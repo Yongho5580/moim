@@ -1,6 +1,11 @@
 import { getChatRooms } from "@/actions/chats";
 import ChatRoomItem from "@/components/chats/ChatRoomItem";
 import getSession from "@/lib/session";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "채팅",
+};
 
 export default async function Chats() {
   const chatRooms = await getChatRooms();

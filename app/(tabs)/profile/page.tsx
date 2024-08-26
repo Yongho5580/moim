@@ -10,6 +10,11 @@ import GatheringItem from "@/components/gatherings/GatheringItem";
 import CommunityItem from "@/components/community/CommunityItem";
 import UserIcon from "@/public/assets/images/profile-user.png";
 import { blurDataURL } from "@/constants/blurDataURL";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "마이페이지",
+};
 
 export default async function Profile() {
   const session = await getSession();

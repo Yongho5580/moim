@@ -3,7 +3,12 @@ import { updateCommunity } from "@/actions/community/edit";
 import { getIsOwner } from "@/actions/gatherings";
 import CommunityForm from "@/components/community/CommunityForm";
 import getSession from "@/lib/session";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "커뮤니티 수정",
+};
 
 export default async function EditCommunity({
   params,

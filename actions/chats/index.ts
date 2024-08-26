@@ -107,6 +107,7 @@ export async function getChatRoom(chatRoomId: string) {
       users: {
         select: {
           id: true,
+          username: true,
         },
       },
     },

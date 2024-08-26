@@ -13,8 +13,8 @@ const notoSans = Noto_Sans_KR({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | 모임",
-    default: "모임",
+    template: "%s | 모임 | moim",
+    default: "모임 | moim",
   },
   description: "함께하면 즐거움이 배가 되는 모임!",
 };

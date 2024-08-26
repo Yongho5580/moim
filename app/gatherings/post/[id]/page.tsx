@@ -4,26 +4,14 @@ import {
   getIsOwner,
 } from "@/actions/gatherings";
 import { formatToWon, isPastEndDate } from "@/lib/utils";
-import {
-  ChatBubbleLeftRightIcon,
-  PencilSquareIcon,
-  UserIcon,
-} from "@heroicons/react/24/solid";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { PencilIcon, Trash2Icon, EllipsisVerticalIcon } from "lucide-react";
+import { ChatBubbleLeftRightIcon, UserIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createChatRoom } from "@/actions/chats";
-import { Button } from "@/components/ui/button";
 import { SubmitButton } from "@/components/common/SubmitButton";
 import getSession from "@/lib/session";
-import { createParticipant, deleteGathering } from "@/actions/gatherings/[id]";
+import { createParticipant } from "@/actions/gatherings/[id]";
 import Countdown from "@/components/gatherings/CountDown";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {

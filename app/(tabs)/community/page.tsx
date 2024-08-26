@@ -1,8 +1,9 @@
 import { getCommunityPosts } from "@/actions/community";
 import FloatingAddButton from "@/components/common/FloatingAddButton";
 import CommunityItem from "@/components/community/CommunityItem";
+import { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "커뮤니티",
 };
 

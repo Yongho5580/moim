@@ -3,7 +3,12 @@ import CommunityItem from "@/components/community/CommunityItem";
 import GatheringItem from "@/components/gatherings/GatheringItem";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import getSession from "@/lib/session";
+import { Metadata } from "next";
 import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "",
+};
 
 export default async function UserProfile({
   params,
