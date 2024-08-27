@@ -34,7 +34,6 @@ export type InitialGatherings = Prisma.PromiseReturnType<
 >;
 
 export async function getInitialGatherings() {
-  await new Promise((resolve) => setTimeout(resolve, 3000));
   const gatherings = db.gatheringPost.findMany({
     select: {
       id: true,
