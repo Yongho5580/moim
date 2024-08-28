@@ -21,7 +21,8 @@ export async function updateGathering(_: any, formData: FormData) {
     file.type.startsWith("image/")
   ) {
     const { name, body } = await preparePhotoData(file);
-    await uploadS3({ name, body });
+    const type = file.type;
+    await uploadS3({ name, body, type });
     photoUrl = `${AWS_S3_BASE_URL}/${name}`;
     formData.set("photo", photoUrl);
   } else {
