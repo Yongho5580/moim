@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import MainContainer from "@/components/common/MainContainer";
 import MainContent from "@/components/common/MainContent";
+import localFont from "next/font/local";
 
-const notoSans = Noto_Sans_KR({
-  weight: "500",
-  subsets: ["latin"],
-  variable: "--noto-sans",
+const goormSans = localFont({
+  src: "../public/fonts/goorm-sans.woff2",
+  display: "swap",
+  variable: "--goorm-sans",
 });
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={cn("overflow-auto", notoSans.variable)}>
+      <body className={cn("overflow-auto", goormSans.className)}>
         <MainContainer>
           <MainContent>{children}</MainContent>
         </MainContainer>

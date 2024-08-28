@@ -20,7 +20,7 @@ const config = {
     },
     extend: {
       fontFamily: {
-        sans: ["var(--noto-sans)", "Apple SD Gothic Neo", ...fontFamily.sans],
+        goormSans: ["var(--goorm-sans)", "system-ui"],
       },
       colors: {
         border: "hsl(var(--border))",
