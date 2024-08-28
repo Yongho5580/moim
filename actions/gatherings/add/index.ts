@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import getSession from "@/lib/session";
 import { redirect } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { AWS_BUCKET, AWS_S3_BASE_URL } from "@/constants/config";
 import { s3 } from "@/lib/s3Client";
 import { ADD_GATHERING_SCHEMA } from "@/schemas/gatherings/add";
@@ -12,7 +12,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 export async function uploadS3({ name, body }: { name: string; body: Buffer }) {
   try {
     const params = new PutObjectCommand({
-      Bucket: AWS_BUCKET,
+      Bucket: process.env.AWS_BUCKET,
       Key: name,
       Body: body,
       ContentType: "image/jpg",
