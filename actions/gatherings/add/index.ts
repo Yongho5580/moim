@@ -104,8 +104,8 @@ export async function uploadGathering(_: any, formData: FormData) {
         },
       });
       revalidatePath("/home");
-      // revalidateTag(`gathering-post-${gathering.id}`);
-      // redirect(`/gatherings/post/${gathering.id}`);
+      revalidateTag(`gathering-post-${gathering.id}`);
+      redirect(`/gatherings/post/${gathering.id}`);
     }
   }
 }

@@ -13,14 +13,19 @@ export async function updateProfile(_: any, formData: FormData) {
   const file = formData.get("avatar");
   let photoUrl = "";
 
-  if (file instanceof File) {
+  if (
+    file instanceof File &&
+    file.size !== 0 &&
+    file.name !== "undefined" &&
+    file.type.startsWith("image/")
+  ) {
     const { name, body } = await preparePhotoData(file);
-    await uploadS3({ name, body });
+    const type = file.type;
+    await uploadS3({ name, body, type });
     photoUrl = `${AWS_S3_BASE_URL}/${name}`;
     formData.set("avatar", photoUrl);
   } else {
-    console.log(".여기서 걸림");
-    return;
+    formData.set("avatar", "");
   }
 
   const data = {
