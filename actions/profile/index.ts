@@ -58,3 +58,9 @@ export async function getUser(id: number) {
   }
   return notFound();
 }
+
+export async function logOut() {
+  const session = await getSession();
+  session.destroy();
+  return redirect("/login");
+}
