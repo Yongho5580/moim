@@ -25,8 +25,6 @@ export async function deleteGathering(id: number) {
     })
   );
   revalidatePath("/home");
-  revalidateTag(`gathering-post-${gathering.id}`);
-  redirect("/profile");
 }
 
 export async function createParticipant(

@@ -9,14 +9,21 @@ import { s3 } from "@/lib/s3Client";
 import { ADD_GATHERING_SCHEMA } from "@/schemas/gatherings/add";
 import { revalidatePath, revalidateTag } from "next/cache";
 
-export async function uploadS3({ name, body }: { name: string; body: Buffer }) {
+export async function uploadS3({
+  name,
+  body,
+  type,
+}: {
+  name: string;
+  body: Buffer;
+  type: string;
+}) {
   try {
-    console.log(AWS_BUCKET);
     const params = new PutObjectCommand({
       Bucket: AWS_BUCKET,
       Key: name,
       Body: body,
-      ContentType: "image/jpg",
+      ContentType: type,
     });
     console.log(params);
     await s3.send(params);
@@ -49,7 +56,8 @@ export async function uploadGathering(_: any, formData: FormData) {
     file.type.startsWith("image/")
   ) {
     const { name, body } = await preparePhotoData(file);
-    await uploadS3({ name, body });
+    const type = file.type;
+    await uploadS3({ name, body, type });
     photoUrl = `${AWS_S3_BASE_URL}/${name}`;
     formData.set("photo", photoUrl);
   } else {
