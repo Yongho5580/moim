@@ -58,7 +58,7 @@ model GatheringPost {
 model Participant {
   user            User          @relation(fields: [userId], references: [id])
   userId          Int
-  gathering       GatheringPost @relation(fields: [gatheringPostId], references: [id])
+  gathering       GatheringPost @relation(fields: [gatheringPostId], references: [id], onDelete: Cascade)
   gatheringPostId Int
   status          String        @default("pending")
   joined_at       DateTime      @default(now())
