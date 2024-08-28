@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function AddGathering() {
-  return <GatheringForm action={uploadGathering} id={""} />;
+  return <GatheringForm action={uploadGathering} id="" />;
 }

@@ -40,13 +40,18 @@ export async function uploadGathering(_: any, formData: FormData) {
   const file = formData.get("photo");
   let photoUrl = "";
 
-  if (file instanceof File) {
+  if (
+    file instanceof File &&
+    file.size !== 0 &&
+    file.name !== "undefined" &&
+    file.type.startsWith("image/")
+  ) {
     const { name, body } = await preparePhotoData(file);
     await uploadS3({ name, body });
     photoUrl = `${AWS_S3_BASE_URL}/${name}`;
     formData.set("photo", photoUrl);
   } else {
-    return;
+    formData.set("photo", "");
   }
   const data = {
     photo: formData.get("photo"),
