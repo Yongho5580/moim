@@ -11,12 +11,14 @@ import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function uploadS3({ name, body }: { name: string; body: Buffer }) {
   try {
+    console.log(AWS_BUCKET);
     const params = new PutObjectCommand({
-      Bucket: process.env.AWS_BUCKET,
+      Bucket: AWS_BUCKET,
       Key: name,
       Body: body,
       ContentType: "image/jpg",
     });
+    console.log(params);
     await s3.send(params);
   } catch (error) {
     console.log(error);
@@ -94,8 +96,8 @@ export async function uploadGathering(_: any, formData: FormData) {
         },
       });
       revalidatePath("/home");
-      revalidateTag(`gathering-post-${gathering.id}`);
-      redirect(`/gatherings/post/${gathering.id}`);
+      // revalidateTag(`gathering-post-${gathering.id}`);
+      // redirect(`/gatherings/post/${gathering.id}`);
     }
   }
 }

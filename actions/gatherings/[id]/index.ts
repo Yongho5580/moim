@@ -20,7 +20,7 @@ export async function deleteGathering(id: number) {
   const photoKey = gathering.photo.split("/").pop();
   await s3.send(
     new DeleteObjectCommand({
-      Bucket: process.env.AWS_BUCKET,
+      Bucket: AWS_BUCKET,
       Key: photoKey,
     })
   );
