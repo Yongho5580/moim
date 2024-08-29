@@ -1,13 +1,13 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { preparePhotoData, uploadS3 } from "../add";
 import { AWS_S3_BASE_URL } from "@/constants/config";
 import { ADD_GATHERING_SCHEMA } from "@/schemas/gatherings/add";
 import getSession from "@/lib/session";
 import { redirect } from "next/navigation";
 import { getGathering } from "..";
 import { revalidatePath, revalidateTag } from "next/cache";
+import { preparePhotoData, uploadS3 } from "@/lib/utils";
 
 export async function updateGathering(_: any, formData: FormData) {
   const file = formData.get("photo");
@@ -21,7 +21,8 @@ export async function updateGathering(_: any, formData: FormData) {
     file.type.startsWith("image/")
   ) {
     const { name, body } = await preparePhotoData(file);
-    await uploadS3({ name, body });
+    const type = file.type;
+    await uploadS3({ name, body, type });
     photoUrl = `${AWS_S3_BASE_URL}/${name}`;
     formData.set("photo", photoUrl);
   } else {

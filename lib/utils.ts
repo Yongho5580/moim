@@ -1,6 +1,8 @@
+import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { v4 as uuidv4 } from "uuid";
+import { s3 } from "./s3Client";
 
 export function formatToTimeAgo(date: string): string {
   if (!date) return "";
@@ -33,11 +35,37 @@ export function convertUTCToLocalTime() {
   return localDate;
 }
 
-export async function preparePhotoData(photo: File): Promise<{ name: string }> {
+export async function uploadS3({
+  name,
+  body,
+  type,
+}: {
+  name: string;
+  body: Buffer;
+  type: string;
+}) {
+  try {
+    const params = new PutObjectCommand({
+      Bucket: process.env.AWS_BUCKET,
+      Key: name,
+      Body: body,
+      ContentType: type,
+    });
+    await s3.send(params);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function preparePhotoData(
+  photo: File
+): Promise<{ name: string; body: Buffer }> {
   const ext = photo.name.split(".").at(-1);
   const uid = uuidv4().replace(/-/g, "");
   const name = `${uid}${ext ? "." + ext : ""}`;
+  const body = (await photo.arrayBuffer()) as Buffer;
   return {
     name,
+    body,
   };
 }

@@ -1,9 +1,9 @@
 "use server";
 
-import { preparePhotoData, uploadS3 } from "@/actions/gatherings/add";
 import { AWS_S3_BASE_URL } from "@/constants/config";
 import { db } from "@/lib/db";
 import getSession from "@/lib/session";
+import { preparePhotoData, uploadS3 } from "@/lib/utils";
 import { UPDATE_PROFILE_SCHEMA } from "@/schemas/profile/edit";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
@@ -15,12 +15,12 @@ export async function updateProfile(_: any, formData: FormData) {
 
   if (file instanceof File) {
     const { name, body } = await preparePhotoData(file);
-    await uploadS3({ name, body });
+    const type = file.type;
+    await uploadS3({ name, body, type });
     photoUrl = `${AWS_S3_BASE_URL}/${name}`;
     formData.set("avatar", photoUrl);
   } else {
-    console.log(".여기서 걸림");
-    return;
+    formData.set("avatar", "");
   }
 
   const data = {
