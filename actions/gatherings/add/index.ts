@@ -25,24 +25,47 @@ export async function uploadS3({
       Body: body,
       ContentType: type,
     });
-    console.log(params);
     await s3.send(params);
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function preparePhotoData(
-  photo: File
-): Promise<{ name: string; body: Buffer }> {
-  const ext = photo.name.split(".").at(-1);
-  const uid = uuidv4().replace(/-/g, "");
-  const name = `${uid}${ext ? "." + ext : ""}`;
-  const body = (await photo.arrayBuffer()) as Buffer;
-  return {
-    name,
-    body,
-  };
+async function s3Upload(file: File) {
+  const formData = new FormData();
+  formData.append("file", file);
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_BASE_URL + "/api/upload",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name: file.name, contentType: file.type }),
+    }
+  );
+
+  if (response.ok) {
+    const { url, fields } = await response.json();
+
+    const formData = new FormData();
+    Object.entries(fields).forEach(([key, value]) => {
+      formData.append(key, value as string);
+    });
+    formData.append("file", file);
+
+    const uploadResponse = await fetch(url, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (uploadResponse.ok) {
+      const key = formData.get("key");
+      return key;
+    } else {
+      console.log("S3 업로드에 실패했습니다.", uploadResponse);
+    }
+  }
 }
 
 export async function uploadGathering(_: any, formData: FormData) {
@@ -55,10 +78,8 @@ export async function uploadGathering(_: any, formData: FormData) {
     file.name !== "undefined" &&
     file.type.startsWith("image/")
   ) {
-    const { name, body } = await preparePhotoData(file);
-    const type = file.type;
-    await uploadS3({ name, body, type });
-    photoUrl = `${AWS_S3_BASE_URL}/${name}`;
+    const key = await s3Upload(file);
+    photoUrl = `${AWS_S3_BASE_URL}/${key}`;
     formData.set("photo", photoUrl);
   } else {
     formData.set("photo", "");

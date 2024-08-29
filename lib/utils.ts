@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { v4 as uuidv4 } from "uuid";
 
 export function formatToTimeAgo(date: string): string {
   if (!date) return "";
@@ -30,4 +31,13 @@ export function convertUTCToLocalTime() {
   const localDate = new Date(utcDate.getTime() + nineHoursInMillis);
 
   return localDate;
+}
+
+export async function preparePhotoData(photo: File): Promise<{ name: string }> {
+  const ext = photo.name.split(".").at(-1);
+  const uid = uuidv4().replace(/-/g, "");
+  const name = `${uid}${ext ? "." + ext : ""}`;
+  return {
+    name,
+  };
 }
