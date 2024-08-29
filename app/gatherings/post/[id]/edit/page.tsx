@@ -1,4 +1,4 @@
-import { getGathering, getIsOwner } from "@/actions/gatherings";
+import { getCachedGatheringPost, getIsOwner } from "@/actions/gatherings";
 import { updateGathering } from "@/actions/gatherings/edit";
 import GatheringForm from "@/components/gatherings/GatheringForm";
 import getSession from "@/lib/session";
@@ -13,7 +13,7 @@ export default async function EditGathering({
   if (isNaN(id)) {
     return notFound();
   }
-  const gathering = await getGathering(id);
+  const gathering = await getCachedGatheringPost(id);
   if (!gathering) {
     return notFound();
   }

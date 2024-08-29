@@ -1,4 +1,8 @@
-import { getGathering, getIsOwner } from "@/actions/gatherings";
+import {
+  getCachedGatheringPost,
+  getGathering,
+  getIsOwner,
+} from "@/actions/gatherings";
 import { formatToWon, isPastEndDate } from "@/lib/utils";
 import { ChatBubbleLeftRightIcon, UserIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";

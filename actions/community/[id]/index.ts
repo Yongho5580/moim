@@ -3,10 +3,10 @@
 import { db } from "@/lib/db";
 import getSession from "@/lib/session";
 import { CREATE_COMMENT_SCHEMA } from "@/schemas/community";
-import { revalidateTag } from "next/cache";
+import { revalidateTag, unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
 
-export async function getLikeStatus(postId: number, userId: number) {
+async function getLikeStatus(postId: number, userId: number) {
   const isLiked = await db.like.findUnique({
     where: {
       id: {
@@ -23,7 +23,7 @@ export async function getLikeStatus(postId: number, userId: number) {
   return { likeCount, isLiked: Boolean(isLiked) };
 }
 
-export async function getComments(postId: number) {
+async function getComments(postId: number) {
   const comments = await db.comment.findMany({
     where: {
       communityPostId: postId,
@@ -151,4 +151,37 @@ export async function deleteCommunityPost(id: number) {
   revalidateTag("community");
   revalidateTag(`community-post-${communityPost.id}`);
   redirect("/community");
+}
+
+// 여기서부터 데이터 캐시 함수
+export async function getCachedCommunityPost(postId: number) {
+  const cachedOperation = unstable_cache(
+    getCommunityPost,
+    [`community-post-${postId}`],
+    { tags: [`community-post-${postId}`] }
+  );
+  return cachedOperation(postId);
+}
+
+export async function getCachedLikeStatus(postId: number) {
+  const session = await getSession();
+  const userId = session.id;
+  const cachedOperation = unstable_cache(
+    getLikeStatus,
+    ["community-like-status"],
+    {
+      tags: [`community-like-status-${postId}`],
+    }
+  );
+
+  return cachedOperation(postId, userId!);
+}
+
+export async function getCachedComments(postId: number) {
+  const cachedOperation = unstable_cache(
+    getComments,
+    [`community-comments-${postId}`],
+    { tags: [`community-comments-${postId}`] }
+  );
+  return cachedOperation(postId);
 }

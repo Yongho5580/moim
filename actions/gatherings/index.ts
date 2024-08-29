@@ -1,6 +1,8 @@
 "use server";
 import { db } from "@/lib/db";
+import getSession from "@/lib/session";
 import { Prisma } from "@prisma/client";
+import { unstable_cache } from "next/cache";
 
 export async function getIsOwner(userId: number, sessionId: number) {
   if (sessionId) {
@@ -73,4 +75,16 @@ export async function getMoreGatherings(page: number) {
     },
   });
   return gatherings;
+}
+
+export async function getCachedGatheringPost(postId: number) {
+  const getCachedGathering = unstable_cache(
+    getGathering,
+    [`gathering-post-${postId}`],
+    {
+      tags: [`gathering-post-${postId}`],
+    }
+  );
+
+  return getCachedGathering(postId);
 }

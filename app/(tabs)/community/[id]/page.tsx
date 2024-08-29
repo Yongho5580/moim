@@ -5,13 +5,13 @@ import PostContent from "@/components/community/[id]/PostContent";
 import PostStats from "@/components/community/[id]/PostStats";
 import getSession from "@/lib/session";
 import {
-  getComments,
-  getCommunityPost,
-  getLikeStatus,
+  getCachedComments,
+  getCachedCommunityPost,
+  getCachedLikeStatus,
 } from "@/actions/community/[id]";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const post = await getCommunityPost(+params.id);
+  const post = await getCachedCommunityPost(+params.id);
   return {
     title: post?.title,
   };
@@ -26,14 +26,14 @@ export default async function CommunityPost({
   if (isNaN(id)) {
     return notFound();
   }
-  const post = await getCommunityPost(id);
+  const post = await getCachedCommunityPost(id);
   if (!post) {
     return notFound();
   }
   const session = await getSession();
 
-  const { isLiked, likeCount } = await getLikeStatus(id, session.id);
-  const comments = await getComments(id);
+  const { isLiked, likeCount } = await getCachedLikeStatus(id);
+  const comments = await getCachedComments(id);
 
   return (
     <div className="p-5 flex flex-col gap-x-40">

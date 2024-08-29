@@ -1,4 +1,4 @@
-import { getUser } from "@/actions/profile";
+import { getCachedUser } from "@/actions/profile";
 import { updateProfile } from "@/actions/profile/edit";
 import ProfileForm from "@/components/profile/ProfileForm";
 import getSession from "@/lib/session";
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default async function ProfileEdit() {
   const session = await getSession();
-  const myInfo = await getUser(session.id);
+  const myInfo = await getCachedUser(session.id);
   if (!myInfo) {
     return notFound();
   }

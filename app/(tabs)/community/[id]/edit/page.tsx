@@ -1,4 +1,4 @@
-import { getCommunityPost } from "@/actions/community/[id]";
+import { getCachedCommunityPost } from "@/actions/community/[id]";
 import { updateCommunity } from "@/actions/community/edit";
 import { getIsOwner } from "@/actions/gatherings";
 import CommunityForm from "@/components/community/CommunityForm";
@@ -19,7 +19,7 @@ export default async function EditCommunity({
   if (isNaN(id)) {
     return notFound();
   }
-  const community = await getCommunityPost(id);
+  const community = await getCachedCommunityPost(id);
   if (!community) {
     return notFound();
   }
