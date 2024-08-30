@@ -5,10 +5,11 @@ import MainContainer from "@/components/common/MainContainer";
 import MainContent from "@/components/common/MainContent";
 import localFont from "next/font/local";
 
-const goormSans = localFont({
-  src: "../public/fonts/goorm-sans.woff2",
+const pretendard = localFont({
+  src: "../public/fonts/PretendardVariable.woff2",
   display: "swap",
-  variable: "--goorm-sans",
+  weight: "45 920",
+  variable: "--font-pretendard",
 });
 
 export const metadata: Metadata = {
@@ -26,7 +27,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={cn("overflow-auto", goormSans.className)}>
+      <body
+        className={cn("overflow-auto", pretendard.variable, "font-pretendard")}
+      >
         <MainContainer>
           <MainContent>{children}</MainContent>
         </MainContainer>

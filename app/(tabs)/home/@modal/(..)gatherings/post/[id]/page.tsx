@@ -69,7 +69,7 @@ export default async function GatheringModal({
           />
         </div>
       </div>
-      <div className="p-5 flex items-center justify-between border-b sm: flex-col sm: gap-2 border-gray-300">
+      <div className="p-5 flex flex-col sm:flex-row items-center justify-between border-b gap-2 border-gray-300">
         <Link href={`/user/${gathering.userId}`}>
           <div className="flex items-center gap-3">
             <div className="size-10 overflow-hidden rounded-full">
@@ -90,7 +90,7 @@ export default async function GatheringModal({
           </div>
         </Link>
         <div className="flex">
-          {!isOwner && (
+          {!isOwner ? (
             <div className="flex gap-4">
               <form action={handleCreateParticipant}>
                 <SubmitButton
@@ -106,6 +106,8 @@ export default async function GatheringModal({
                 </SubmitButton>
               </form>
             </div>
+          ) : (
+            <div></div>
           )}
         </div>
       </div>

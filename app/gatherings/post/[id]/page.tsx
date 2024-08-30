@@ -70,7 +70,7 @@ export default async function GatheringPost({
           className="object-cover"
         />
       </div>
-      <div className="p-5 flex items-center justify-between border-b border-gray-300">
+      <div className="p-5 flex flex-col sm:flex-row items-center justify-between border-b gap-2 border-gray-300">
         <Link href={`/user/${gathering.userId}`}>
           <div className="flex items-center gap-3">
             <div className="size-10 overflow-hidden rounded-full">
@@ -91,7 +91,7 @@ export default async function GatheringPost({
           </div>
         </Link>
         <div className="flex">
-          {!isOwner && (
+          {!isOwner ? (
             <div className="flex gap-4">
               <form action={handleCreateParticipant}>
                 <SubmitButton
@@ -107,6 +107,8 @@ export default async function GatheringPost({
                 </SubmitButton>
               </form>
             </div>
+          ) : (
+            <div></div>
           )}
         </div>
       </div>

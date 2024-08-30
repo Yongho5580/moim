@@ -51,7 +51,7 @@ export default function GatheringItem({
           href={`/gatherings/post/${id}`}
           className="flex h-full w-full flex-col"
         >
-          <div className="w-full flex-row justify-center aspect-[16/9]">
+          <div className="relative w-full flex-row justify-center aspect-[16/9]">
             <Image
               fill
               priority

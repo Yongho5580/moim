@@ -4,6 +4,7 @@ import GatheringItem from "@/components/gatherings/GatheringItem";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import getSession from "@/lib/session";
 import Image from "next/image";
+import UserIcon from "@/public/assets/images/profile-user.png";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const user = await getUser(+params.id);
@@ -22,7 +23,7 @@ export default async function UserProfile({
   return (
     <div className="flex flex-col items-center gap-5 py-5">
       <Image
-        src={user.avatar!}
+        src={user.avatar || UserIcon}
         alt={user.username}
         width={128}
         height={128}

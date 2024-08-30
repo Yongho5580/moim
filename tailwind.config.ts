@@ -20,7 +20,7 @@ const config = {
     },
     extend: {
       fontFamily: {
-        goormSans: ["var(--goorm-sans)", "system-ui"],
+        pretendard: ["var(--font-pretendard)"],
       },
       colors: {
         border: "hsl(var(--border))",
