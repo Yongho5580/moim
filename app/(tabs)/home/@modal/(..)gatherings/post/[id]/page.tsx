@@ -1,5 +1,9 @@
 import { createChatRoom } from "@/actions/chats";
-import { getGathering, getIsOwner } from "@/actions/gatherings";
+import {
+  getCachedGatheringPost,
+  getGathering,
+  getIsOwner,
+} from "@/actions/gatherings";
 import { createParticipant, deleteGathering } from "@/actions/gatherings/[id]";
 import { SubmitButton } from "@/components/common/SubmitButton";
 import Countdown from "@/components/gatherings/CountDown";
@@ -12,7 +16,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const gathering = await getGathering(+params.id);
+  const gathering = await getCachedGatheringPost(+params.id);
   return {
     title: gathering?.title,
   };
