@@ -5,9 +5,9 @@ import { AWS_S3_BASE_URL } from "@/constants/config";
 import { ADD_GATHERING_SCHEMA } from "@/schemas/gatherings/add";
 import getSession from "@/lib/session";
 import { redirect } from "next/navigation";
-import { getGathering } from "..";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { preparePhotoData, uploadS3 } from "@/lib/utils";
+import { getCachedGatheringPost } from "../[id]";
 
 export async function updateGathering(_: any, formData: FormData) {
   const file = formData.get("photo");
@@ -26,7 +26,7 @@ export async function updateGathering(_: any, formData: FormData) {
     photoUrl = `${AWS_S3_BASE_URL}/${name}`;
     formData.set("photo", photoUrl);
   } else {
-    const gathering = await getGathering(+id);
+    const gathering = await getCachedGatheringPost(+id);
     if (!gathering) {
       formData.set("photo", "");
     } else {

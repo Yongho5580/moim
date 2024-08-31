@@ -50,6 +50,7 @@ export default function GatheringItem({
         <Link
           href={`/gatherings/post/${id}`}
           className="flex h-full w-full flex-col"
+          scroll={false}
         >
           <div className="relative w-full flex-row justify-center aspect-[16/9]">
             <Image

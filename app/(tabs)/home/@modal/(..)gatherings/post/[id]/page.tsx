@@ -1,9 +1,9 @@
 import { createChatRoom } from "@/actions/chats";
 import {
   getCachedGatheringPost,
-  getGathering,
+  getGatheringPost,
   getIsOwner,
-} from "@/actions/gatherings";
+} from "@/actions/gatherings/[id]";
 import { createParticipant } from "@/actions/gatherings/[id]";
 import { SubmitButton } from "@/components/common/SubmitButton";
 import Countdown from "@/components/gatherings/CountDown";
@@ -31,7 +31,7 @@ export default async function GatheringModal({
   if (isNaN(id)) {
     return notFound();
   }
-  const gathering = await getGathering(id);
+  const gathering = await getGatheringPost(id);
   if (!gathering) {
     return notFound();
   }

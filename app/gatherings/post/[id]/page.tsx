@@ -1,9 +1,9 @@
 import {
   getCachedGatheringPost,
-  getGathering,
-  getGatheringTitle,
+  getGatheringPost,
+  getGatheringPostTitle,
   getIsOwner,
-} from "@/actions/gatherings";
+} from "@/actions/gatherings/[id]";
 import { formatToWon, isPastEndDate } from "@/lib/utils";
 import { ChatBubbleLeftRightIcon, UserIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
@@ -16,7 +16,7 @@ import { createParticipant } from "@/actions/gatherings/[id]";
 import Countdown from "@/components/gatherings/CountDown";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const gathering = await getGatheringTitle(+params.id);
+  const gathering = await getGatheringPostTitle(+params.id);
   return {
     title: gathering?.title,
   };
@@ -31,18 +31,21 @@ export default async function GatheringPost({
   if (isNaN(id)) {
     return notFound();
   }
-  const gathering = await getGathering(id);
+  const gathering = await getCachedGatheringPost(id);
   if (!gathering) {
     return notFound();
   }
   const session = await getSession();
-  const isOwner = await getIsOwner(gathering.userId, session.id);
+  const isOwner = getIsOwner(gathering.userId, session.id);
 
   const disabledButtonValue = () => {
     if (
       isPastEndDate(gathering.endDate) ||
       gathering.status === "closed" ||
-      gathering.maxParticipants === gathering.participants.length
+      gathering.maxParticipants === gathering.participants.length ||
+      gathering.participants.find(
+        (participant) => participant.userId === session.id
+      )
     ) {
       return true;
     }

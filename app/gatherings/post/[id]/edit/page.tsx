@@ -1,4 +1,4 @@
-import { getCachedGatheringPost, getIsOwner } from "@/actions/gatherings";
+import { getCachedGatheringPost, getIsOwner } from "@/actions/gatherings/[id]";
 import { updateGathering } from "@/actions/gatherings/edit";
 import GatheringForm from "@/components/gatherings/GatheringForm";
 import getSession from "@/lib/session";

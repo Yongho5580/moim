@@ -1,6 +1,6 @@
 import { getCachedCommunityPost } from "@/actions/community/[id]";
 import { updateCommunity } from "@/actions/community/edit";
-import { getIsOwner } from "@/actions/gatherings";
+import { getIsOwner } from "@/actions/gatherings/[id]";
 import CommunityForm from "@/components/community/CommunityForm";
 import getSession from "@/lib/session";
 import { Metadata } from "next";
