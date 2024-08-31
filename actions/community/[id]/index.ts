@@ -136,6 +136,7 @@ export async function getCommunityPost(id: number) {
         },
       },
     });
+    revalidatePath("/community");
     return post;
   } catch (e) {
     return null;

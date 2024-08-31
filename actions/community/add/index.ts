@@ -28,6 +28,6 @@ export async function uploadCommunity(_: any, formData: FormData) {
     });
 
     revalidatePath("/community");
-    redirect(`/community/${communityPost.id}`);
+    redirect(`/community`);
   }
 }
