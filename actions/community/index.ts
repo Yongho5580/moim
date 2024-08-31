@@ -18,6 +18,9 @@ export async function getCommunityPosts() {
           },
         },
       },
+      orderBy: {
+        created_at: "desc",
+      },
     });
     return posts;
   } catch (e) {

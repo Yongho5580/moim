@@ -10,6 +10,7 @@ import { formatToTimeAgo } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { SubmitButton } from "@/components/common/SubmitButton";
+import { deleteCommunityPost } from "@/actions/community/[id]";
 interface IUserInfoProps {
   userId: number;
   postId: number;
@@ -27,10 +28,10 @@ export default function UserInfo({
   username,
   createdAt,
 }: IUserInfoProps) {
-  // const handleDeleteCommunityPost = async () => {
-  //   "use server";
-  //   await deleteCommunityPost(postId);
-  // };
+  const handleDeleteCommunityPost = async () => {
+    "use server";
+    await deleteCommunityPost(postId);
+  };
   return (
     <div className="flex justify-between">
       <Link href={`/user/${userId}`} className="flex items-center gap-2 mb-2">
@@ -48,7 +49,7 @@ export default function UserInfo({
           </div>
         </div>
       </Link>
-      {/* {sessionId === userId && (
+      {sessionId === userId && (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="none" size="icon">
@@ -72,7 +73,7 @@ export default function UserInfo({
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      )} */}
+      )}
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import { db } from "@/lib/db";
 import getSession from "@/lib/session";
 import { CREATE_COMMENT_SCHEMA } from "@/schemas/community";
-import { revalidateTag, unstable_cache } from "next/cache";
+import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
 
 async function getLikeStatus(postId: number, userId: number) {
@@ -62,7 +62,7 @@ export async function uploadComment(_: any, formData: FormData) {
         id: true,
       },
     });
-
+    revalidatePath("/community");
     revalidateTag(`community-comments-${result.data.postId}`);
   }
 }
@@ -76,6 +76,7 @@ export async function deleteComment(commentId: number) {
       communityPostId: true,
     },
   });
+  revalidatePath("/community");
   revalidateTag(`community-comments-${communityPostId}`);
 }
 
@@ -88,6 +89,7 @@ export async function likeCommunityPost(postId: number) {
         userId: session.id!,
       },
     });
+    revalidatePath("/community");
     revalidateTag(`community-like-status-${postId}`);
   } catch (e) {}
 }
@@ -103,12 +105,12 @@ export async function disLikeCommunityPost(postId: number) {
         },
       },
     });
+    revalidatePath("/community");
     revalidateTag(`community-like-status-${postId}`);
   } catch (e) {}
 }
 
 export async function getCommunityPost(id: number) {
-  console.log("im hit!!");
   try {
     const post = await db.communityPost.update({
       where: {

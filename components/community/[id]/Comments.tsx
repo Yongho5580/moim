@@ -34,13 +34,13 @@ export default function Comments({
   );
   const interceptAction = async (_: any, formData: FormData) => {
     const optimisticComment = {
-      payload: formData.get("comment")?.toString()!,
+      payload: formData.get("payload")?.toString()!,
       id: Date.now(),
       communityPostId: postId,
       created_at: new Date(),
       user: {
         id: Date.now(),
-        username: "optimistic",
+        username: "잠시만 기다려주세요",
         avatar: null,
       },
     };
