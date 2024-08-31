@@ -11,6 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { SubmitButton } from "@/components/common/SubmitButton";
 import { deleteCommunityPost } from "@/actions/community/[id]";
+import UserIcon from "@/public/assets/images/profile-user.png";
 interface IUserInfoProps {
   userId: number;
   postId: number;
@@ -39,7 +40,7 @@ export default function UserInfo({
           width={28}
           height={28}
           className="size-7 rounded-full"
-          src={avatar}
+          src={avatar || UserIcon}
           alt={username}
         />
         <div>
