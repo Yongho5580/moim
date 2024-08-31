@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import getSession from "@/lib/session";
 import Image from "next/image";
 import UserIcon from "@/public/assets/images/profile-user.png";
+import { blurDataURL } from "@/constants/blurDataURL";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const user = await getUser(+params.id);
@@ -27,6 +28,8 @@ export default async function UserProfile({
         alt={user.username}
         width={128}
         height={128}
+        placeholder="blur"
+        blurDataURL={blurDataURL}
         className="rounded-full w-32 h-32 object-cover"
       />
       <span className="text-lg font-semibold ">{user.username}</span>

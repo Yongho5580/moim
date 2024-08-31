@@ -142,7 +142,7 @@ export default async function GatheringModal({
           <div className="flex flex-col">
             {gathering.participants.map((participant) => (
               <Link
-                href={`/user/${gathering.userId}`}
+                href={`/user/${participant.userId}`}
                 key={participant.userId}
                 className="flex items-center gap-2 w-full border-b border-gray-300 last:border-b-0 py-4"
               >
