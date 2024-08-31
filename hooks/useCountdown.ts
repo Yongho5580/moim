@@ -6,8 +6,9 @@ export function useCountdown(
   countdownRef: React.RefObject<HTMLTimeElement>
 ) {
   useEffect(() => {
+    console.log(endDate);
     const updateCountdown = () => {
-      const timeDifference = endDate.getTime() - new Date().getTime();
+      const timeDifference = new Date(endDate).getTime() - new Date().getTime();
 
       if (timeDifference <= 0 || status === "closed") {
         clearInterval(intervalId);

@@ -37,15 +37,16 @@ export default async function GatheringPost({
   }
   const session = await getSession();
   const isOwner = getIsOwner(gathering.userId, session.id);
+  const isParticipant = gathering.participants.find(
+    (participant) => participant.userId === session.id
+  );
 
   const disabledButtonValue = () => {
     if (
       isPastEndDate(gathering.endDate) ||
+      isParticipant ||
       gathering.status === "closed" ||
-      gathering.maxParticipants === gathering.participants.length ||
-      gathering.participants.find(
-        (participant) => participant.userId === session.id
-      )
+      gathering.maxParticipants === gathering.participants.length
     ) {
       return true;
     }
@@ -102,7 +103,7 @@ export default async function GatheringPost({
                   disabled={disabledButtonValue()}
                   variant={disabledButtonValue() ? "secondary" : "default"}
                 >
-                  모임 신청
+                  {isParticipant ? "완료" : "모임 신청"}
                 </SubmitButton>
               </form>
               <form action={startChat}>

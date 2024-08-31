@@ -16,7 +16,7 @@ export async function uploadCommunity(_: any, formData: FormData) {
     return result.error.flatten();
   } else {
     const session = await getSession();
-    const communityPost = await db.communityPost.create({
+    await db.communityPost.create({
       data: {
         title: result.data.title,
         description: result.data.description,
