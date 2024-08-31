@@ -4,7 +4,7 @@ import {
   getGathering,
   getIsOwner,
 } from "@/actions/gatherings";
-import { createParticipant, deleteGathering } from "@/actions/gatherings/[id]";
+import { createParticipant } from "@/actions/gatherings/[id]";
 import { SubmitButton } from "@/components/common/SubmitButton";
 import Countdown from "@/components/gatherings/CountDown";
 import GatheringModalContainer from "@/components/gatherings/GatheringModalContainer";

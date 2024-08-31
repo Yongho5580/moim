@@ -24,6 +24,7 @@ export async function deleteGathering(id: number) {
       Key: photoKey,
     })
   );
+  revalidateTag(`gathering-post-${gathering.id}`);
   revalidatePath("/home");
 }
 

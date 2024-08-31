@@ -7,13 +7,14 @@ import getSession from "@/lib/session";
 import {
   getCachedComments,
   getCachedCommunityPost,
+  getCachedCommunityPostTitle,
   getCachedLikeStatus,
 } from "@/actions/community/[id]";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const post = await getCachedCommunityPost(+params.id);
+  const post = await getCachedCommunityPostTitle(+params.id);
   return {
-    title: post?.title,
+    title: post,
   };
 }
 

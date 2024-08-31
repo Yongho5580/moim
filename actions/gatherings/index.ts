@@ -29,6 +29,18 @@ export async function getGathering(gatheringId: number) {
   return gathering;
 }
 
+export async function getGatheringTitle(gatheringId: number) {
+  const gathering = await db.gatheringPost.findUnique({
+    where: {
+      id: gatheringId,
+    },
+    select: {
+      title: true,
+    },
+  });
+  return gathering;
+}
+
 export type InitialGatherings = Prisma.PromiseReturnType<
   typeof getInitialGatherings
 >;
@@ -81,6 +93,18 @@ export async function getCachedGatheringPost(postId: number) {
   const getCachedGathering = unstable_cache(
     getGathering,
     [`gathering-post-${postId}`],
+    {
+      tags: [`gathering-post-${postId}`],
+    }
+  );
+
+  return getCachedGathering(postId);
+}
+
+export async function getCachedGatheringTitle(postId: number) {
+  const getCachedGathering = unstable_cache(
+    getGatheringTitle,
+    [`gathering-post-title-${postId}`],
     {
       tags: [`gathering-post-${postId}`],
     }

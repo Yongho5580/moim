@@ -108,6 +108,7 @@ export async function disLikeCommunityPost(postId: number) {
 }
 
 export async function getCommunityPost(id: number) {
+  console.log("im hit!!");
   try {
     const post = await db.communityPost.update({
       where: {
@@ -139,6 +140,18 @@ export async function getCommunityPost(id: number) {
   }
 }
 
+export async function getCommunityPostTitle(id: number) {
+  const post = await db.communityPost.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      title: true,
+    },
+  });
+  return { title: post?.title };
+}
+
 export async function deleteCommunityPost(id: number) {
   const communityPost = await db.communityPost.delete({
     where: {
@@ -148,8 +161,9 @@ export async function deleteCommunityPost(id: number) {
       id: true,
     },
   });
-  revalidateTag("community");
   revalidateTag(`community-post-${communityPost.id}`);
+  revalidateTag(`community-like-status-${communityPost.id}`);
+  revalidateTag(`community-comments-${communityPost.id}`);
   redirect("/community");
 }
 
@@ -163,12 +177,21 @@ export async function getCachedCommunityPost(postId: number) {
   return cachedOperation(postId);
 }
 
+export async function getCachedCommunityPostTitle(postId: number) {
+  const cachedOperation = unstable_cache(
+    getCommunityPostTitle,
+    [`community-post-title-${postId}`],
+    { tags: [`community-post-${postId}`] }
+  );
+  return cachedOperation(postId);
+}
+
 export async function getCachedLikeStatus(postId: number) {
   const session = await getSession();
   const userId = session.id;
   const cachedOperation = unstable_cache(
     getLikeStatus,
-    ["community-like-status"],
+    [`community-like-status-${postId}`],
     {
       tags: [`community-like-status-${postId}`],
     }

@@ -1,6 +1,7 @@
 import {
   getCachedGatheringPost,
   getGathering,
+  getGatheringTitle,
   getIsOwner,
 } from "@/actions/gatherings";
 import { formatToWon, isPastEndDate } from "@/lib/utils";
@@ -15,7 +16,7 @@ import { createParticipant } from "@/actions/gatherings/[id]";
 import Countdown from "@/components/gatherings/CountDown";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const gathering = await getGathering(+params.id);
+  const gathering = await getGatheringTitle(+params.id);
   return {
     title: gathering?.title,
   };
