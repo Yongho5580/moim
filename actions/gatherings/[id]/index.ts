@@ -48,7 +48,16 @@ export async function getGatheringPost(gatheringId: number) {
           avatar: true,
         },
       },
-      participants: true,
+      participants: {
+        include: {
+          user: {
+            select: {
+              username: true,
+              avatar: true,
+            },
+          },
+        },
+      },
     },
   });
   const endDate = isPastEndDate(gathering?.endDate!);

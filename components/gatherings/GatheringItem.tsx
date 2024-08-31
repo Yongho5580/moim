@@ -6,7 +6,7 @@ import Countdown from "./CountDown";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
-import { PencilIcon, Trash2Icon } from "lucide-react";
+import { PencilIcon, Trash2Icon, User2Icon } from "lucide-react";
 import { deleteGathering } from "@/actions/gatherings/[id]";
 
 interface IGatheringItemProps {

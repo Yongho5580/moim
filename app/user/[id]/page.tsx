@@ -39,7 +39,7 @@ export default async function UserProfile({
             커뮤니티 글 ({user.communityPost?.length})
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="gatherings">
+        <TabsContent value="gatherings" className="flex flex-col gap-4">
           {user.gatheringPost.length !== 0 ? (
             user.gatheringPost.map((post) => (
               <GatheringItem

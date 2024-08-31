@@ -1,19 +1,16 @@
 import { createChatRoom } from "@/actions/chats";
-import {
-  getCachedGatheringPost,
-  getGatheringPost,
-  getIsOwner,
-} from "@/actions/gatherings/[id]";
+import { getCachedGatheringPost, getIsOwner } from "@/actions/gatherings/[id]";
 import { createParticipant } from "@/actions/gatherings/[id]";
 import { SubmitButton } from "@/components/common/SubmitButton";
 import Countdown from "@/components/gatherings/CountDown";
 import GatheringModalContainer from "@/components/gatherings/GatheringModalContainer";
 import getSession from "@/lib/session";
 import { formatToWon, isPastEndDate } from "@/lib/utils";
-import { ChatBubbleLeftRightIcon, UserIcon } from "@heroicons/react/24/solid";
+import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import UserIcon from "@/public/assets/images/profile-user.png";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const gathering = await getCachedGatheringPost(+params.id);
@@ -31,7 +28,7 @@ export default async function GatheringModal({
   if (isNaN(id)) {
     return notFound();
   }
-  const gathering = await getGatheringPost(id);
+  const gathering = await getCachedGatheringPost(id);
   if (!gathering) {
     return notFound();
   }
@@ -65,7 +62,7 @@ export default async function GatheringModal({
 
   return (
     <GatheringModalContainer>
-      <div className="aspect-[16/6] h-full w-full">
+      <div className="h-full max-h-[600px] w-full">
         <div className="text-neutral-200 relative flex justify-center rounded-t-xl items-center overflow-hidden h-full">
           <Image
             fill
@@ -81,19 +78,15 @@ export default async function GatheringModal({
         <Link href={`/user/${gathering.userId}`}>
           <div className="flex items-center gap-3">
             <div className="size-10 overflow-hidden rounded-full">
-              {gathering.user.avatar !== null ? (
-                <Image
-                  src={gathering.user.avatar}
-                  alt={gathering.user.username}
-                  width={40}
-                  height={40}
-                />
-              ) : (
-                <UserIcon className="size-10 rounded-full" />
-              )}
+              <Image
+                src={gathering.user.avatar || UserIcon}
+                alt={gathering.user.username}
+                width={40}
+                height={40}
+              />
             </div>
             <div>
-              <h3>{gathering.user.username}</h3>
+              <h3 className="font-semibold">{gathering.user.username}</h3>
             </div>
           </div>
         </Link>
@@ -105,7 +98,7 @@ export default async function GatheringModal({
                   disabled={disabledButtonValue()}
                   variant={disabledButtonValue() ? "secondary" : "default"}
                 >
-                  {isParticipant ? "완료" : "모임 신청"}
+                  {isParticipant ? "참가 완료" : "모임 참가"}
                 </SubmitButton>
               </form>
               <form action={startChat}>
@@ -119,7 +112,7 @@ export default async function GatheringModal({
           )}
         </div>
       </div>
-      <div className="h-full flex flex-col p-5 gap-0.5 overflow-y-auto max-h-[200px] scrollbar-hide">
+      <div className="h-full flex flex-col p-5 gap-0.5 overflow-y-auto max-h-[300px] scrollbar-hide">
         <h1 className="text-xl font-medium">{gathering.title}</h1>
         <div className="flex gap-1">
           <div className="flex items-center gap-1 *:text-neutral-500">
@@ -139,7 +132,37 @@ export default async function GatheringModal({
         <span className="text-lg font-bold">
           {formatToWon(gathering.price)}원
         </span>
-        <p className="mt-4 text-neutral-900 text-sm">{gathering.description}</p>
+        <p className="mt-4 text-neutral-900 text-sm mb-5">
+          {gathering.description}
+        </p>
+        <div className="py-5 rounded-md">
+          <div className="text-lg font-semibold">
+            모임 멤버 ({gathering.participants.length})
+          </div>
+          <div className="flex flex-col">
+            {gathering.participants.map((participant) => (
+              <Link
+                href={`/user/${gathering.userId}`}
+                key={participant.userId}
+                className="flex items-center gap-2 w-full border-b border-gray-300 last:border-b-0 py-4"
+              >
+                <Image
+                  className="h-8 w-8 overflow-hidden object-cover rounded-full"
+                  src={participant.user.avatar || UserIcon}
+                  alt={participant.user.username}
+                  width={40}
+                  height={40}
+                />
+                <div className="text-sm font-bold">
+                  {participant.user.username}
+                  {gathering.userId === participant.userId && (
+                    <span className="pl-2">👑</span>
+                  )}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
     </GatheringModalContainer>
   );

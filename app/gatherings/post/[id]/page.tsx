@@ -103,7 +103,7 @@ export default async function GatheringPost({
                   disabled={disabledButtonValue()}
                   variant={disabledButtonValue() ? "secondary" : "default"}
                 >
-                  {isParticipant ? "완료" : "모임 신청"}
+                  {isParticipant ? "참가 완료" : "모임 참가"}
                 </SubmitButton>
               </form>
               <form action={startChat}>

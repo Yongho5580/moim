@@ -44,7 +44,6 @@ export async function updateGathering(_: any, formData: FormData) {
   };
   const result = ADD_GATHERING_SCHEMA.safeParse(data);
   if (!result.success) {
-    console.log(result.error.flatten());
     return result.error.flatten();
   } else {
     const session = await getSession();

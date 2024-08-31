@@ -6,7 +6,6 @@ export function useCountdown(
   countdownRef: React.RefObject<HTMLTimeElement>
 ) {
   useEffect(() => {
-    console.log(endDate);
     const updateCountdown = () => {
       const timeDifference = new Date(endDate).getTime() - new Date().getTime();
 

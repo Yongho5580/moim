@@ -23,10 +23,12 @@ export default async function EditGathering({
     return notFound();
   }
   return (
-    <GatheringForm
-      id={params.id}
-      action={updateGathering}
-      initialState={gathering}
-    />
+    <div>
+      <GatheringForm
+        id={params.id}
+        action={updateGathering}
+        initialState={gathering}
+      />
+    </div>
   );
 }
