@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   title: "커뮤니티",
 };
 
+export const revalidate = 0;
+
 export default async function Community() {
   const posts = await getCommunityPosts();
 
