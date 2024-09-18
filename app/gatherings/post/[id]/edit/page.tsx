@@ -2,7 +2,12 @@ import { getCachedGatheringPost, getIsOwner } from "@/actions/gatherings/[id]";
 import { updateGathering } from "@/actions/gatherings/edit";
 import GatheringForm from "@/components/gatherings/GatheringForm";
 import getSession from "@/lib/session";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "모임 수정",
+};
 
 export default async function EditGathering({
   params,
@@ -23,12 +28,11 @@ export default async function EditGathering({
     return notFound();
   }
   return (
-    <div>
-      <GatheringForm
-        id={params.id}
-        action={updateGathering}
-        initialState={gathering}
-      />
-    </div>
+    <GatheringForm
+      id={params.id}
+      action={updateGathering}
+      initialState={gathering}
+      isEdit
+    />
   );
 }

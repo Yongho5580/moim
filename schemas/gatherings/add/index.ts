@@ -6,6 +6,7 @@ export const ADD_GATHERING_SCHEMA = z.object({
   price: z.coerce.number().min(1, "모임 비용을 작성해주세요."),
   location: z.string().min(1, "모임 장소를 작성해주세요."),
   endDate: z.string(),
+  status: z.string(),
   photo: z.string().min(1, "사진을 첨부해주세요"),
   maxParticipants: z.coerce
     .number()

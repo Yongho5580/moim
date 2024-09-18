@@ -38,6 +38,7 @@ export async function updateGathering(_: any, formData: FormData) {
     description: formData.get("description"),
     location: formData.get("location"),
     photo: formData.get("photo"),
+    status: formData.get("status"),
     price: formData.get("price"),
     endDate: formData.get("endDate"),
     maxParticipants: formData.get("maxParticipants"),
@@ -58,6 +59,7 @@ export async function updateGathering(_: any, formData: FormData) {
           location: result.data.location,
           price: result.data.price,
           photo: result.data.photo,
+          status: result.data.status,
           maxParticipants: result.data.maxParticipants,
           endDate: result.data.endDate,
           user: {

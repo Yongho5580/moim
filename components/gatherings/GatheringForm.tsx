@@ -35,12 +35,14 @@ interface IGatheringFormProps {
   >;
   initialState?: any;
   id: string;
+  isEdit: boolean;
 }
 
 export default function GatheringForm({
   action,
   initialState = {},
   id,
+  isEdit,
 }: IGatheringFormProps) {
   const { preview, setPreview, onImageChange } = useImagePreview();
 
@@ -134,15 +136,17 @@ export default function GatheringForm({
         type="number"
         errors={state?.fieldErrors.price}
       />
-      <Select name="status" defaultValue="open">
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="모집 상태" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="open">모집 중</SelectItem>
-          <SelectItem value="closed">모집 종료</SelectItem>
-        </SelectContent>
-      </Select>
+      {isEdit && (
+        <Select name="status" defaultValue="open">
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="모집 상태" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="open">모집 중</SelectItem>
+            <SelectItem value="closed">모집 종료</SelectItem>
+          </SelectContent>
+        </Select>
+      )}
       <InputWithError
         defaultValue={initialState.maxParticipants ?? ""}
         name="maxParticipants"
