@@ -16,5 +16,7 @@ export default async function ProfileEdit() {
     return notFound();
   }
 
-  return <ProfileForm action={updateProfile} initialState={myInfo} />;
+  return (
+    <ProfileForm action={updateProfile} initialState={myInfo} id={session.id} />
+  );
 }

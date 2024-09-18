@@ -24,11 +24,13 @@ interface IProfileFormProps {
     | undefined
   >;
   initialState?: any;
+  id: number;
 }
 
 export default function ProfileForm({
   action,
   initialState = {},
+  id,
 }: IProfileFormProps) {
   const { preview, setPreview, onImageChange } = useImagePreview();
   const [state, formAction] = useFormState(action, null);
@@ -71,6 +73,7 @@ export default function ProfileForm({
         className="hidden"
       />
       <div className="flex flex-col gap-1.5 w-full">
+        <input type="hidden" name="id" className="hidden" defaultValue={id} />
         <Label htmlFor="username">이름</Label>
         <InputWithError
           defaultValue={initialState.username ?? ""}

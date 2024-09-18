@@ -40,6 +40,7 @@ export default async function Profile() {
         <Image
           className="h-8 w-8 overflow-hidden object-cover rounded-full"
           src={myInfo.avatar || UserIcon}
+          quality={75}
           alt="프로필 이미지"
           width={32}
           height={32}
