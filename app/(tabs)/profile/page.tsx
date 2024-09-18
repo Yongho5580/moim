@@ -26,11 +26,6 @@ export default async function Profile() {
     "use server";
     await logOut();
   };
-  const handleRedirect = async () => {
-    "use server";
-    redirect("/profile/edit/password");
-  };
-
   return (
     <>
       <Link
@@ -101,11 +96,11 @@ export default async function Profile() {
       </Tabs>
       <div className="px-side pb-5">
         {myInfo.auth_type === "email" && (
-          <form action={handleRedirect}>
+          <Link href="/profile/edit/password">
             <SubmitButton variant="link" className="p-0">
               비밀번호 변경
             </SubmitButton>
-          </form>
+          </Link>
         )}
         <form action={handleLogOut}>
           <SubmitButton variant="link" className="p-0">
