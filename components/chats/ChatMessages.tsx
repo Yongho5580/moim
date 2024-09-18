@@ -63,7 +63,7 @@ export default function ChatMessages({
     setMessage("");
   };
 
-  // 브라우저 뒤로가기 이후 다시 접속했을 때 바뀐 부모의 DB 값을 반영하기 위한 함수
+  // 브라우저 뒤로가기 이후 다시 접속했을 때 바뀐 DB 값을 반영하기 위한 함수
   useEffect(() => {
     setMessages(initialMessages);
   }, [initialMessages]);
@@ -101,8 +101,6 @@ export default function ChatMessages({
       online_at: new Date().toISOString(),
       userId,
     });
-
-    markMessagesAsRead(chatRoomId);
 
     return () => {
       channel.current?.unsubscribe();

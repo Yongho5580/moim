@@ -4,7 +4,6 @@ import { InputWithError } from "../common/InputWithError";
 import { useFormState } from "react-dom";
 import { typeToFlattenedError } from "zod";
 import { SubmitButton } from "../common/SubmitButton";
-import { Textarea } from "../ui/textarea";
 import { TextareaWithError } from "../common/TextAreaWithError";
 
 interface ICommunityFormProps {

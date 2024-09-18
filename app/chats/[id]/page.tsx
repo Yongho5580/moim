@@ -2,7 +2,6 @@ import { getChatRoom, getMessages } from "@/actions/chats";
 import { getUser } from "@/actions/profile";
 import ChatMessages from "@/components/chats/ChatMessages";
 import getSession from "@/lib/session";
-import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
